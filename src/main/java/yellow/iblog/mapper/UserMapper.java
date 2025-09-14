@@ -1,5 +1,6 @@
 package yellow.iblog.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import yellow.iblog.model.User;
 
 //由于MyBatis修改字段是全部都修改，选择性修改是要使用XML，并且要手写sql语句，时间浪费且麻烦
@@ -8,9 +9,12 @@ import yellow.iblog.model.User;
 
 public interface UserMapper extends BaseMapper<User> {
 
-
 }
-//一旦继承了BaseMapper立刻得到成佛，下面写的方法全部都有，哈哈哈！！！
+
+
+
+
+//一旦继承了BaseMapper立刻得道成佛，下面写的方法全部都有，哈哈哈！！！
 
 
 //public interface UserMapper {

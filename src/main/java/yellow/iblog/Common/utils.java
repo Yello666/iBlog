@@ -1,4 +1,4 @@
-package yellow.iblog.Utils;
+package yellow.iblog.Common;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;

@@ -35,6 +35,13 @@ public class User {
         this.age = age;
         this.password = password;
     }
+
+    public User(String userName, Character gender, Integer age) {
+        this.userName = userName;
+        this.gender = gender;
+        this.age = age;
+    }
+
     public User(){}
 
 }
