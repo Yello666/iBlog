@@ -1,4 +1,5 @@
 package yellow.iblog.controller;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
@@ -17,7 +18,8 @@ public class UserC {
         this.userService = userService;
     }
 
-    @PostMapping("/add")
+    //用户注册
+    @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody User u){
         User savedUser=userService.createUser(u);
         if(savedUser!=null){
@@ -28,7 +30,8 @@ public class UserC {
         }
     }
 
-    @GetMapping("/get/{uid}")
+    //用户获取某个用户的信息
+    @GetMapping("/{uid}")
     public ResponseEntity<ApiResponse<UserResponse>> getUserByUid(@PathVariable Long uid){
         User savedUser=userService.getUserByUid(uid);
         if(savedUser!=null){
@@ -39,7 +42,8 @@ public class UserC {
         }
     }
 
-    @PostMapping("/delete/{uid}")
+    //用户注销自己的账号
+    @DeleteMapping("/{uid}")
     public ResponseEntity<ApiResponse<Boolean>> deleteUserByUid(@PathVariable Long uid){
         boolean ok=userService.deleteUserByUid(uid);
         if(ok){
@@ -49,7 +53,8 @@ public class UserC {
         }
     }
 
-    @PostMapping("/update")
+    //用户修改自己的个人信息
+    @PutMapping
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody User u){
         User savedUser=userService.updateUser(u);
         if(savedUser!=null){
@@ -59,7 +64,9 @@ public class UserC {
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
         }
     }
-    @PostMapping("/update/psw")
+
+    //用户修改自己的密码
+    @PutMapping("/psw")
     public ResponseEntity<ApiResponse<Boolean>> updatePassword(@RequestBody UpdatePswRequest updatePswRequest){
         boolean ok=userService.updateUserPassword(updatePswRequest);
         if(ok){

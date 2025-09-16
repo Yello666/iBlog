@@ -13,11 +13,12 @@ import lombok.Data;
 @Data
 @TableName("articles")
 public class Article {
+    // 插入数据库成功后，MyBatis-Plus 会把数据库生成的自增ID回填到 article.aid
     @TableId(type= IdType.AUTO)
     private Long aid;
 
-    @TableField(value="articleName")
-    private String articleName;
+    @TableField(value="uid")
+    private Long uid;
 
     @TableField(value = "title")
     private String title;
@@ -33,14 +34,16 @@ public class Article {
 
     public Article(){}
 
-    public Article(Long ID, String articleName, String content) {
-        this.aid = ID;
-        this.articleName = articleName;
+    public Article(Long uid,String title, String content) {
+        this.uid=uid;
+        this.title = title;
         this.content = content;
     }
-
-
-
+    public Article(Long aid,Long uid,String title, String content) {
+        this.aid=aid;
+        this.title = title;
+        this.content = content;
+    }
 }
 
 /*、

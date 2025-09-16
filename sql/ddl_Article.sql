@@ -1,6 +1,7 @@
 CREATE TABLE articles
 (
     aid          BIGINT       NOT NULL,
+    uid          BIGINT       NOT NULL,
     article_name VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL ,
     content      MEDIUMTEXT NULL,
