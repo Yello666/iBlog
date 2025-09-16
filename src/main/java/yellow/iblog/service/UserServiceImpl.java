@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
     public User createUser(User u){//虽然接口那个地方没有写public，但是那里默认方法是public，所以这里一定要写public
         u.setPassword(utils.Encode(u.getPassword()));
 //        u.setUid(utils.GenerateIDBySnowFlake());MyBatis-Plus已经实现
-        u.setCreatedAt(LocalDateTime.now());
-        u.setUpdatedAt(LocalDateTime.now());
+//        u.setCreatedAt(LocalDateTime.now());
+//        u.setUpdatedAt(LocalDateTime.now());
         if(userMapper.insert(u)>0){
             return u;
         } else{

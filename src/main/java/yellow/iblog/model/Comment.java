@@ -1,17 +1,14 @@
 package yellow.iblog.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 
-@Data
-@TableName("users")
+@Data//包含getter和setter，但是不包括构造函数
+@TableName("comment")
 public class Comment {
     @TableId(type= IdType.AUTO)
     private Long cid;
@@ -26,12 +23,18 @@ public class Comment {
     private Long uid;
 
     @TableField("parent_id")
-    private Long parent_cid;//上一级评论的cid
+    private Long parentCid;//上一级评论的cid
 
-    @TableField("created_at")
+    @TableField(value="created_at",fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-
+    public Comment(String contents, Long aid, Long uid, Long parent_cid) {
+        this.contents = contents;
+        this.aid = aid;
+        this.uid = uid;
+        this.parentCid = parent_cid;
+    }
+    public Comment(){}
 }
 
 
@@ -53,7 +56,7 @@ public class Comment {
 //    private Long uid;
 //
 //    @Column(name="parent_id")
-//    private Long parent_cid;
+//    private Long parentCid;
 //
 //    @Column(name="created_at",nullable = false)
 //    private LocalDateTime createdAt;

@@ -56,7 +56,9 @@ public class ArticleTests {
 
     @Test
     public void testDeleteArticle(){
-        Boolean ok=articleService.deleteArticleByAid(3L);
+        Article article=new Article(testUid,"不重逢","我没有说告别，眼看他仓皇走在风中");
+        Article a=articleService.createArticle(article);
+        Boolean ok=articleService.deleteArticleByAid(a.getAid());
         assertEquals(true,ok);//前一个值是期待，后一个值是返回值
     }
 

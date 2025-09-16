@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 /*、
 文章实体类，包括ID
  */
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 @Data
@@ -26,10 +23,10 @@ public class Article {
     @TableField(value="content")
     private String content;
 
-    @TableField(value = "created_at")
+    @TableField(value = "created_at",fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-    @TableField(value="updated_at")
+    @TableField(value="updated_at",fill= FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 
     public Article(){}

@@ -22,11 +22,11 @@ public class User {
     private String password;
 
     // 新增创建时间字段
-    @TableField(value = "created_at")
+    @TableField(value = "created_at",fill=FieldFill.INSERT)
     private LocalDateTime createdAt;
 
     // 新增更新时间字段
-    @TableField(value="updated_at")
+    @TableField(value="updated_at",fill=FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
     //构造函数
     public User( String userName, Character gender, Integer age, String password) {

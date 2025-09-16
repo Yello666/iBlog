@@ -50,7 +50,9 @@ class UserTests {
     @Test
     public void testDeleteUserByUid(){
         System.out.println("开始删除用户");
-        System.out.println(userService.deleteUserByUid(testID));
+        User user=new User("emily",'f',16,"123456");
+        User u=userService.createUser(user);
+        System.out.println(userService.deleteUserByUid(u.getUid()));
     }
 
 

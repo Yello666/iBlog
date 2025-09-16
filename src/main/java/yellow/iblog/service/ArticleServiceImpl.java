@@ -17,8 +17,8 @@ public class ArticleServiceImpl implements ArticleService{
     }
     @Override
     public Article createArticle(Article article) {
-        article.setCreatedAt(LocalDateTime.now());
-        article.setUpdatedAt(LocalDateTime.now());
+//        article.setCreatedAt(LocalDateTime.now());
+//        article.setUpdatedAt(LocalDateTime.now());
         if(articleMapper.insert(article)>0){
             return article;
         }
