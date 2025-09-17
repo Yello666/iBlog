@@ -1,6 +1,9 @@
 package yellow.iblog;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -8,9 +11,11 @@ import yellow.iblog.Common.UpdatePswRequest;
 import yellow.iblog.model.User;
 import yellow.iblog.service.UserService;
 
-
+@Slf4j
+//使用这个注解可以直接使用log记录日志，它会包含下面那句代码
 @SpringBootTest
 class UserTests {
+//    private static final Logger log= LoggerFactory.getLogger(UserTests.class);
 
 
     @Autowired
@@ -20,10 +25,10 @@ class UserTests {
 
     @Test
     public void testCreateUser(){
-        System.out.println("开始创建用户");
+        log.info("开始创建用户");
         User user=new User("emily",'f',16,"123456");
         User u=userService.createUser(user);
-        System.out.println(u);
+        log.info("创建了用户{}",u);
     }
 
     @Test

@@ -1,9 +1,12 @@
 package yellow.iblog.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.model.Article;
+import yellow.iblog.model.Comment;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,11 +50,13 @@ public class ArticleServiceImpl implements ArticleService{
         return null;
     }
     @Override
-    public List<Article> getArticleByUid(Long uid){
-        return articleMapper.selectList(//？
-                new QueryWrapper<Article>().eq("uid", uid)
-        );
-        //相当于@Select("SELECT aid,uid,title,content,created_at from articles WHERE uid=#{uid}")
-        //public List<Article> getArticleByUid(Long uid);
+    public Page<Article> getArticleByUid(Long uid, int page, int size){
+        Page<Article> articlePage=new Page<>(page,size);
+        LambdaQueryWrapper<Article> wrapper=new LambdaQueryWrapper<>();
+        wrapper.eq(Article::getUid,uid)
+                .select(Article::getAid,Article::getTitle,Article::getUpdatedAt)
+                .orderByDesc(Article::getUpdatedAt);
+        return articleMapper.selectPage(articlePage,wrapper);
+
     }
 }

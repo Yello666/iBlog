@@ -1,15 +1,17 @@
 package yellow.iblog.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
+import yellow.iblog.Common.PageResult;
 import yellow.iblog.model.Comment;
 import yellow.iblog.service.CommentService;
 import yellow.iblog.service.CommentServiceImpl;
 
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping("/comments")
 public class CommentC {
@@ -27,6 +29,7 @@ public class CommentC {
     public ResponseEntity<ApiResponse<Comment>> publishComment(@RequestBody Comment comment) {
         Comment saved = commentService.publishComment(comment);
         if(saved!=null){
+            log.info("用户{}评论了文章{}",saved.getUid(),saved.getAid());
             return ResponseEntity.ok(ApiResponse.success(comment));
         }
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
@@ -55,6 +58,7 @@ public class CommentC {
     public ResponseEntity<ApiResponse<Comment>> replyComment(@PathVariable Long cid, @RequestBody Comment reply) {
         Comment savedReply = commentService.replyCommentByCid(cid, reply);
         if(savedReply!=null){
+            log.info("用户{}回复了文章{}的评论{}",savedReply.getUid(),savedReply.getAid(),savedReply.getParentCid());
             return ResponseEntity.ok(ApiResponse.success(savedReply));
         }
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
@@ -74,6 +78,7 @@ public class CommentC {
 
         Page<Comment> comments = commentService.getCommentsByAid(aid, page, size);
         if(comments!=null){
+
             return ResponseEntity.ok(ApiResponse.success(comments));
         }
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));

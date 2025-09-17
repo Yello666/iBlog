@@ -1,4 +1,5 @@
 package yellow.iblog.controller;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import yellow.iblog.Common.UserResponse;
 import yellow.iblog.model.User;
 import yellow.iblog.service.UserServiceImpl;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserC {
@@ -23,6 +25,7 @@ public class UserC {
     public ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody User u){
         User savedUser=userService.createUser(u);
         if(savedUser!=null){
+            log.info("用户{}成功注册",savedUser.getUid());
             UserResponse r=new UserResponse().FromUser(u);
             return ResponseEntity.ok(ApiResponse.success(r));
         } else{
@@ -47,6 +50,7 @@ public class UserC {
     public ResponseEntity<ApiResponse<Boolean>> deleteUserByUid(@PathVariable Long uid){
         boolean ok=userService.deleteUserByUid(uid);
         if(ok){
+            log.info("用户{}注销了",uid);
             return ResponseEntity.ok(ApiResponse.success(true));
         } else{
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));

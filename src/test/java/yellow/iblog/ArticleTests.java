@@ -1,12 +1,11 @@
 package yellow.iblog;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import yellow.iblog.model.Article;
 import yellow.iblog.service.ArticleService;
-
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -36,14 +35,39 @@ public class ArticleTests {
     }
 
     @Test
-    //通过用户id访问文章列表
-    public void testGetArticleByUid(){
-        List<Article> articleList=articleService.getArticleByUid(testUid);
-        for(Article a:articleList){
-            System.out.println(a);
-        }
+    void testGetArticleByUid() throws InterruptedException {
+        Long uid = 100L;
 
+        // 清理数据（可选，看测试数据库是否隔离）
+//        articleService.delete(null);
+
+        // 插入测试数据
+        Article a1 = new Article();
+        a1.setUid(uid);
+        a1.setTitle("文章1");
+        articleService.createArticle(a1);
+
+        Article a2 = new Article();
+        a2.setUid(uid);
+        a2.setTitle("文章2");
+        articleService.createArticle(a2);
+
+        Article a3 = new Article();
+        a3.setUid(uid);
+        a3.setTitle("文章3");
+        articleService.createArticle(a3);
+
+        // 分页查询（每页2条，取第1页）
+        Page<Article> page = articleService.getArticleByUid(uid, 1, 2);
+
+        // 类型断言
+        assertThat(page, instanceOf(Page.class));
+        // 结果大小
+        assertEquals(2, page.getRecords().size());
+//        // 值断言
+//        assertEquals("文章3", page.getRecords().getFirst().getTitle());
     }
+
 
 //    用户修改文章
     @Test
