@@ -1,9 +1,9 @@
 package yellow.iblog.jwt;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.Claims;
+import yellow.iblog.Common.ApiResponse;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -45,8 +47,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             } else {
+                //token不对或者没有token
+                ApiResponse<Object> apiResponse = ApiResponse.fail("您没有足够的权限或者登陆已经过期，请联系工作人员");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(new ObjectMapper().writeValueAsString(apiResponse));
                 return;
+
             }
         }
 

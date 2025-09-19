@@ -3,6 +3,9 @@ package yellow.iblog.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
 
@@ -12,7 +15,7 @@ import yellow.iblog.service.ArticleServiceImpl;
 
 @Slf4j
 @RestController
-@RequestMapping("/article")
+//@RequestMapping("/article")
 public class ArticleC {
     private final ArticleServiceImpl articleService;
 
@@ -22,7 +25,8 @@ public class ArticleC {
 
 
     //用户写文章
-    @PostMapping("")
+    @PostMapping("/article")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Article>> addArticle(@RequestBody Article article) {
         Article a=articleService.createArticle(article);
         if(a!=null){
@@ -38,11 +42,11 @@ public class ArticleC {
 
     //用户查看某一篇文章
     //获取单条数据不需要分页，获取多条数据需要分页
-    @GetMapping("/{aid}")
+    @GetMapping("/article/{aid}")
     public ResponseEntity<ApiResponse<Article>> getArticleByAid(@PathVariable Long aid) {
         Article a=articleService.getArticleByAid(aid);
         if(a!=null){
-            log.info("用户{}查看了文章{}",a.getUid(),a.getAid());
+            log.info("用户{}的文章{}被查看了",a.getUid(),a.getAid());
             return ResponseEntity.ok(ApiResponse.success(a));
         }
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
@@ -51,7 +55,7 @@ public class ArticleC {
 
     //用户查看某个用户的所有文章列表
     //要做分页
-    @GetMapping("/user/{uid}")
+    @GetMapping("/article/user/{uid}")
     public ResponseEntity<ApiResponse<Page<Article>>> getArticleByUid(
             @PathVariable Long uid,
             @RequestParam(defaultValue ="1") int page,
@@ -67,7 +71,8 @@ public class ArticleC {
 
 
     //用户修改自己的文章
-    @PutMapping("")
+    @PutMapping("/article")
+    @PreAuthorize("isAuthenticated() and #article.uid==authentication.name")
     public ResponseEntity<ApiResponse<Article>> updateArticle(
             @RequestParam Long aid,
             @RequestBody Article article){
@@ -81,7 +86,8 @@ public class ArticleC {
     }
 
     //用户删除自己的一篇文章
-    @DeleteMapping("")
+    @DeleteMapping("/article")
+    @PreAuthorize("isAuthenticated() and #uid==authentication.name")
     public ResponseEntity<ApiResponse<Boolean>> deleteArticleByAid(
             @RequestParam Long aid,
             @RequestParam Long uid){
@@ -93,6 +99,21 @@ public class ArticleC {
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
 
     }
+    //管理员删除一篇文章
+    //TODO可以设置成用户不可见
+    @DeleteMapping("/admin/article")
+    public ResponseEntity<ApiResponse<Boolean>> adminDeleteArticleByAid(
+            @RequestParam Long aid){
+        // 从 SecurityContext 获取认证信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long uid = Long.valueOf(authentication.getName()); // 获取用户ID
+        if(articleService.deleteArticleByAid(aid)){
 
+            log.info("管理员{}删除了文章{}",uid,aid);
+            return ResponseEntity.ok(ApiResponse.success(true));
+        }
+        return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
+
+    }
 
 }

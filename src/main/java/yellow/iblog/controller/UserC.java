@@ -52,7 +52,6 @@ public class UserC {
     }
     //用户获取某个用户的信息
     @GetMapping("/user/{uid}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<UserResponse>> getUserByUid(@PathVariable Long uid){
         User savedUser=userService.getUserByUid(uid);
         if(savedUser!=null){
@@ -65,7 +64,6 @@ public class UserC {
 
     //用户注销自己的账号
     @DeleteMapping("/user")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse<Boolean>> deleteUserByUid(Authentication authentication){
         Long uid = Long.valueOf(authentication.getName());// 从 token (SecurityContext) 中拿 uid
         boolean ok=userService.deleteUserByUid(uid);
@@ -78,7 +76,6 @@ public class UserC {
     }
     //管理员注销别人的账号
     @DeleteMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Boolean>> deleteUserByAdmin(@RequestParam Long uid) {
         boolean ok = userService.deleteUserByUid(uid);
 
@@ -92,7 +89,7 @@ public class UserC {
 
     //用户修改自己的个人信息
     @PutMapping("/user")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("#u.uid == authentication.name")
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody User u){
         User savedUser=userService.updateUser(u);
         if(savedUser!=null){
@@ -105,7 +102,7 @@ public class UserC {
 
     //用户修改自己的密码
     @PutMapping("/user/psw")
-    @PreAuthorize("isAuthenticated()")//只要是登陆认证了的都可以访问
+    @PreAuthorize("isFullyAuthenticated() and #updatePswRequest.uid == authentication.principal.uid")
     public ResponseEntity<ApiResponse<Boolean>> updatePassword(@RequestBody UpdatePswRequest updatePswRequest){
         boolean ok=userService.updateUserPassword(updatePswRequest);
         if(ok){

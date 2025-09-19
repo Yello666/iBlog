@@ -3,6 +3,7 @@ package yellow.iblog.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
 
@@ -12,7 +13,7 @@ import yellow.iblog.service.CommentServiceImpl;
 import java.util.List;
 @Slf4j
 @RestController
-@RequestMapping("/comments")
+//@RequestMapping("/comments")
 public class CommentC {
 
     private final CommentServiceImpl commentService;
@@ -24,7 +25,8 @@ public class CommentC {
     /**
      * 发布评论
      */
-    @PostMapping
+    @PostMapping("/comments")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Comment>> publishComment(@RequestBody Comment comment) {
         Comment saved = commentService.publishComment(comment);
         if(saved!=null){
@@ -38,10 +40,21 @@ public class CommentC {
     /**
      * 删除评论
      * @param cid 评论id
-     * @param uid 用户id
+     * @param uid 要删除的评论的所属用户的id
      */
-    @DeleteMapping("")
+    @DeleteMapping("/comments")
+    @PreAuthorize("isAuthenticated() and authentication.name==uid")
     public ResponseEntity<ApiResponse<Boolean>> deleteComment(
+            @RequestParam Long cid, @RequestParam Long uid) {
+        Boolean deleted = commentService.deleteCommentByCidAndUid(cid, uid);
+        if(deleted){
+            return ResponseEntity.ok(ApiResponse.success(true));
+        }
+        return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
+    }
+    //管理员删除评论
+    @DeleteMapping("/admin/comments")
+    public ResponseEntity<ApiResponse<Boolean>> adminDeleteComment(
             @RequestParam Long cid, @RequestParam Long uid) {
         Boolean deleted = commentService.deleteCommentByCidAndUid(cid, uid);
         if(deleted){
@@ -54,7 +67,8 @@ public class CommentC {
      * 回复评论
      * @param cid 被回复的评论id
      */
-    @PostMapping("/reply")
+    @PostMapping("/comments/reply")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Comment>> replyComment(
             @RequestParam Long cid, @RequestBody Comment reply) {
         Comment savedReply = commentService.replyCommentByCid(cid, reply);
@@ -71,7 +85,7 @@ public class CommentC {
      * @param page 页码（默认 1）
      * @param size 每页大小（默认 10）
      */
-    @GetMapping("/article")
+    @GetMapping("/comments/article")
     public ResponseEntity<ApiResponse<Page<Comment>>> getCommentsByArticle(
             @RequestParam Long aid,
             @RequestParam(defaultValue = "1") int page,
@@ -89,7 +103,7 @@ public class CommentC {
      * 获取某个评论的所有直接回复
      * @param cid 评论id
      */
-    @GetMapping("/replies")
+    @GetMapping("/comments/replies")
     public ResponseEntity<ApiResponse<List<Comment>>> getReplies(
             @RequestParam Long cid) {
         List<Comment> replies = commentService.getAllRepliesByCid(cid);
