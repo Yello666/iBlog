@@ -2,11 +2,13 @@ package yellow.iblog.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
 @TableName("users")
+@AllArgsConstructor
 public class User {
     @TableId(type= IdType.ASSIGN_ID)
     private Long uid;
@@ -21,6 +23,9 @@ public class User {
     @TableField("password") //存储hash值，需要长一点
     private String password;
 
+    @TableField("role")
+    private String role;//集成SpringSecurity，值以ROLE_开头（ROLE_USER,ROLE_ADMIN)
+
     // 新增创建时间字段
     @TableField(value = "created_at",fill=FieldFill.INSERT)
     private LocalDateTime createdAt;
@@ -34,12 +39,14 @@ public class User {
         this.gender = gender;
         this.age = age;
         this.password = password;
+        this.role="ROLE_USER";
     }
 
     public User(String userName, Character gender, Integer age) {
         this.userName = userName;
         this.gender = gender;
         this.age = age;
+        this.role="ROLE_USER";
     }
 
     public User(){}

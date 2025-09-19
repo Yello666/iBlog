@@ -43,6 +43,7 @@ public class CommentServiceImpl implements CommentService{
     public Comment replyCommentByCid(Long cid, Comment c) {
         Comment parent=commentMapper.selectById(cid);
         if(parent==null) return null;//parent不存在
+        c.setAid(parent.getAid());
         c.setParentCid(parent.getCid());
         if(commentMapper.insert(c)>0){
             return c;

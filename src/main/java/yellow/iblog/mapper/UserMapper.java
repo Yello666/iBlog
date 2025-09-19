@@ -1,4 +1,5 @@
 package yellow.iblog.mapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import yellow.iblog.model.User;
@@ -8,6 +9,13 @@ import yellow.iblog.model.User;
 //只需要继承BaseMapper就可以
 
 public interface UserMapper extends BaseMapper<User> {
+//    default关键字修饰的方法，允许在接口中直接编写完整的方法体（具体逻辑），
+//    且实现类不需要强制重写这个方法
+    default User findUserByUserName(String userName) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUserName, userName);
+        return this.selectOne(wrapper);
+    }
 
 }
 

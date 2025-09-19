@@ -8,6 +8,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import yellow.iblog.Common.ApiResponse;
 
 @Slf4j
@@ -46,6 +47,13 @@ public class GlobalExceptionHandler {
         log.error("数据库访问异常{}", e.getMessage());
         return ApiResponse.fail(500, "数据库访问出错，请检查SQL或数据源配置");
     }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ApiResponse<Exception> handleNoResourceFoundException(NoResourceFoundException e) {
+        log.error("资源路径不存在{}", e.getMessage());
+        return ApiResponse.fail(404, "资源路径不存在，请检查路由是否正确");
+    }
+
 
 
 }

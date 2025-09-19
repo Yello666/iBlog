@@ -44,4 +44,8 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<Exception> fail(int code,String message, Exception e) {
         return new ApiResponse<>(code,message,e);
     }
+    public boolean IsSuccess(){
+        return this.getCode() >= 0;
+
+    }
 }

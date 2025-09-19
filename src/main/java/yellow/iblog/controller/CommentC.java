@@ -5,9 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
-import yellow.iblog.Common.PageResult;
+
 import yellow.iblog.model.Comment;
-import yellow.iblog.service.CommentService;
 import yellow.iblog.service.CommentServiceImpl;
 
 import java.util.List;
@@ -41,8 +40,9 @@ public class CommentC {
      * @param cid 评论id
      * @param uid 用户id
      */
-    @DeleteMapping("/{cid}")
-    public ResponseEntity<ApiResponse<Boolean>> deleteComment(@PathVariable Long cid, @RequestParam Long uid) {
+    @DeleteMapping("")
+    public ResponseEntity<ApiResponse<Boolean>> deleteComment(
+            @RequestParam Long cid, @RequestParam Long uid) {
         Boolean deleted = commentService.deleteCommentByCidAndUid(cid, uid);
         if(deleted){
             return ResponseEntity.ok(ApiResponse.success(true));
@@ -54,8 +54,9 @@ public class CommentC {
      * 回复评论
      * @param cid 被回复的评论id
      */
-    @PostMapping("/{cid}/reply")
-    public ResponseEntity<ApiResponse<Comment>> replyComment(@PathVariable Long cid, @RequestBody Comment reply) {
+    @PostMapping("/reply")
+    public ResponseEntity<ApiResponse<Comment>> replyComment(
+            @RequestParam Long cid, @RequestBody Comment reply) {
         Comment savedReply = commentService.replyCommentByCid(cid, reply);
         if(savedReply!=null){
             log.info("用户{}回复了文章{}的评论{}",savedReply.getUid(),savedReply.getAid(),savedReply.getParentCid());
@@ -70,9 +71,9 @@ public class CommentC {
      * @param page 页码（默认 1）
      * @param size 每页大小（默认 10）
      */
-    @GetMapping("/article/{aid}")
+    @GetMapping("/article")
     public ResponseEntity<ApiResponse<Page<Comment>>> getCommentsByArticle(
-            @PathVariable Long aid,
+            @RequestParam Long aid,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
 
@@ -88,8 +89,9 @@ public class CommentC {
      * 获取某个评论的所有直接回复
      * @param cid 评论id
      */
-    @GetMapping("/{cid}/replies")
-    public ResponseEntity<ApiResponse<List<Comment>>> getReplies(@PathVariable Long cid) {
+    @GetMapping("/replies")
+    public ResponseEntity<ApiResponse<List<Comment>>> getReplies(
+            @RequestParam Long cid) {
         List<Comment> replies = commentService.getAllRepliesByCid(cid);
         if(replies!=null){
             return ResponseEntity.ok(ApiResponse.success(replies));

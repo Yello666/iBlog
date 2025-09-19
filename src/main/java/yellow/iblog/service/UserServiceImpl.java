@@ -1,8 +1,15 @@
 package yellow.iblog.service;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import yellow.iblog.Common.ApiResponse;
 import yellow.iblog.Common.UpdatePswRequest;
 import yellow.iblog.Common.utils;
 import yellow.iblog.mapper.UserMapper;
+import yellow.iblog.jwt.jwtUtils;
+import yellow.iblog.model.LoginInfo;
+import yellow.iblog.model.LoginResponse;
 import yellow.iblog.model.User;
 
 import java.time.LocalDateTime;
@@ -19,6 +26,27 @@ public class UserServiceImpl implements UserService {
         this.userMapper=userMapper;
     }
 
+    //用户登陆
+    @Override
+    public ApiResponse<LoginResponse> userLogin(LoginInfo loginInfo){
+        String userName=loginInfo.getUserName();
+        User u=userMapper.findUserByUserName(userName);
+        if(u==null) return ApiResponse.fail("用户名不存在");
+        //校验密码
+        String password=loginInfo.getPassword();
+        if(utils.Match(password,u.getPassword())){
+            //生成token
+            String token=jwtUtils.generateToken(u.getUid(),u.getUserName(),u.getRole());
+            LoginResponse response=new LoginResponse();
+            response.setUserName(userName);
+            response.setUid(u.getUid());
+            //token
+            response.setToken(token);
+            return ApiResponse.success(response);
+        }
+        return ApiResponse.fail("密码不正确");
+
+    }
     @Override
     public User createUser(User u){//虽然接口那个地方没有写public，但是那里默认方法是public，所以这里一定要写public
         u.setPassword(utils.Encode(u.getPassword()));
@@ -52,10 +80,10 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserPassword(UpdatePswRequest request){
         //oldPsw是用户输入的之前的密码，newPsw是用户输入的新密码
         //获取之前的哈希密码
-        System.out.println("updatePassword");
+//        System.out.println("updatePassword");
         User u=userMapper.selectById(request.getUid());
         if(utils.Match(request.getOldPsw(),u.getPassword())){//如果用户输入的密码加盐哈希之后，和之前存储的密码一样，那么就说明输对了
-            System.out.println("right password");
+//            System.out.println("right password");
             u.setPassword(utils.Encode(request.getNewPsw()));//修改密码为加密过的新密码
             u.setUpdatedAt(LocalDateTime.now());
             return userMapper.updateById(u) > 0;//存储
@@ -69,5 +97,19 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    //    @Override
+//    public UserDetails userLogin(LoginInfo loginInfo)throws UsernameNotFoundException {
+//        String userName=loginInfo.getUserName();
+//        User u=userMapper.findUserByUserName(userName);
+//        if(u==null){
+//            throw new UsernameNotFoundException("用户名不存在");
+//        }
+//        return org.springframework.security.core.userdetails.User
+//                .withUsername(u.getUserName())
+//                .password(u.getPassword()) // 已加密的密码
+//                .roles(u.getRole().replace("ROLE_", "")) // Spring会自动补ROLE_
+//                .build();
+//
+//    }
 
 }

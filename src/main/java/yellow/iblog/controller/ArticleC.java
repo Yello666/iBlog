@@ -3,15 +3,12 @@ package yellow.iblog.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
 
 import yellow.iblog.model.Article;
 
 import yellow.iblog.service.ArticleServiceImpl;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -70,9 +67,11 @@ public class ArticleC {
 
 
     //用户修改自己的文章
-    @PutMapping("/update")
-    public ResponseEntity<ApiResponse<Article>> updateArticle(@RequestBody Article article){
-
+    @PutMapping("")
+    public ResponseEntity<ApiResponse<Article>> updateArticle(
+            @RequestParam Long aid,
+            @RequestBody Article article){
+        article.setAid(aid);
         Article a=articleService.updateArticle(article);
         if(a!=null){
             return ResponseEntity.ok(ApiResponse.success(a));
@@ -82,8 +81,10 @@ public class ArticleC {
     }
 
     //用户删除自己的一篇文章
-    @DeleteMapping("/{aid}/user/{uid}")
-    public ResponseEntity<ApiResponse<Boolean>> deleteArticleByAid(@PathVariable Long aid,Long uid){
+    @DeleteMapping("")
+    public ResponseEntity<ApiResponse<Boolean>> deleteArticleByAid(
+            @RequestParam Long aid,
+            @RequestParam Long uid){
 
         if(articleService.deleteArticleByAid(aid)){
             log.info("用户{}删除了文章{}",uid,aid);
