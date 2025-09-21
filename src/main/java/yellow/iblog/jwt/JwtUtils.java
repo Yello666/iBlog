@@ -10,7 +10,7 @@ import java.security.Key;
 import java.util.Date;
 
 
-public class jwtUtils {
+public class JwtUtils {
     // 生成一个秘钥（也可以配置在 application.yml）
     //这里是随机生成一个密钥
 //    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -22,7 +22,7 @@ public class jwtUtils {
     // 生成 token
     public static String generateToken(Long uid, String username,String role) {
         return Jwts.builder()
-                .setSubject(uid.toString())
+                .setSubject(uid.toString())//注意存储的是字符串//比对的时候还是用Long
                 .claim("role", role)//添加构成jwt的参数
                 .claim("username",username)
                 .setIssuedAt(new Date())

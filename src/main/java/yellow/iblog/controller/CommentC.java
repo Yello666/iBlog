@@ -3,7 +3,10 @@ package yellow.iblog.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
 
@@ -43,21 +46,29 @@ public class CommentC {
      * @param uid 要删除的评论的所属用户的id
      */
     @DeleteMapping("/comments")
-    @PreAuthorize("isAuthenticated() and authentication.name==uid")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse<Boolean>> deleteComment(
             @RequestParam Long cid, @RequestParam Long uid) {
-        Boolean deleted = commentService.deleteCommentByCidAndUid(cid, uid);
-        if(deleted){
-            return ResponseEntity.ok(ApiResponse.success(true));
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        Long crtUid=Long.valueOf(authentication.getName());
+        if(crtUid.equals(uid)){
+            Boolean deleted = commentService.deleteCommentByCid(cid);
+            if(deleted){
+                return ResponseEntity.ok(ApiResponse.success(true));
+            } else{
+                return ResponseEntity.badRequest().body(ApiResponse.fail(400,"评论已经不存在"));
+            }
         }
-        return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
+        throw new AccessDeniedException("权限不足，用户"+crtUid+"试图删除评论"+cid);
+
     }
     //管理员删除评论
     @DeleteMapping("/admin/comments")
     public ResponseEntity<ApiResponse<Boolean>> adminDeleteComment(
             @RequestParam Long cid, @RequestParam Long uid) {
-        Boolean deleted = commentService.deleteCommentByCidAndUid(cid, uid);
+        Boolean deleted = commentService.deleteCommentByCid(cid);
         if(deleted){
+            log.info("管理员{}删除了评论{}",uid,cid);
             return ResponseEntity.ok(ApiResponse.success(true));
         }
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));

@@ -7,7 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /*
 通用工具类，包含密码加密，密码验证，雪花算法生成ID的函数
  */
-public class utils {
+public class Utils {
 
     public static String Encode(String str){
         BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();

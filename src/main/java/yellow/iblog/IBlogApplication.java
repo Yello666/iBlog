@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -14,6 +15,7 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 @MapperScan("yellow.iblog.mapper") //括号里面的是Mapper的包的地址
 @Slf4j
+@EnableCaching//启用缓存
 public class IBlogApplication {
 
     public static void main(String[] args) throws UnknownHostException {

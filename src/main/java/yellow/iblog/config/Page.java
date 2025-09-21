@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 //分页插件
 @Configuration
 @Slf4j
-public class page {
+public class Page {
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {

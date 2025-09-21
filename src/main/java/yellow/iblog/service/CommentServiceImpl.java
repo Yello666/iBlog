@@ -2,6 +2,8 @@ package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import yellow.iblog.mapper.CommentMapper;
 import yellow.iblog.model.Comment;
@@ -18,6 +20,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    @Cacheable(value="comment",key="#c.cid",unless="#result==null")
     public Comment publishComment(Comment c) {
         if(commentMapper.insert(c)>0){
             return c;
@@ -26,20 +29,15 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Boolean deleteCommentByCidAndUid(Long cid, Long uid) {
-        //TODO如果是管理员就可以删
+    @CacheEvict(value="comment",key="#cid")
+    public Boolean deleteCommentByCid(Long cid) {
         Comment c=commentMapper.selectById(cid);
         if(c==null) return false;//评论不存在
-        // 普通用户只能删除自己的评论
-        if(Objects.equals(uid, c.getUid())){
-            return commentMapper.deleteById(cid) > 0;
-        }
-        //管理员可以直接删除
-//        return commentMapper.deleteById(cid) > 0;
-        return false;
+        return commentMapper.deleteById(cid) > 0;
     }
 
     @Override
+    @Cacheable(value="comment",key="#c.cid",unless="#result==null")
     public Comment replyCommentByCid(Long cid, Comment c) {
         Comment parent=commentMapper.selectById(cid);
         if(parent==null) return null;//parent不存在
@@ -54,6 +52,7 @@ public class CommentServiceImpl implements CommentService{
 
     //查看一个文章的所有评论
     @Override
+    @Cacheable(value="comment",key="#aid + '_' + #page + '_' + #size",unless="#result==null")
     public Page<Comment> getCommentsByAid(Long aid, int page, int size) {
         // 使用分页插件
         Page<Comment> commentPage = new Page<>(page, size);//分页插件，page是第几页，size是页面有多少个对象
@@ -69,6 +68,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    @Cacheable(value="comment",key="#cid",unless="#result==null")
     public List<Comment> getAllRepliesByCid(Long cid) {
         LambdaQueryWrapper<Comment> wrapper=new LambdaQueryWrapper<>();
         wrapper.eq(Comment::getParentCid,cid)//找它的所有子回复

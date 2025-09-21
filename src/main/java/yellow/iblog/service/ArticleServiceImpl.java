@@ -3,6 +3,9 @@ package yellow.iblog.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.model.Article;
@@ -19,9 +22,8 @@ public class ArticleServiceImpl implements ArticleService{
         this.articleMapper=articleMapper;
     }
     @Override
+    @Cacheable(value="article",key="#article.aid",unless="#result==null")
     public Article createArticle(Article article) {
-//        article.setCreatedAt(LocalDateTime.now());
-//        article.setUpdatedAt(LocalDateTime.now());
         if(articleMapper.insert(article)>0){
             return article;
         }
@@ -29,11 +31,13 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
+    @CacheEvict(value="article",key="#aid")
     public Boolean deleteArticleByAid(Long aid) {
         return articleMapper.deleteById(aid) > 0;
     }
 
     @Override
+    @CachePut(value="article",key="#article.aid")
     public Article updateArticle(Article article) {
         article.setUpdatedAt(LocalDateTime.now());
         if(articleMapper.updateById(article)>0){
@@ -43,6 +47,7 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
+    @Cacheable(value="article",key="#aid",unless="#result==null")
     public Article getArticleByAid(Long aid) {
         if (articleMapper.selectById(aid) != null){
             return articleMapper.selectById(aid);

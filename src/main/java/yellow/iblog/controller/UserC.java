@@ -2,9 +2,11 @@ package yellow.iblog.controller;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
 import yellow.iblog.Common.UpdatePswRequest;
@@ -14,6 +16,7 @@ import yellow.iblog.model.LoginResponse;
 import yellow.iblog.model.User;
 import yellow.iblog.service.UserServiceImpl;
 
+//   /user开头的默认已经登陆了
 @Slf4j
 @RestController
 //@RequestMapping("/user")
@@ -86,11 +89,18 @@ public class UserC {
         }
     }
 
+//    @PreAuthorize("#u.uid == authentication.name")
+//     时间顺序问题：Spring Security在执行权限检查时，方法参数还没有被解析和绑定，在这里写是不行的
 
-    //用户修改自己的个人信息
+     //用户修改自己的个人信息
     @PutMapping("/user")
-    @PreAuthorize("#u.uid == authentication.name")
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody User u){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        Long crtUid=Long.valueOf(authentication.getName());
+        if(!crtUid.equals(u.getUid())){
+            log.warn("用户{}试图修改用户{}的信息",crtUid,u.getUid());
+            throw new AccessDeniedException("用户"+crtUid+"试图修改其它用户的信息");
+        }
         User savedUser=userService.updateUser(u);
         if(savedUser!=null){
             UserResponse r=new UserResponse().FromUser(u);
@@ -102,7 +112,7 @@ public class UserC {
 
     //用户修改自己的密码
     @PutMapping("/user/psw")
-    @PreAuthorize("isFullyAuthenticated() and #updatePswRequest.uid == authentication.principal.uid")
+    @PreAuthorize("isFullyAuthenticated()")
     public ResponseEntity<ApiResponse<Boolean>> updatePassword(@RequestBody UpdatePswRequest updatePswRequest){
         boolean ok=userService.updateUserPassword(updatePswRequest);
         if(ok){

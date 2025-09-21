@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,7 +25,15 @@ public class GlobalExceptionHandler {
         log.error("请求类型出错或者路由出错",e);
         return ApiResponse.fail(400,"请求类型或者路由出错啦");
     }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ApiResponse<Exception> handleUserNotFound(UserNotFoundException e) {
+        return ApiResponse.fail(400,e.getMessage());
+    }
 
+    @ExceptionHandler(PasswordIncorrectException.class)
+    public ApiResponse<Exception> handlePasswordError(PasswordIncorrectException e) {
+        return ApiResponse.fail(400,e.getMessage());
+    }
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ApiResponse<Exception> handleDataIntegrityViolation(DataIntegrityViolationException e) {
         log.error("数据库完整性约束异常：必填字段值为空，或者字段值类型不匹配,或重复插入{}", e.getMessage());
@@ -52,6 +61,12 @@ public class GlobalExceptionHandler {
     public ApiResponse<Exception> handleNoResourceFoundException(NoResourceFoundException e) {
         log.error("资源路径不存在{}", e.getMessage());
         return ApiResponse.fail(404, "资源路径不存在，请检查路由是否正确");
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ApiResponse<Exception> handleAccessDeniedException(AccessDeniedException e) {
+        log.error("权限不足:{}", e.getMessage());
+        return ApiResponse.fail(403, e.getMessage());
+        //401-没有登录，403-登录了但是没有管理员权限
     }
 
 

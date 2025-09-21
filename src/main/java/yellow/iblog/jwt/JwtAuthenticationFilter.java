@@ -27,14 +27,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
-            if (jwtUtils.validateToken(token)) {
-                Claims claims = jwtUtils.parseToken(token);
-                String username=claims.getSubject();
+            if (JwtUtils.validateToken(token)) {
+                Claims claims = JwtUtils.parseToken(token);
+                String username=(String)claims.get("username");
                 String role=(String) claims.get("role");
-
-                // 这里你可以把用户信息放到 request
-                request.setAttribute("uid", claims.get("uid"));
-                request.setAttribute("username", claims.getSubject());
+                // uid从subject获取：
+                String uidStr = claims.getSubject();
+//                Long uid = Long.valueOf(uidStr);  // 将字符串转回Long,没必要，getSubject默认返回的就是String
+                request.setAttribute("uid", uidStr);//这里uid是当作subject来存的， 没有存到claims里面
+                //这里uid就是long来存的
+                request.setAttribute("username", claims.get("username"));
                 request.setAttribute("role",claims.get("role"));
                 // 构造 Spring Security 的认证对象
                 List<GrantedAuthority> authorities = Collections.singletonList(
@@ -48,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             } else {
                 //token不对或者没有token
-                ApiResponse<Object> apiResponse = ApiResponse.fail("您没有足够的权限或者登陆已经过期，请联系工作人员");
+                ApiResponse<Object> apiResponse = ApiResponse.fail(401,"您没有足够的权限或者登陆已经过期，请联系工作人员");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(new ObjectMapper().writeValueAsString(apiResponse));

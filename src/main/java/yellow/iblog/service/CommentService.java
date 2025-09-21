@@ -9,7 +9,7 @@ public interface CommentService {
     //发布评论
     Comment publishComment(Comment c);
     //删除评论（要确定uid是不是管理员或者发布这个评论的user，如果不是的话，不能删除）
-    Boolean deleteCommentByCidAndUid(Long cid,Long uid);
+    Boolean deleteCommentByCid(Long cid);
     //回复评论
     Comment replyCommentByCid(Long cid,Comment c);
     //获得某个文章的所有回复（按时间排序）
