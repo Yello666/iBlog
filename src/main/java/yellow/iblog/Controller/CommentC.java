@@ -1,4 +1,4 @@
-package yellow.iblog.controller;
+package yellow.iblog.Controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;

@@ -23,6 +23,15 @@ public class Article {
     @TableField(value="content")
     private String content;
 
+    @TableField(value="likes_count")//点赞数
+    private Integer likesCount;
+
+    @TableField(value="favor_count")//收藏数
+    private Integer favorCount;
+
+    @TableField(value="comments_count")//评论数
+    private Integer commentsCount;
+
     @TableField(value = "created_at",fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
@@ -35,11 +44,18 @@ public class Article {
         this.uid=uid;
         this.title = title;
         this.content = content;
+        this.favorCount=0;
+        this.commentsCount=0;
+        this.likesCount=0;
     }
     public Article(Long aid,Long uid,String title, String content) {
+        this.uid=uid;
         this.aid=aid;
         this.title = title;
         this.content = content;
+        this.favorCount=0;
+        this.commentsCount=0;
+        this.likesCount=0;
     }
 }
 

@@ -1,8 +1,9 @@
-package yellow.iblog.controller;
+package yellow.iblog.Controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,10 +73,16 @@ public class ArticleC {
 
     //用户修改自己的文章
     @PutMapping("/article")
-    @PreAuthorize("isAuthenticated() and #article.uid==authentication.name")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Article>> updateArticle(
             @RequestParam Long aid,
             @RequestBody Article article){
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        Long crtUid=Long.valueOf(authentication.getName());
+        if(!crtUid.equals(article.getUid())){
+            log.warn("用户{}想要修改其它人的文章,aid:{}", crtUid, aid);
+            throw new AccessDeniedException("用户"+crtUid+"想要修改其它人的文章,aid:"+aid);
+        }
         article.setAid(aid);
         Article a=articleService.updateArticle(article);
         if(a!=null){
@@ -87,11 +94,16 @@ public class ArticleC {
 
     //用户删除自己的一篇文章
     @DeleteMapping("/article")
-    @PreAuthorize("isAuthenticated() and #uid==authentication.name")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Boolean>> deleteArticleByAid(
             @RequestParam Long aid,
             @RequestParam Long uid){
-
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        Long crtUid=Long.valueOf(authentication.getName());
+        if(!crtUid.equals(uid)){
+            log.warn("用户{}想要删除其它人的文章,aid:{}", crtUid, aid);
+            throw new AccessDeniedException("用户"+crtUid+"想要删除其它人的文章,aid:"+aid);
+        }
         if(articleService.deleteArticleByAid(aid)){
             log.info("用户{}删除了文章{}",uid,aid);
             return ResponseEntity.ok(ApiResponse.success(true));
