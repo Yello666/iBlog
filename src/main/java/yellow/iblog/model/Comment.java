@@ -28,11 +28,15 @@ public class Comment {
     @TableField(value="created_at",fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
+    @TableField(value="likes_count")
+    private Integer likesCount;
+
     public Comment(String contents, Long aid, Long uid, Long parent_cid) {
         this.contents = contents;
         this.aid = aid;
         this.uid = uid;
         this.parentCid = parent_cid;
+        this.likesCount=0;
     }
     public Comment(){}
 }

@@ -1,20 +1,30 @@
 package yellow.iblog.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import yellow.iblog.model.Article;
+import yellow.iblog.model.Comment;
 
 import java.util.List;
 
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
-//    @Select("SELECT aid,uid,title,content,created_at from articles WHERE uid=#{uid}")
-//    public List<Article> getArticleByUid(Long uid);
-// 直接用 queryWrapper 查询 uid也有方法，这里也不用写
+    default int addComments(Long aid){
+        UpdateWrapper<Article> wrapper=new UpdateWrapper<>();
+        wrapper.setSql("comment_count=comment_count+1")
+                .eq("aid",aid);
+        return this.update(null,wrapper);//第一个传null，可以动态更新
 
+    }
+    default int deleteComments(Long aid){
+        UpdateWrapper<Article> wrapper=new UpdateWrapper<>();
+        wrapper.setSql("comment_count=comment_count-1")
+                .eq("aid",aid);
+        return this.update(null,wrapper);//第一个传null，可以动态更新
 
-
+    }
 
 }

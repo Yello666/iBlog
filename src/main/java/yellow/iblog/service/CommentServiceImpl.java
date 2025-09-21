@@ -2,51 +2,109 @@ package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.mapper.CommentMapper;
+import yellow.iblog.model.Article;
 import yellow.iblog.model.Comment;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.zip.DataFormatException;
 
 @Service
+@Slf4j
 public class CommentServiceImpl implements CommentService{
     private final CommentMapper commentMapper;
+    private final ArticleMapper articleMapper;
 
-    public CommentServiceImpl(CommentMapper commentMapper){
+
+    public CommentServiceImpl(CommentMapper commentMapper, ArticleMapper articleMapper){
         this.commentMapper=commentMapper;
+        this.articleMapper=articleMapper;
     }
 
     @Override
-    @Cacheable(value="comment",key="#c.cid",unless="#result==null")
-    public Comment publishComment(Comment c) {
-        if(commentMapper.insert(c)>0){
-            return c;
+    @Cacheable(value="comment",key="#cid")
+    public Comment getCommentByCid(Long cid) {
+        Comment c=commentMapper.selectById(cid);
+        if(c==null){
+            log.error("评论{}不存在",cid);
+            return null;
         }
-        return null;
+        return c;
+    }
+
+    @Override
+    @Transactional
+    public Boolean LikeComment(Long cid) {
+        Comment c=commentMapper.selectById(cid);
+        if(c==null){
+            log.error("评论{}不存在",cid);
+            return false;
+        }
+        c.setLikesCount(c.getLikesCount()+1);
+        if(commentMapper.updateById(c)<=0){
+            log.error("数据库操作失败:更新评论{}点赞数失败",cid);
+            return false;
+        }
+        return true;
+    }
+
+    //写的时候不需要添加缓存，因为会返回data，就等于有缓存了
+    @Override
+    @Transactional //事务标签
+    public Comment publishComment(Comment c) {
+        if(commentMapper.insert(c)<=0){
+            log.error("数据库操作插入评论失败");
+            throw new RuntimeException("数据库操作插入评论失败");//要throw异常，才会被认为事务失败，会回滚
+        }
+        if(articleMapper.addComments(c.getAid())<=0){
+            log.error("数据库操作，添加评论数失败");
+            throw new RuntimeException("数据库操作，添加评论数失败");
+
+        }
+        return c;
     }
 
     @Override
     @CacheEvict(value="comment",key="#cid")
+    @Transactional
     public Boolean deleteCommentByCid(Long cid) {
         Comment c=commentMapper.selectById(cid);
-        if(c==null) return false;//评论不存在
-        return commentMapper.deleteById(cid) > 0;
+        if(c==null){
+            throw new RuntimeException("尝试删除一条不存在的评论");
+        }
+        if(commentMapper.deleteById(cid)<=0){
+            throw new RuntimeException("数据库操作:删除评论失败");
+        }
+        if(articleMapper.deleteComments(c.getAid())<=0){
+            throw new RuntimeException("数据库操作:减少评论数失败");
+        }
+        return true;
     }
 
+    //cid:要评论的评论id，c：发表的评论
     @Override
-    @Cacheable(value="comment",key="#c.cid",unless="#result==null")
+    @Transactional
     public Comment replyCommentByCid(Long cid, Comment c) {
         Comment parent=commentMapper.selectById(cid);
-        if(parent==null) return null;//parent不存在
-        c.setAid(parent.getAid());
-        c.setParentCid(parent.getCid());
-        if(commentMapper.insert(c)>0){
-            return c;
+        if(parent==null){
+            throw new RuntimeException("尝试评论一条不存在的评论");
         }
-        return null;
+        c.setAid(parent.getAid());//将发表评论的文章id设置成上级评论的所属文章id
+        c.setParentCid(parent.getCid());//将发表的评论的上级评论id设置一下
+        if(commentMapper.insert(c)<=0){
+            throw new RuntimeException("数据库操作:增加评论失败");
+        }
+        if(articleMapper.addComments(parent.getAid())<=0){
+            throw new RuntimeException("数据库操作:增加评论数失败");
+        }
+        return c;
 
     }
 

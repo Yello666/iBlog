@@ -1,4 +1,4 @@
-package yellow.iblog.service;
+package yellow.iblog;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import yellow.iblog.model.Comment;
 import yellow.iblog.mapper.CommentMapper;
+import yellow.iblog.service.CommentService;
 
 import java.util.List;
 
@@ -18,14 +19,10 @@ class CommentServiceImplTest {
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
     private CommentService commentService;
 
-    @BeforeEach
-    void setUp() {
-        commentService = new CommentServiceImpl(commentMapper);
-        // 测试前清空表
-        commentMapper.delete(null);
-    }
+
 
     @Test
     void testPublishComment() {
@@ -48,7 +45,7 @@ class CommentServiceImplTest {
         c.setContents("待删除评论");
         commentMapper.insert(c);
 
-        Boolean deleted = commentService.deleteCommentByCidAndUid(c.getCid(), 100L);
+        Boolean deleted = commentService.deleteCommentByCid(c.getCid());
         assertTrue(deleted);
 
         // 验证数据库里已经不存在

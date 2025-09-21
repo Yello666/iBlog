@@ -12,8 +12,15 @@ public interface CommentService {
     Boolean deleteCommentByCid(Long cid);
     //回复评论
     Comment replyCommentByCid(Long cid,Comment c);
+    //查看某一条评论
+    Comment getCommentByCid(Long cid);
     //获得某个文章的所有回复（按时间排序）
     Page<Comment> getCommentsByAid(Long aid, int page, int size);//分页功能
     //获得某个评论的所有回复（暂时是获得一层回复，不能获取所有的回复。）
     List<Comment> getAllRepliesByCid(Long cid);
+    //给评论点赞
+    Boolean LikeComment(Long cid);
+
+    //举报评论（举报之后将评论设置为不可见，并交给管理员，让管理员审核删除）
+
 }
