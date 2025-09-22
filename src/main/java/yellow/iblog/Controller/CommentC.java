@@ -25,6 +25,29 @@ public class CommentC {
         this.commentService = commentService;
     }
 
+    //点赞评论
+    @PostMapping("/comments/like")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse<Integer>> LikeCommentByCid(Long cid){
+        Integer crtLikes=commentService.LikeComment(cid);
+        if(crtLikes<=0){
+            log.error("点赞失败,cid:{}",cid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("点赞失败"));
+        }
+        return ResponseEntity.ok(ApiResponse.success(crtLikes));
+
+    }
+    //获取单条评论
+    @GetMapping("/comments")
+    public ResponseEntity<ApiResponse<Comment>> GetCommentByCid(Long cid){
+        Comment c=commentService.getCommentByCid(cid);
+        if(c==null){
+            log.error("获取评论失败,cid:{}",cid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error:获取评论失败"));
+        }
+        return ResponseEntity.ok(ApiResponse.success(c));
+
+    }
     /**
      * 发布评论
      */
@@ -36,7 +59,7 @@ public class CommentC {
             log.info("用户{}评论了文章{}",saved.getUid(),saved.getAid());
             return ResponseEntity.ok(ApiResponse.success(comment));
         }
-        return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
+        return ResponseEntity.internalServerError().body(ApiResponse.fail("error:评论失败"));
 
     }
 
