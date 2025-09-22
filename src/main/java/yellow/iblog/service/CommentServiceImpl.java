@@ -2,6 +2,7 @@ package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,21 +14,17 @@ import yellow.iblog.model.Article;
 import yellow.iblog.model.Comment;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.zip.DataFormatException;
+
 
 @Service
 @Slf4j
+@RequiredArgsConstructor//自动为final、notnull的变量声明构造器
 public class CommentServiceImpl implements CommentService{
     private final CommentMapper commentMapper;
     private final ArticleMapper articleMapper;
+    private final LikeService likeService; // 注入LikeService
 
-
-    public CommentServiceImpl(CommentMapper commentMapper, ArticleMapper articleMapper){
-        this.commentMapper=commentMapper;
-        this.articleMapper=articleMapper;
-    }
-
+    //点赞数增量从redis获取，redis的点赞数定期相加存储到mysql中
     @Override
     @Cacheable(value="comment",key="#cid")
     public Comment getCommentByCid(Long cid) {
@@ -36,23 +33,31 @@ public class CommentServiceImpl implements CommentService{
             log.error("评论{}不存在",cid);
             return null;
         }
+        c.setLikesCount(Math.toIntExact(likeService.getLikeCount(cid)+c.getLikesCount()));
         return c;
     }
 
     @Override
     @Transactional
-    public Boolean LikeComment(Long cid) {
-        Comment c=commentMapper.selectById(cid);
+    public Integer LikeComment(Long cid) {
+        Comment c=commentMapper.selectById(cid);//selectById(cid) 基于主键查询，在有索引的情况下是O(1)复杂度
+        //所以不需要缓存
         if(c==null){
             log.error("评论{}不存在",cid);
-            return false;
+            throw new RuntimeException("尝试点赞不存在的评论");
         }
         c.setLikesCount(c.getLikesCount()+1);
-        if(commentMapper.updateById(c)<=0){
-            log.error("数据库操作失败:更新评论{}点赞数失败",cid);
-            return false;
+        Long crtLikes= likeService.likeComment(cid);
+        if(crtLikes<=0) {//将点赞数存到redis中
+            log.error("存储点赞数到redis失败,cid:{}",cid);
+            throw new RuntimeException("点赞失败");
         }
-        return true;
+        return Math.toIntExact(crtLikes);
+//        if(commentMapper.updateById(c)<=0){
+//            log.error("数据库操作失败:更新评论{}点赞数失败",cid);
+//            return false;
+//        }
+//        return true;
     }
 
     //写的时候不需要添加缓存，因为会返回data，就等于有缓存了

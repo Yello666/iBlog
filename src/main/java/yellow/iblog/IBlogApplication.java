@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,6 +17,7 @@ import java.net.UnknownHostException;
 @MapperScan("yellow.iblog.mapper") //括号里面的是Mapper的包的地址
 @Slf4j
 @EnableCaching//启用缓存
+@EnableScheduling  // 启用定时任务
 public class IBlogApplication {
 
     public static void main(String[] args) throws UnknownHostException {
