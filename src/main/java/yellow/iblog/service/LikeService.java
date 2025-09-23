@@ -1,6 +1,7 @@
 package yellow.iblog.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor //它会为所有 final 字段和 @NonNull 注解的字段生成一个构造函数。
+@Slf4j
 public class LikeService {
     // 获取实时点赞数（Redis里优先）
 
@@ -39,11 +41,13 @@ public class LikeService {
             // 存储增量（每次+1）
             Long newCount = redisTemplate.opsForValue().increment(key, 1);
             redisTemplate.expire(key, 2, TimeUnit.MINUTES); // 设置过期时间
+            log.info("存入了:{}",redisTemplate.opsForValue().get(key));
             return newCount;
         } catch (Exception e) {
             throw new RuntimeException("点赞失败", e);
         }
     }
+
 
     public Long getCommentLikeCount(Long cid) {
         String key = "comment:likes:" + cid;

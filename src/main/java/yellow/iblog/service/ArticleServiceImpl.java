@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
@@ -23,17 +22,53 @@ public class ArticleServiceImpl implements ArticleService{
     private final FavorService favorService;
     private final RedisService redisService;
 
+    //取消收藏
     @Override
     @Transactional
-    public Integer favorArticleByAid(Long aid){
+    public Boolean undoArticleFavor(Long aid, Long uid){
         Article a=articleMapper.selectById(aid);
         if(a==null){
-            log.error("收藏文章{}失败:文章不存在",aid);
+            log.error("用户{}取消收藏文章{}失败:文章不存在",uid,aid);
+            throw new RuntimeException("尝试取消收藏不存在的文章");
+        }
+        a.setFavorCount(a.getFavorCount()-1);
+        if(articleMapper.updateById(a)<=0){
+            log.error("用户{}取消收藏aid:{}失败,mysql数据库操作失败",uid,aid);
+            return false;
+        }
+        return true;
+    }
+    //取消点赞（有待完善）
+    @Override
+    @Transactional
+    public Integer undoArticleLike(Long aid, Long uid){
+        Article a=articleMapper.selectById(aid);
+        if(a==null){
+            log.error("用户{}取消点赞文章{}失败:文章不存在",uid,aid);
+            throw new RuntimeException("尝试取消点赞不存在的文章");
+        }
+        a.setLikesCount(a.getLikesCount()-1);
+        if(articleMapper.updateById(a)<=0){
+            log.error("用户{}取消点赞aid:{}失败,mysql数据库操作失败",uid,aid);
+            return -1;
+        }
+        int redisLikes=Math.toIntExact(likeService.getArticleLikeCount(aid));
+        log.info("设置的点赞数为:{}",a.getLikesCount());
+        return redisLikes+a.getLikesCount();
+    }
+
+
+    @Override
+    @Transactional
+    public Integer favorArticleByAid(Long aid,Long uid){
+        Article a=articleMapper.selectById(aid);
+        if(a==null){
+            log.error("用户{}收藏文章{}失败:文章不存在",uid,aid);
             throw new RuntimeException("尝试收藏不存在的文章");
         }
         int deltaFavors=Math.toIntExact(favorService.favorArticle(aid));
         if(deltaFavors<=0){
-            log.error("收藏文章{}失败",aid);
+            log.error("用户{}收藏文章{}失败",uid,aid);
             throw new RuntimeException("收藏失败");
         }
         return Math.toIntExact(deltaFavors);
@@ -50,17 +85,17 @@ public class ArticleServiceImpl implements ArticleService{
     //返回的是增长的点赞数
     @Override
     @Transactional
-    public Integer likeArticleByAid(Long aid){
+    public Integer likeArticleByAid(Long aid,Long uid){
         Article a=articleMapper.selectById(aid);
         if(a==null){
-            log.error("点赞文章{}失败:文章不存在",aid);
+            log.error("用户{}点赞文章{}失败:文章不存在",uid,aid);
             throw new RuntimeException("尝试点赞不存在的文章");
         }
 //        a.setLikesCount(a.getLikesCount()+1); 没有必要做这个操作，因为数据都是从数据库拿出来，
 //        临时点赞存放到redis那，获取点赞数是先从数据库查询，再与redis相加，没必要在这里加点赞数
         int deltaLikes=Math.toIntExact(likeService.likeArticle(aid));
         if(deltaLikes<=0){
-            log.error("点赞文章{}失败",aid);
+            log.error("用户{}点赞文章{}失败",uid,aid);
             throw new RuntimeException("点赞失败");
         }
         return Math.toIntExact(deltaLikes);
@@ -91,21 +126,30 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
 //    @Cacheable(value="article",key="#aid",unless="#result==null")//要求对象实现serializable接口，或者把 RedisCacheManager 改成 JSON 序列化
     public Article getArticleByAid(Long aid) {
+        //1.先读缓存（只包含静态/DB数据？）
         Article cacheA=(Article) redisService.checkCache("article",aid);
         if(cacheA==null){
             log.warn("缓存未命中或第一次查询");
-            Article a=articleMapper.selectById(aid);
-            if (a != null){
-                a.setLikesCount(Math.toIntExact(likeService.getArticleLikeCount(aid))+a.getLikesCount());
+            //2.缓存未命中，从DB读并缓存
+            Article dbArticle=articleMapper.selectById(aid);
+            if (dbArticle != null){
+                //获取点赞数和收藏数需要将redis和mysql加起来
+                dbArticle.setLikesCount(Math.toIntExact(likeService.getArticleLikeCount(aid))+dbArticle.getLikesCount());
+                dbArticle.setFavorCount(Math.toIntExact(favorService.getArticleFavorCount(aid))+dbArticle.getFavorCount());
                 //手动缓存
-                if(redisService.addCache("article",aid,a)){
+                if(redisService.addCache("article",aid,dbArticle)){
                     log.info("缓存成功");
                 } else{
                     log.warn("缓存失败");
                 }
-                return a;
+
+                return dbArticle;
             }
         } else{
+            //缓存的A可能点赞数不一致
+            cacheA.setLikesCount(Math.toIntExact(likeService.getArticleLikeCount(aid))+cacheA.getLikesCount());
+            cacheA.setFavorCount(Math.toIntExact(favorService.getArticleFavorCount(aid))+cacheA.getFavorCount());
+            log.info("目前缓存里面的点赞数:{},mysql里面的点赞数:{}",likeService.getArticleLikeCount(aid),cacheA.getLikesCount());
             return cacheA;
         }
 

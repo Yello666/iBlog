@@ -56,8 +56,8 @@ public class LikeSyncService {
             }
         }
     }
-    // 每隔30秒执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 30000) //ms
+    // 每隔50秒执行一次，可以根据需求调整
+    @Scheduled(fixedRate = 50000) //ms
     public void syncArticleLikesToDB() {
         // 获取所有key
         Set<String> keys = redisTemplate.keys("article:likes:*");

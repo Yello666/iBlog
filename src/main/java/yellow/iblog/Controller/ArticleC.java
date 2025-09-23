@@ -3,10 +3,6 @@ package yellow.iblog.Controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,31 +21,69 @@ import yellow.iblog.service.ArticleServiceImpl;
 //@RequestMapping("/article")
 public class ArticleC {
     private final ArticleServiceImpl articleService;
-    private final CacheManager cacheManager; // 注入 CacheManager
-//    public ArticleC(ArticleServiceImpl articleService) {
-//        this.articleService = articleService;
-//    }
 
+    //取消收藏
+    @PostMapping("/article/undoFavor")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse<Boolean>> undoArticleFavor(
+            @RequestParam Long aid,
+            @RequestParam Long uid){
+//        Integer deltaLikes=articleService.likeArticleByAid(aid);
+        Boolean res=articleService.undoArticleFavor(aid,uid);
+        if(!res){
+            log.error("{}取消收藏文章失败,aid:{}",uid,aid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：取消收藏文章失败"));
+        }
+        log.info("文章{}被{}取消收藏了",aid,uid);
+        return ResponseEntity.ok(ApiResponse.success(res));
+
+    }
+
+    //取消点赞,需要改变缓存
+    @PostMapping("/article/undoLike")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse<Integer>> undoArticleLike(
+            @RequestParam Long aid,
+            @RequestParam Long uid){
+//        Integer deltaLikes=articleService.likeArticleByAid(aid);
+        Integer res;
+        res = articleService.undoArticleLike(aid,uid);
+        if(res<=0){
+            log.error("{}取消点赞文章失败,aid:{}",uid,aid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：取消点赞文章失败"));
+        }
+        log.info("文章{}被{}取消点赞了",aid,uid);
+        return ResponseEntity.ok(ApiResponse.success(res));
+
+    }
+
+
+    //点赞文章
     @PostMapping("/article/like")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ApiResponse<Integer>> likeArticleByAid(@RequestParam Long aid){
-        Integer deltaLikes=articleService.likeArticleByAid(aid);
+    public ResponseEntity<ApiResponse<Integer>> likeArticleByAid(
+            @RequestParam Long aid,
+            @RequestParam Long uid){
+        Integer deltaLikes=articleService.likeArticleByAid(aid,uid);
         if(deltaLikes<=0){
-            log.error("点赞文章失败,aid:{}",aid);
+            log.error("{}点赞文章失败,aid:{}",uid,aid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error：点赞文章失败"));
         }
-        log.info("文章{}被点赞了",aid);
+        log.info("文章{}被{}点赞了",aid,uid);
         return ResponseEntity.ok(ApiResponse.success(deltaLikes));
 
     }
+    //参数是点赞的文章，点赞的执行人
     @PostMapping("/article/favor")
-    public ResponseEntity<ApiResponse<Integer>> favorArticleByAid(@RequestParam Long aid){
-        Integer deltaFavors=articleService.favorArticleByAid(aid);
+    public ResponseEntity<ApiResponse<Integer>> favorArticleByAid(
+            @RequestParam Long aid,
+            @RequestParam Long uid){
+        Integer deltaFavors=articleService.favorArticleByAid(aid,uid);
         if(deltaFavors<=0){
-            log.error("收藏文章失败,aid:{}",aid);
+            log.error("{}收藏文章失败,aid:{}",uid,aid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error：收藏文章失败"));
         }
-        log.info("文章{}被收藏了",aid);
+        log.info("文章{}被{}收藏了",aid,uid);
         return ResponseEntity.ok(ApiResponse.success(deltaFavors));
     }
 
