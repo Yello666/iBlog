@@ -125,7 +125,7 @@ public class ArticleC {
 
     //用户删除自己的一篇文章
     @DeleteMapping("/article")
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Boolean>> deleteArticleByAid(
             @RequestParam Long aid,
             @RequestParam Long uid){

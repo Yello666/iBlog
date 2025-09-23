@@ -83,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService{
         savedA.setTitle(article.getTitle());//只能修改标题和内容
         savedA.setContent(article.getContent());
         if(articleMapper.updateById(savedA)>0){
-            return article;
+            return savedA;
         }
         return null;
     }

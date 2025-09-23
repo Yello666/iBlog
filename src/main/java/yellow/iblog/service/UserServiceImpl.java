@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
         u.setUpdatedAt(LocalDateTime.now());
 
         if(userMapper.updateById(savedU)>0){
-            return u;
+            return savedU;
         } else{ //影响行数为0，就是没有找到user，user没有注册
             return null;
         }
