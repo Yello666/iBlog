@@ -1,7 +1,12 @@
 package yellow.iblog.Controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,14 +21,37 @@ import yellow.iblog.service.ArticleServiceImpl;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 //@RequestMapping("/article")
 public class ArticleC {
     private final ArticleServiceImpl articleService;
+    private final CacheManager cacheManager; // 注入 CacheManager
+//    public ArticleC(ArticleServiceImpl articleService) {
+//        this.articleService = articleService;
+//    }
 
-    public ArticleC(ArticleServiceImpl articleService) {
-        this.articleService = articleService;
+    @PostMapping("/article/like")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse<Integer>> likeArticleByAid(@RequestParam Long aid){
+        Integer deltaLikes=articleService.likeArticleByAid(aid);
+        if(deltaLikes<=0){
+            log.error("点赞文章失败,aid:{}",aid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：点赞文章失败"));
+        }
+        log.info("文章{}被点赞了",aid);
+        return ResponseEntity.ok(ApiResponse.success(deltaLikes));
+
     }
-
+    @PostMapping("/article/favor")
+    public ResponseEntity<ApiResponse<Integer>> favorArticleByAid(@RequestParam Long aid){
+        Integer deltaFavors=articleService.favorArticleByAid(aid);
+        if(deltaFavors<=0){
+            log.error("收藏文章失败,aid:{}",aid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：收藏文章失败"));
+        }
+        log.info("文章{}被收藏了",aid);
+        return ResponseEntity.ok(ApiResponse.success(deltaFavors));
+    }
 
     //用户写文章
     @PostMapping("/article")
@@ -48,6 +76,7 @@ public class ArticleC {
         Article a=articleService.getArticleByAid(aid);
         if(a!=null){
             log.info("用户{}的文章{}被查看了",a.getUid(),a.getAid());
+
             return ResponseEntity.ok(ApiResponse.success(a));
         }
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
@@ -77,15 +106,17 @@ public class ArticleC {
     public ResponseEntity<ApiResponse<Article>> updateArticle(
             @RequestParam Long aid,
             @RequestBody Article article){
+        //这个article一定要包含uid
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
         Long crtUid=Long.valueOf(authentication.getName());
         if(!crtUid.equals(article.getUid())){
-            log.warn("用户{}想要修改其它人的文章,aid:{}", crtUid, aid);
+            log.warn("用户{}想要修改其它人{}的文章,aid:{}", crtUid,article.getUid(), aid);
             throw new AccessDeniedException("用户"+crtUid+"想要修改其它人的文章,aid:"+aid);
         }
         article.setAid(aid);
         Article a=articleService.updateArticle(article);
         if(a!=null){
+            log.info("用户{}修改了自己的文章",crtUid);
             return ResponseEntity.ok(ApiResponse.success(a));
         }
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
@@ -94,7 +125,7 @@ public class ArticleC {
 
     //用户删除自己的一篇文章
     @DeleteMapping("/article")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Boolean>> deleteArticleByAid(
             @RequestParam Long aid,
             @RequestParam Long uid){

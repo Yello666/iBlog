@@ -6,9 +6,11 @@ import yellow.iblog.model.Article;
 import java.util.List;
 
 public interface ArticleService {
-    public Article createArticle(Article article);
-    public Boolean deleteArticleByAid(Long Aid);
-    public Article updateArticle(Article article);
-    public Article getArticleByAid(Long Aid);
-    public Page<Article> getArticleByUid(Long uid, int page, int size);
+    Integer likeArticleByAid(Long aid);
+    Integer favorArticleByAid(Long aid);
+    Article createArticle(Article article);
+    Boolean deleteArticleByAid(Long Aid);
+    Article updateArticle(Article article);
+    Article getArticleByAid(Long Aid);
+    Page<Article> getArticleByUid(Long uid, int page, int size);
 }

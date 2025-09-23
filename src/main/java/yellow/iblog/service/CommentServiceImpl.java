@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService{
             log.error("评论{}不存在",cid);
             return null;
         }
-        c.setLikesCount(Math.toIntExact(likeService.getLikeCount(cid)+c.getLikesCount()));
+        c.setLikesCount(Math.toIntExact(likeService.getCommentLikeCount(cid)+c.getLikesCount()));
         return c;
     }
 
@@ -46,7 +46,7 @@ public class CommentServiceImpl implements CommentService{
             log.error("评论{}不存在",cid);
             throw new RuntimeException("尝试点赞不存在的评论");
         }
-        c.setLikesCount(c.getLikesCount()+1);
+//        c.setLikesCount(c.getLikesCount()+1);
         Long crtLikes= likeService.likeComment(cid);
         if(crtLikes<=0) {//将点赞数存到redis中
             log.error("存储点赞数到redis失败,cid:{}",cid);

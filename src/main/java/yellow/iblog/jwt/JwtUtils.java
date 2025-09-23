@@ -17,7 +17,7 @@ public class JwtUtils {
     private static final String SECRET = "emily-is-gonna-be-rich-888888888888888888"; // 必须至少32字节（32个字符）
     private static final Key key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
-    private static final long EXPIRATION = 1000 * 60 * 60; // 1小时（以ms为单位）
+    private static final long EXPIRATION = 1000 * 60 * 60*24; // 1天（以ms为单位）
 
     // 生成 token
     public static String generateToken(Long uid, String username,String role) {

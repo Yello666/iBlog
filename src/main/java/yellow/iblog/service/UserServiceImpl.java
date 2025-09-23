@@ -96,8 +96,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @CachePut(value="user",key="#u.uid")
     public User updateUser(User u){
+        User savedU=userMapper.selectById(u.getUid());
+        savedU.setUserName(u.getUserName());
+        savedU.setAge(u.getAge());
+        savedU.setGender(u.getGender());
         u.setUpdatedAt(LocalDateTime.now());
-        if(userMapper.updateById(u)>0){
+
+        if(userMapper.updateById(savedU)>0){
             return u;
         } else{ //影响行数为0，就是没有找到user，user没有注册
             return null;

@@ -29,7 +29,7 @@ public class Comment {
     private LocalDateTime createdAt;
 
     @TableField(value="likes_count")
-    private Integer likesCount;
+    private int likesCount;
 
     public Comment(String contents, Long aid, Long uid, Long parent_cid) {
         this.contents = contents;

@@ -1,5 +1,7 @@
 package yellow.iblog.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 /*、
 文章实体类，包括ID
@@ -9,7 +11,9 @@ import lombok.Data;
 
 @Data
 @TableName("articles")
-public class Article {
+public class Article{
+//    @Serial 这样序列化之后在redis看是二进制，不方便查看
+//    private static final long serialVersionUID = 1L;
     // 插入数据库成功后，MyBatis-Plus 会把数据库生成的自增ID回填到 article.aid
     @TableId(type= IdType.AUTO)
     private Long aid;
@@ -24,13 +28,13 @@ public class Article {
     private String content;
 
     @TableField(value="likes_count")//点赞数
-    private Integer likesCount;
+    private int likesCount;//如果是int的话默认为0，如果是Integer的话默认为null
 
     @TableField(value="favor_count")//收藏数
-    private Integer favorCount;
+    private int favorCount;
 
     @TableField(value="comments_count")//评论数
-    private Integer commentsCount;
+    private int commentsCount;
 
     @TableField(value = "created_at",fill = FieldFill.INSERT)
     private LocalDateTime createdAt;

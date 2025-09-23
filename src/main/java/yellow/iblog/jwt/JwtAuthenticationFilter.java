@@ -42,8 +42,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 List<GrantedAuthority> authorities = Collections.singletonList(
                         new SimpleGrantedAuthority(role));
 
+                //这里的第一个参数是subject，到时候getName()返回的值
+                //第二个参数是认证时的密码或 token，一般在登录阶段用来比对密码，但是在其它函数那里比对，所以这里不填
+                //第三个参数是角色 "ROLE_USER"...
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(username, null, authorities);
+                        new UsernamePasswordAuthenticationToken(uidStr, null, authorities);
 
                 // 存入 Spring Security 的上下文
                 SecurityContextHolder.getContext().setAuthentication(authentication);

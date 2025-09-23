@@ -28,18 +28,18 @@ public class CommentC {
     //点赞评论
     @PostMapping("/comments/like")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ApiResponse<Integer>> LikeCommentByCid(Long cid){
-        Integer crtLikes=commentService.LikeComment(cid);
-        if(crtLikes<=0){
+    public ResponseEntity<ApiResponse<Integer>> LikeCommentByCid(@RequestParam Long cid){
+        Integer deltaLikes=commentService.LikeComment(cid);
+        if(deltaLikes<=0){
             log.error("点赞失败,cid:{}",cid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("点赞失败"));
         }
-        return ResponseEntity.ok(ApiResponse.success(crtLikes));
+        return ResponseEntity.ok(ApiResponse.success(deltaLikes));
 
     }
     //获取单条评论
     @GetMapping("/comments")
-    public ResponseEntity<ApiResponse<Comment>> GetCommentByCid(Long cid){
+    public ResponseEntity<ApiResponse<Comment>> GetCommentByCid(@RequestParam Long cid){
         Comment c=commentService.getCommentByCid(cid);
         if(c==null){
             log.error("获取评论失败,cid:{}",cid);

@@ -14,7 +14,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
 //                .eq("cid",cid);
 //    }
     // 点赞数增加 delta
-    @Update("UPDATE comments SET likes_count = likes_count + #{delta} WHERE cid = #{cid}")
+    @Update("UPDATE comment SET likes_count = likes_count + #{delta} WHERE cid = #{cid}")
     int incrLikeCount(Long cid,int delta);
 
 
