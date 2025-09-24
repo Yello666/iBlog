@@ -20,13 +20,13 @@ public class LikeSyncService {
     private final StringRedisTemplate redisTemplate;
     private final CommentMapper commentMapper;
     private final ArticleMapper articleMapper;
-    //同步文章点赞数和取消点赞数到数据库的时间（单位是ms）
-    private static final Integer SYNCARTICLELIKE=1000*60*60;//1h
+    //同步文章点赞数和取消点赞数到数据库的时间（单位是ms）因为schedule只能使用编译时就确定好的量
+//    private static final Integer SYNC_ARTICLE_LIKE=;//1h
     //同步评论点赞和取消点赞到数据库的时间
-    private static final Integer SYNCCOMMENTSLIKE=1000*60*90;//1.5h
+//    private static final Integer SYNC_COMMENTS_LIKE=5400000;//1.5h
 
     // 同步评论点赞到数据库的时间
-    @Scheduled(fixedRate = SYNCCOMMENTSLIKE)
+    @Scheduled(fixedRate = 50000)//ms
     public void syncCommentsLikesToDB() {
         // 获取所有key用来同步点赞数
         Set<String> commentIds = redisTemplate.opsForSet().members("comment:like:ids");
@@ -62,7 +62,7 @@ public class LikeSyncService {
     }
 
     // 同步评论取消点赞到数据库的时间
-    @Scheduled(fixedRate = SYNCCOMMENTSLIKE)
+    @Scheduled(fixedRate = 50000)
     public void syncCommentsUnLikesToDB() {
         // 获取所有key
         Set<String> strCids = redisTemplate.opsForSet().members("comment:unlike:ids");
@@ -97,7 +97,7 @@ public class LikeSyncService {
         }
     }
 
-    @Scheduled(fixedRate = SYNCARTICLELIKE) //ms
+    @Scheduled(fixedRate = 3600000) //ms
     public void syncArticleUnLikesToDB() {
         // 获取所有key
         Set<String> strAids = redisTemplate.opsForSet().members("article:like:ids");
@@ -134,7 +134,7 @@ public class LikeSyncService {
 
     //同步文章的redis点赞数到mysql，并删除article的缓存
     // 每隔一个小时执行一次，可以根据需求调整
-    @Scheduled(fixedRate = SYNCARTICLELIKE) //ms
+    @Scheduled(fixedRate = 3600000) //ms
     public void syncArticleLikesToDB() {
         // 获取所有被点赞过的文章 ID
         Set<String> articleIds = redisTemplate.opsForSet().members("article:like:ids");

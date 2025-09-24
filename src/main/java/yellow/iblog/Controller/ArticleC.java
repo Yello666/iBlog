@@ -22,22 +22,22 @@ import yellow.iblog.service.ArticleServiceImpl;
 public class ArticleC {
     private final ArticleServiceImpl articleService;
 
-    //取消收藏
-    @PostMapping("/article/undoFavor")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ApiResponse<Boolean>> undoArticleFavor(
-            @RequestParam Long aid,
-            @RequestParam Long uid){
-//        Integer deltaLikes=articleService.likeArticleByAid(aid);
-        Boolean res=articleService.undoArticleFavor(aid,uid);
-        if(!res){
-            log.error("{}取消收藏文章失败,aid:{}",uid,aid);
-            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：取消收藏文章失败"));
-        }
-        log.info("文章{}被{}取消收藏了",aid,uid);
-        return ResponseEntity.ok(ApiResponse.success(res));
-
-    }
+//    //取消收藏
+//    @PostMapping("/article/undoFavor")
+//    @PreAuthorize("isAuthenticated()")
+//    public ResponseEntity<ApiResponse<Integer>> undoArticleFavor(
+//            @RequestParam Long aid,
+//            @RequestParam Long uid){
+////        Integer deltaLikes=articleService.likeArticleByAid(aid);
+//        Integer deltaFavors=articleService.undoArticleFavor(aid,uid);
+//        if(deltaFavors<=0){
+//            log.error("{}取消收藏文章失败,aid:{}",uid,aid);
+//            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：取消收藏文章失败"));
+//        }
+//        log.info("文章{}被{}取消收藏了",aid,uid);
+//        return ResponseEntity.ok(ApiResponse.success(deltaFavors));
+//
+//    }
 
     //取消点赞,需要改变缓存
     @PostMapping("/article/undoLike")
@@ -73,12 +73,27 @@ public class ArticleC {
         return ResponseEntity.ok(ApiResponse.success(deltaLikes));
 
     }
-    //参数是点赞的文章，点赞的执行人
+    //用户收藏文章
+    // 参数是收藏的文章，收藏的执行人
     @PostMapping("/article/favor")
     public ResponseEntity<ApiResponse<Integer>> favorArticleByAid(
             @RequestParam Long aid,
             @RequestParam Long uid){
         Integer deltaFavors=articleService.favorArticleByAid(aid,uid);
+        if(deltaFavors<=0){
+            log.error("{}收藏文章失败,aid:{}",uid,aid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：收藏文章失败"));
+        }
+        log.info("文章{}被{}收藏了",aid,uid);
+        return ResponseEntity.ok(ApiResponse.success(deltaFavors));
+    }
+    //用户取消收藏文章
+    // 参数是取消收藏的文章，取消收藏的执行人
+    @PostMapping("/article/undoFavor")
+    public ResponseEntity<ApiResponse<Integer>> unFavorArticleByAid(
+            @RequestParam Long aid,
+            @RequestParam Long uid){
+        Integer deltaFavors=articleService.undoArticleFavor(aid,uid);
         if(deltaFavors<=0){
             log.error("{}收藏文章失败,aid:{}",uid,aid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error：收藏文章失败"));

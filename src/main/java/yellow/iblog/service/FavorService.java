@@ -28,13 +28,7 @@ public class FavorService {
             throw new RuntimeException("取消收藏失败", e);
         }
     }
-    //获取取消收藏数
-    public Long getArticleUnFavorCount(Long aid) {
-        String key = "article:unfavor:" + aid;
-        Object obj = redisTemplate.opsForValue().get(key);//如果这个键不存在的话，那么就返回0
-        return obj == null ? 0L : Long.parseLong(obj.toString());
 
-    }
     //收藏文章
     public Long favorArticle(Long aid) {
         String key = "article:favor:" + aid;
@@ -48,6 +42,13 @@ public class FavorService {
         }
     }
 
+    //获取取消收藏数
+    public Long getArticleUnFavorCount(Long aid) {
+        String key = "article:unfavor:" + aid;
+        Object obj = redisTemplate.opsForValue().get(key);//如果这个键不存在的话，那么就返回0
+        return obj == null ? 0L : Long.parseLong(obj.toString());
+
+    }
     //获取收藏数
     public Long getArticleFavorCount(Long aid) {
         String key = "article:favor:" + aid;
@@ -55,4 +56,5 @@ public class FavorService {
         return o == null ? 0L : Long.parseLong(o.toString());
 
     }
+
 }

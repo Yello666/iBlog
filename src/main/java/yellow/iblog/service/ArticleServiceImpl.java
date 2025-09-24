@@ -22,21 +22,26 @@ public class ArticleServiceImpl implements ArticleService{
     private final FavorService favorService;
     private final RedisService redisService;
 
-    //取消收藏
+
+    //    点赞文章
+    //返回的是增长的点赞数
     @Override
     @Transactional
-    public Boolean undoArticleFavor(Long aid, Long uid){
+    public Integer likeArticleByAid(Long aid,Long uid){
         Article a=articleMapper.selectById(aid);
         if(a==null){
-            log.error("用户{}取消收藏文章{}失败:文章不存在",uid,aid);
-            throw new RuntimeException("尝试取消收藏不存在的文章");
+            log.error("用户{}点赞文章{}失败:文章不存在",uid,aid);
+            throw new RuntimeException("尝试点赞不存在的文章");
         }
-        a.setFavorCount(a.getFavorCount()-1);
-        if(articleMapper.updateById(a)<=0){
-            log.error("用户{}取消收藏aid:{}失败,mysql数据库操作失败",uid,aid);
-            return false;
+//        a.setLikesCount(a.getLikesCount()+1); 没有必要做这个操作，因为数据都是从数据库拿出来，
+//        临时点赞存放到redis那，获取点赞数是先从数据库查询，再与redis相加，没必要在这里加点赞数
+        int deltaLikes=Math.toIntExact(likeService.likeArticle(aid));
+        if(deltaLikes<=0){
+            log.error("用户{}点赞文章{}失败",uid,aid);
+            throw new RuntimeException("点赞失败");
         }
-        return true;
+        return Math.toIntExact(deltaLikes);
+
     }
     //取消点赞//要改redis里面的缓存，设置成-1也可以，到时候返回article缓存的时候要设置点赞数为redisLike+缓存Article
     @Override
@@ -52,7 +57,19 @@ public class ArticleServiceImpl implements ArticleService{
         log.info("设置的取消点赞数为:{}",redisUnLikes);
         return redisUnLikes;
     }
-
+    //取消收藏
+    @Override
+    @Transactional
+    public Integer undoArticleFavor(Long aid, Long uid){
+        Article a=articleMapper.selectById(aid);
+        if(a==null){
+            log.error("用户{}取消收藏文章{}失败:文章不存在",uid,aid);
+            throw new RuntimeException("尝试取消收藏不存在的文章");
+        }
+        int redisUnLikes=Math.toIntExact(favorService.unFavorArticle(aid));
+        log.info("设置的取消点赞数为:{}",redisUnLikes);
+        return redisUnLikes;
+    }
 //收藏文章
     @Override
     @Transactional
@@ -79,26 +96,7 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
 
-//    点赞文章
-    //返回的是增长的点赞数
-    @Override
-    @Transactional
-    public Integer likeArticleByAid(Long aid,Long uid){
-        Article a=articleMapper.selectById(aid);
-        if(a==null){
-            log.error("用户{}点赞文章{}失败:文章不存在",uid,aid);
-            throw new RuntimeException("尝试点赞不存在的文章");
-        }
-//        a.setLikesCount(a.getLikesCount()+1); 没有必要做这个操作，因为数据都是从数据库拿出来，
-//        临时点赞存放到redis那，获取点赞数是先从数据库查询，再与redis相加，没必要在这里加点赞数
-        int deltaLikes=Math.toIntExact(likeService.likeArticle(aid));
-        if(deltaLikes<=0){
-            log.error("用户{}点赞文章{}失败",uid,aid);
-            throw new RuntimeException("点赞失败");
-        }
-        return Math.toIntExact(deltaLikes);
 
-    }
     @Override
     @CacheEvict(value="article",key="#aid")
     public Boolean deleteArticleByAid(Long aid) {

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import yellow.iblog.model.Article;
 
 public interface ArticleService {
-    Boolean undoArticleFavor(Long aid,Long uid);
+    Integer undoArticleFavor(Long aid,Long uid);
     Integer undoArticleLike(Long aid,Long uid);
     Integer likeArticleByAid(Long aid,Long uid);
     Integer favorArticleByAid(Long aid,Long uid);

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
@@ -13,6 +14,7 @@ import yellow.iblog.mapper.CommentMapper;
 import yellow.iblog.model.Comment;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -23,6 +25,7 @@ public class CommentServiceImpl implements CommentService{
     private final ArticleMapper articleMapper;
     private final LikeService likeService; // 注入LikeService
     private final RedisService redisService;
+    private final RedisTemplate redisTemplate;
 
     //点赞数增量从redis获取，redis的点赞数定期相加存储到mysql中
     @Override
@@ -147,8 +150,9 @@ public class CommentServiceImpl implements CommentService{
     }
 
     //查看一个文章的所有评论
+//    @Cacheable(value="comment",key="#aid + '_' + #page + '_' + #size",unless="#result==null")
+    //分页就不要做缓存了，太麻烦了，还要改缓存呢
     @Override
-    @Cacheable(value="comment",key="#aid + '_' + #page + '_' + #size",unless="#result==null")
     public Page<Comment> getCommentsByAid(Long aid, int page, int size) {
         // 使用分页插件
         Page<Comment> commentPage = new Page<>(page, size);//分页插件，page是第几页，size是页面有多少个对象
@@ -159,8 +163,21 @@ public class CommentServiceImpl implements CommentService{
                 .isNull(Comment::getParentCid) // 只查没有上级评论的评论，即顶级评论
                 .orderByDesc(Comment::getCreatedAt);//查询需要按照时间排序降序排序，即越晚发布的越先显示
 
-        return commentMapper.selectPage(commentPage, wrapper);//使用分页查询，传入分页插件和查询对象
+        // 获取评论分页数据
+        Page<Comment> comments = commentMapper.selectPage(commentPage, wrapper);
 
+        // 更新点赞数(redisLikes+数据库-redisUnLikes）
+        for (Comment comment : comments.getRecords()) {
+            String likeKey = "comment:likes:" + comment.getCid();
+            String unlikeKey="comment:unlikes:" + comment.getCid();
+            Integer likeCount =(Integer)redisTemplate.opsForValue().get(likeKey);
+            Integer unlikeCount =(Integer) redisTemplate.opsForValue().get(unlikeKey);
+            likeCount=likeCount==null?0 :likeCount;
+            unlikeCount=unlikeCount==null? 0:unlikeCount;
+            comment.setLikesCount(comment.getLikesCount()+likeCount-unlikeCount);  // 设置评论的点赞数
+        }
+
+        return comments;
     }
 
     @Override
