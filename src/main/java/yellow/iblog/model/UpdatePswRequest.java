@@ -1,4 +1,4 @@
-package yellow.iblog.Common;
+package yellow.iblog.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

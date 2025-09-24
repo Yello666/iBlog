@@ -8,14 +8,14 @@ import yellow.iblog.model.Comment;
 
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
-//    default void LikesComment(Long cid){
-//        UpdateWrapper<Comment> wrapper=new UpdateWrapper<>();
-//        wrapper.setSql("likes_count=likes_count+1")
-//                .eq("cid",cid);
-//    }
+
     // 点赞数增加 delta
     @Update("UPDATE comment SET likes_count = likes_count + #{delta} WHERE cid = #{cid}")
     int incrLikeCount(Long cid,int delta);
+    //取消点赞数增加
+    @Update("UPDATE comment SET likes_count = likes_count - #{delta} WHERE cid = #{cid}")
+    int decrLikeCount(Long cid,int delta);
+
 
 
 }

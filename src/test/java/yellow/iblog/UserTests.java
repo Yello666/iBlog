@@ -2,12 +2,10 @@ package yellow.iblog;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import yellow.iblog.Common.UpdatePswRequest;
+import yellow.iblog.model.UpdatePswRequest;
 import yellow.iblog.model.User;
 import yellow.iblog.service.UserService;
 

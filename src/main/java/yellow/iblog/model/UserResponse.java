@@ -1,9 +1,8 @@
-package yellow.iblog.Common;
+package yellow.iblog.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import yellow.iblog.model.User;
 
 @Getter
 @Setter

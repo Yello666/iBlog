@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.mapper.CommentMapper;
-import yellow.iblog.model.Article;
 import yellow.iblog.model.Comment;
 
 import java.util.List;
@@ -23,18 +22,58 @@ public class CommentServiceImpl implements CommentService{
     private final CommentMapper commentMapper;
     private final ArticleMapper articleMapper;
     private final LikeService likeService; // 注入LikeService
+    private final RedisService redisService;
 
     //点赞数增量从redis获取，redis的点赞数定期相加存储到mysql中
     @Override
-    @Cacheable(value="comment",key="#cid")
     public Comment getCommentByCid(Long cid) {
+        //1.先读缓存
+        Comment cacheC=(Comment) redisService.checkCache("comment",cid);
+        if(cacheC==null){
+            //2.缓存未命中，从mysql读，并缓存
+            Comment dbComment=commentMapper.selectById(cid);
+            if(dbComment==null){
+                log.warn("尝试查询不存在的评论,cid:{}",cid);
+                return null;
+            } else{
+                //3.设置当前点赞数
+                int redisCacheLikes=Math.toIntExact(likeService.getCommentLikeCount(cid));
+                int redisCacheUnlikes=Math.toIntExact(likeService.getCommentUnLikeCount(cid));
+                int dbLikes=dbComment.getLikesCount();
+                dbComment.setLikesCount(redisCacheLikes+dbLikes-redisCacheUnlikes);
+                //4.手动缓存
+                if(redisService.addCache("comment",cid,dbComment)){
+                    log.info("缓存评论成功");
+                } else{
+                    log.warn("缓存评论失败");
+                }
+                return dbComment;
+            }
+        } else{
+            //5.如果存在评论缓存，需要返回点赞数为缓存comment的点赞数+redisLike-redisUnLike
+            int redisCacheLikes=Math.toIntExact(likeService.getCommentLikeCount(cid));
+            int redisCacheUnlikes=Math.toIntExact(likeService.getCommentUnLikeCount(cid));
+            cacheC.setLikesCount(redisCacheLikes+cacheC.getLikesCount()-redisCacheUnlikes);
+            log.info("目前redis评论点赞缓存里面的点赞数:{},redisComment缓存里面的点赞数:{}," +
+                    "redis取消评论点赞缓存里面的点赞数:{}",redisCacheLikes,cacheC.getLikesCount(),redisCacheUnlikes);
+            return cacheC;
+        }
+
+    }
+    @Transactional
+    @Override
+    public Integer UnLikeComment(Long cid) {
         Comment c=commentMapper.selectById(cid);
         if(c==null){
             log.error("评论{}不存在",cid);
-            return null;
+            throw new RuntimeException("尝试取消点赞不存在的评论");
         }
-        c.setLikesCount(Math.toIntExact(likeService.getCommentLikeCount(cid)+c.getLikesCount()));
-        return c;
+        Long deltaLikes= likeService.unlikeComment(cid);
+        if(deltaLikes<=0) {//将点赞数存到redis中
+            log.error("存储取消点赞数到redis失败,cid:{}",cid);
+            throw new RuntimeException("点赞失败");
+        }
+        return Math.toIntExact(deltaLikes);
     }
 
     @Override
@@ -46,18 +85,12 @@ public class CommentServiceImpl implements CommentService{
             log.error("评论{}不存在",cid);
             throw new RuntimeException("尝试点赞不存在的评论");
         }
-//        c.setLikesCount(c.getLikesCount()+1);
-        Long crtLikes= likeService.likeComment(cid);
-        if(crtLikes<=0) {//将点赞数存到redis中
+        Long deltaLikes= likeService.likeComment(cid);
+        if(deltaLikes<=0) {//将点赞数存到redis中
             log.error("存储点赞数到redis失败,cid:{}",cid);
             throw new RuntimeException("点赞失败");
         }
-        return Math.toIntExact(crtLikes);
-//        if(commentMapper.updateById(c)<=0){
-//            log.error("数据库操作失败:更新评论{}点赞数失败",cid);
-//            return false;
-//        }
-//        return true;
+        return Math.toIntExact(deltaLikes);
     }
 
     //写的时候不需要添加缓存，因为会返回data，就等于有缓存了

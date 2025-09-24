@@ -125,35 +125,44 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
 //    @Cacheable(value="article",key="#aid",unless="#result==null")//要求对象实现serializable接口，或者把 RedisCacheManager 改成 JSON 序列化
     public Article getArticleByAid(Long aid) {
-        //1.先读缓存（只包含静态/DB数据？）
+        //1.先读缓存
         Article cacheA=(Article) redisService.checkCache("article",aid);
         if(cacheA==null){
             log.warn("缓存未命中或第一次查询");
-            //2.缓存未命中，从DB读并缓存
+            //2.缓存未命中，从DB读数据
             Article dbArticle=articleMapper.selectById(aid);
-            if (dbArticle != null){
-                //获取点赞数和收藏数需要将redis和mysql加起来
-                dbArticle.setLikesCount(Math.toIntExact(likeService.getArticleLikeCount(aid))+dbArticle.getLikesCount()-Math.toIntExact(likeService.getArticleUnLikeCount(aid)));
-                dbArticle.setFavorCount(Math.toIntExact(favorService.getArticleFavorCount(aid))+dbArticle.getFavorCount()-Math.toIntExact(favorService.getArticleUnFavorCount(aid)));
-                //手动缓存
+            if (dbArticle == null){
+                log.warn("尝试查询不存在的文章,aid:{}",aid);
+                return null;
+            }
+            else{
+                //3.将点赞数设置为当前点赞数
+                int redisLikes=Math.toIntExact(likeService.getArticleLikeCount(aid));
+                int dbLikes=dbArticle.getLikesCount();
+                int redisUnLikes=Math.toIntExact(likeService.getArticleUnLikeCount(aid));
+                dbArticle.setLikesCount(redisLikes+dbLikes-redisUnLikes);
+                //将收藏数设置为当前收藏数
+                int redisFavors=Math.toIntExact(favorService.getArticleFavorCount(aid));
+                int dbFavors=dbArticle.getFavorCount();
+                int redisUnFavors=Math.toIntExact(favorService.getArticleUnFavorCount(aid));
+                dbArticle.setFavorCount(redisFavors+dbFavors-redisUnFavors);
+                //4.手动缓存
                 if(redisService.addCache("article",aid,dbArticle)){
                     log.info("缓存成功");
                 } else{
                     log.warn("缓存失败");
                 }
-
                 return dbArticle;
             }
         } else{
-            //缓存的A的点赞数需要加上现在redis的点赞数和减去redis的取消点赞数
+            //5.有缓存，需要返回的点赞数和收藏数是缓存的值+redisLike-redisUnlike
             cacheA.setLikesCount(Math.toIntExact(likeService.getArticleLikeCount(aid))+cacheA.getLikesCount()-Math.toIntExact(likeService.getArticleUnLikeCount(aid)));
             cacheA.setFavorCount(Math.toIntExact(favorService.getArticleFavorCount(aid))+cacheA.getFavorCount());
             log.info("目前redis点赞缓存里面的点赞数:{},redisArticle缓存里面的点赞数:{}," +
-                    "redis取消点赞缓存里面的点赞数:{}",likeService.getArticleLikeCount(aid),cacheA.getLikesCount(),Math.toIntExact(favorService.getArticleUnFavorCount(aid)));
+                    "redis取消点赞缓存里面的点赞数:{}",likeService.getArticleLikeCount(aid),cacheA.getLikesCount(),Math.toIntExact(likeService.getArticleUnLikeCount(aid)));
             return cacheA;
         }
 
-        return null;
     }
     @Override
     public Page<Article> getArticleByUid(Long uid, int page, int size){

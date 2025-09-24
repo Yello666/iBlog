@@ -20,21 +20,62 @@ public class LikeSyncService {
     private final StringRedisTemplate redisTemplate;
     private final CommentMapper commentMapper;
     private final ArticleMapper articleMapper;
+    //同步文章点赞数和取消点赞数到数据库的时间（单位是ms）
+    private static final Integer SYNCARTICLELIKE=1000*60*60;//1h
+    //同步评论点赞和取消点赞到数据库的时间
+    private static final Integer SYNCCOMMENTSLIKE=1000*60*90;//1.5h
 
-    // 每隔30秒执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 30000)
-    public void syncLikesToDB() {
-        // 获取所有key
-        Set<String> keys = redisTemplate.keys("comment:likes:*");
-        if (keys == null || keys.isEmpty()) {
+    // 同步评论点赞到数据库的时间
+    @Scheduled(fixedRate = SYNCCOMMENTSLIKE)
+    public void syncCommentsLikesToDB() {
+        // 获取所有key用来同步点赞数
+        Set<String> commentIds = redisTemplate.opsForSet().members("comment:like:ids");
+        if (commentIds == null || commentIds.isEmpty()) {
             return;
         }
 
-        for (String key : keys) {
+        for (String cidStr :commentIds) {
             try {
-                Long cid = Long.valueOf(key.replace("comment:likes:", ""));
+                Long cid = Long.valueOf(cidStr);
+                String likeKey="comment:likes:"+cid;
                 // 使用原子操作获取并删除，避免并发问题
-                String deltaStr = redisTemplate.opsForValue().getAndDelete(key);
+                String deltaStr = redisTemplate.opsForValue().getAndDelete(likeKey);
+                if (deltaStr == null) continue;
+                int delta = Integer.parseInt(deltaStr);
+                if (delta <= 0) continue;
+
+                // SQL 原子更新点赞数
+                if(commentMapper.incrLikeCount(cid, delta)<=0){
+                    throw new RuntimeException("同步评论点赞数据到mysql失败");
+                }
+                //删除评论缓存
+                String commentCacheKey="comment::"+cid;
+                redisTemplate.delete(commentCacheKey);
+                log.info("同步评论 {} 的点赞数 {} 到数据库,并清理缓存{}", cid, delta,commentCacheKey);
+            } catch (Exception e) {
+                log.error("同步评论点赞数据到mysql失败，评论ID:{}",cidStr,e);
+            } finally{
+                redisTemplate.opsForSet().remove("comment:like:ids",cidStr);
+            }
+
+        }
+    }
+
+    // 同步评论取消点赞到数据库的时间
+    @Scheduled(fixedRate = SYNCCOMMENTSLIKE)
+    public void syncCommentsUnLikesToDB() {
+        // 获取所有key
+        Set<String> strCids = redisTemplate.opsForSet().members("comment:unlike:ids");
+        if (strCids == null || strCids.isEmpty()) {
+            return;
+        }
+
+        for (String strCid : strCids) {
+            try {
+                Long cid = Long.valueOf(strCid);
+                String unlikeKey="comment:unlikes:"+cid;
+                // 使用原子操作获取并删除，避免并发问题
+                String deltaStr = redisTemplate.opsForValue().getAndDelete(unlikeKey);
 
                 if (deltaStr == null) continue;
 
@@ -42,36 +83,35 @@ public class LikeSyncService {
                 if (delta <= 0) continue;
 
                 // SQL 原子更新点赞数
-                if(commentMapper.incrLikeCount(cid, delta)<=0){
-                    throw new RuntimeException("同步点赞数据到mysql失败");
+                if(commentMapper.decrLikeCount(cid, delta)<=0){
+                    throw new RuntimeException("同步评论取消点赞数据到mysql失败");
                 }
-                //获取之后不能删除，不然后面获取点赞数的时候要将两个地方的加起来，redis就找不到键了
-                //获取完之后要设置为0
-                //不用这样，要设置redis找不到键返回0，就可以了，还是要删除的
-//                redisTemplate.opsForValue().set(key,String.valueOf(0));
-                log.info("同步评论 {} 的点赞数 {} 到数据库", cid, delta);
+
+                log.info("同步评论 {} 的取消点赞数 {} 到数据库", cid, delta);
             } catch (Exception e) {
-                //slf4j中，如果最后一个对象是异常，不用使用占位符
-                log.error("同步点赞数据到mysql失败，key:{}",key,e);
-                throw new RuntimeException(e);
+                log.error("同步评论点赞数据到mysql失败，评论id:{}",strCid,e);
+
+            } finally {
+                redisTemplate.opsForSet().remove("comment:unlike:ids",strCid);
             }
         }
     }
-    // 每隔50秒执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 50000) //ms
+
+    @Scheduled(fixedRate = SYNCARTICLELIKE) //ms
     public void syncArticleUnLikesToDB() {
         // 获取所有key
-        Set<String> keys = redisTemplate.keys("article:unlikes:*");
-        if (keys == null || keys.isEmpty()) {
+        Set<String> strAids = redisTemplate.opsForSet().members("article:like:ids");
+        if (strAids == null || strAids.isEmpty()) {
             return;
         }
 
-        for (String key : keys) {
+        for (String strAid : strAids) {
             try {
-                Long aid = Long.valueOf(key.replace("article:unlikes:", ""));
+                Long aid = Long.valueOf(strAid);
                 // 使用原子操作获取并删除，避免并发问题
 
-                String deltaStr = redisTemplate.opsForValue().getAndDelete(key);
+                String unLikeKey="article:unlikes:"+aid;
+                String deltaStr = redisTemplate.opsForValue().getAndDelete(unLikeKey);
                 if (deltaStr == null) continue;
 
                 int delta = Integer.parseInt(deltaStr);
@@ -79,19 +119,22 @@ public class LikeSyncService {
 
                 // SQL 原子更新点赞数
                 if (articleMapper.decrLikeCount(aid, delta) <= 0) {
-                    throw new RuntimeException("同步点赞数据到mysql失败");
+                    throw new RuntimeException("同步文章取消点赞数据到mysql失败");
                 }
-//                redisTemplate.opsForValue().set(key,String.valueOf(0));
+
                 log.info("同步文章 {} 的取消点赞数 {} 到数据库", aid, delta);
             } catch (Exception e) {
                 //slf4j中，如果最后一个对象是异常，不用使用占位符
-                log.error("同步取消点赞数据到mysql失败，key:{}", key, e);
-                throw new RuntimeException(e);
+                log.error("同步文章取消点赞数据到mysql失败，key:{}",strAid, e);
+            } finally{
+                redisTemplate.opsForSet().remove("article:like:ids",strAid);
             }
         }
     }
-    // 每隔50秒执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 50000) //ms
+
+    //同步文章的redis点赞数到mysql，并删除article的缓存
+    // 每隔一个小时执行一次，可以根据需求调整
+    @Scheduled(fixedRate = SYNCARTICLELIKE) //ms
     public void syncArticleLikesToDB() {
         // 获取所有被点赞过的文章 ID
         Set<String> articleIds = redisTemplate.opsForSet().members("article:like:ids");
@@ -114,7 +157,7 @@ public class LikeSyncService {
 
                 // SQL 原子更新点赞数
                 if(articleMapper.incrLikeCount(aid, delta)<=0){
-                    throw new RuntimeException("同步点赞数据到mysql失败");
+                    throw new RuntimeException("同步文章点赞数据到mysql失败");
                 }
 
                 //  删除文章缓存，保证前端下次读取的是最新数据
@@ -122,7 +165,7 @@ public class LikeSyncService {
                 redisTemplate.delete(articleCacheKey);
                 log.info("同步文章 {} 的点赞数 {} 到数据库，并清理缓存 {}", aid, delta, articleCacheKey);
             } catch (Exception e) {
-                log.error("同步点赞数据到 mysql 失败，文章ID: {}", aidStr, e);
+                log.error("同步文章点赞数据到 mysql 失败，文章ID: {}", aidStr, e);
             } finally {
                 // 无论成功失败，都先移除集合里的 ID，避免下次重复处理
                 redisTemplate.opsForSet().remove("article:like:ids", aidStr);

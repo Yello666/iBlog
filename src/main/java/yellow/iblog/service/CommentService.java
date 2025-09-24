@@ -1,6 +1,7 @@
 package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.model.Comment;
 
 import java.util.List;
@@ -18,6 +19,10 @@ public interface CommentService {
     Page<Comment> getCommentsByAid(Long aid, int page, int size);//分页功能
     //获得某个评论的所有回复（暂时是获得一层回复，不能获取所有的回复。）
     List<Comment> getAllRepliesByCid(Long cid);
+
+    @Transactional
+    Integer UnLikeComment(Long cid);
+
     //给评论点赞,返回当前点赞数
     Integer LikeComment(Long cid);
     //举报评论（举报之后将评论设置为不可见，并交给管理员，让管理员审核删除）

@@ -5,7 +5,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import yellow.iblog.Common.ApiResponse;
-import yellow.iblog.Common.UpdatePswRequest;
+import yellow.iblog.model.UpdatePswRequest;
 import yellow.iblog.Common.Utils;
 import yellow.iblog.exception.PasswordIncorrectException;
 import yellow.iblog.exception.UserNotFoundException;

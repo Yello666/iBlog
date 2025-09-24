@@ -25,6 +25,18 @@ public class CommentC {
         this.commentService = commentService;
     }
 
+    //取消点赞
+    @PostMapping("/comments/unlike")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse<Integer>> UnLikeCommentByCid(@RequestParam Long cid){
+        Integer deltaLikes=commentService.UnLikeComment(cid);
+        if(deltaLikes<=0){
+            log.error("取消点赞失败,cid:{}",cid);
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("取消点赞失败"));
+        }
+        return ResponseEntity.ok(ApiResponse.success(deltaLikes));
+    }
+
     //点赞评论
     @PostMapping("/comments/like")
     @PreAuthorize("isAuthenticated()")

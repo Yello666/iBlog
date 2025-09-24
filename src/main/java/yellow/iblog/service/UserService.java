@@ -1,8 +1,7 @@
 package yellow.iblog.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import yellow.iblog.Common.ApiResponse;
-import yellow.iblog.Common.UpdatePswRequest;
+import yellow.iblog.model.UpdatePswRequest;
 import yellow.iblog.model.LoginInfo;
 import yellow.iblog.model.LoginResponse;
 import yellow.iblog.model.User;
