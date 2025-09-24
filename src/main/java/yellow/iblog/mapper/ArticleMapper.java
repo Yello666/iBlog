@@ -36,5 +36,13 @@ public interface ArticleMapper extends BaseMapper<Article> {
     @Update("UPDATE articles SET favor_count = favor_count + #{delta} WHERE aid = #{aid}")
     int incrFavorCount(Long aid,int delta);
 
+    //点赞数减少
+    @Update("UPDATE articles SET likes_count=likes_count-#{delta} WHERE aid=#{aid}")
+    int decrLikeCount(Long aid, int delta);
+    //收藏数减少
+    @Update("UPDATE articles SET favor_count = favor_count - #{delta} WHERE aid=#{aid}")
+    int decrFavorCount(Long aid, int delta);
+
+
 
 }
