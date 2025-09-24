@@ -135,6 +135,7 @@ public class CommentServiceImpl implements CommentService{
     public Comment replyCommentByCid(Long cid, Comment c) {
         Comment parent=commentMapper.selectById(cid);
         if(parent==null){
+            log.error("尝试评论一条不存在的评论");
             throw new RuntimeException("尝试评论一条不存在的评论");
         }
         c.setAid(parent.getAid());//将发表评论的文章id设置成上级评论的所属文章id
