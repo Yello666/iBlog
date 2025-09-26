@@ -30,6 +30,7 @@ public class SecurityAndJwtConfig {
                         .requestMatchers("/comments/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 只有管理员能访问
                         .requestMatchers("/user/**").authenticated()
+                        .requestMatchers("/tags/**").permitAll()
 //                        .anyRequest().authenticated()              // 其他都要认证，登陆了就可以访问
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
