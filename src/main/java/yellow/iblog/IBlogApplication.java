@@ -24,7 +24,7 @@ public class IBlogApplication {
         ConfigurableApplicationContext context =SpringApplication.run(IBlogApplication.class, args);
         // 获取环境变量
         Environment env = context.getEnvironment();
-        // 获取端口号
+        // 获取端口号，默认为8080端口
         String port = env.getProperty("server.port");
         // 获取主机地址
         String hostAddress = InetAddress.getLocalHost().getHostAddress();

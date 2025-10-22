@@ -13,7 +13,11 @@ import yellow.iblog.Common.ApiResponse;
 
 import yellow.iblog.model.Article;
 
+import yellow.iblog.model.ArticleResponse;
 import yellow.iblog.service.ArticleServiceImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -207,5 +211,23 @@ public class ArticleC {
         return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
 
     }
+
+    //获取n篇文章点赞数最高的文章：用于前端展示
+    @GetMapping("/article/hot")
+    public ResponseEntity<ApiResponse<List<ArticleResponse>>> getArticleListOrderedByLikes(@RequestParam Integer num){
+        List<Article> articles=articleService.getArticleListOrderedByLikes(num);
+        if(articles!=null){
+            log.info("返回了{}篇热门文章",num);
+            List<ArticleResponse> articleList=new ArrayList<>();
+            for (Article article : articles) {
+                ArticleResponse r = new ArticleResponse(article);
+                articleList.add(r);
+            }
+            return ResponseEntity.ok(ApiResponse.success(articleList));//返回的uid是字符串
+        } else{
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
+        }
+    }
+
 
 }

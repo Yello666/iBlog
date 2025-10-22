@@ -2,6 +2,7 @@ package yellow.iblog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -29,7 +30,10 @@ public class SecurityAndJwtConfig {
                          .requestMatchers("/article/**").permitAll()
                         .requestMatchers("/comments/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // 只有管理员能访问
-                        .requestMatchers("/user/**").authenticated()
+//                        .requestMatchers("/user/**").authenticated()
+                        .requestMatchers("/user/**").permitAll()
+                        // 单独放行 /user/{uid} 的 GET 请求（允许未登录访问）
+//                        .requestMatchers(HttpMethod.GET, "/user/{uid}").permitAll()
                         .requestMatchers("/tags/**").permitAll()
 //                        .anyRequest().authenticated()              // 其他都要认证，登陆了就可以访问
                 )

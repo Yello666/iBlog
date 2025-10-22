@@ -12,6 +12,7 @@ import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.model.Article;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,8 @@ public class ArticleServiceImpl implements ArticleService{
     private final LikeService likeService;
     private final FavorService favorService;
     private final RedisService redisService;
+
+    private final static  Integer DEFAULT_ARTICLES_NUM=5;
 
 
     //    点赞文章
@@ -171,5 +174,17 @@ public class ArticleServiceImpl implements ArticleService{
                 .orderByDesc(Article::getUpdatedAt);
         return articleMapper.selectPage(articlePage,wrapper);
 
+    }
+    @Override
+    public List<Article> getArticleListOrderedByLikes(Integer num){
+        if(num==null||num<=0){
+            num=DEFAULT_ARTICLES_NUM;//默认值
+        }
+        LambdaQueryWrapper<Article> wrapper=new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(Article::getLikesCount)
+                .last("LIMIT "+num);
+        //LIMIT是mysql语句的写法,控制返回的数量
+        //SELECT * FROM article ORDER BY LikesCount DESC LIMIT 5;
+        return articleMapper.selectList(wrapper);
     }
 }

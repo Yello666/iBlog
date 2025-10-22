@@ -45,7 +45,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(code,message,e);
     }
     public boolean IsSuccess(){
-        return this.getCode() >= 0;
+        return this.getCode() >=0;
 
     }
 }

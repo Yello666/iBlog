@@ -16,7 +16,6 @@ import yellow.iblog.model.LoginResponse;
 import yellow.iblog.model.User;
 import yellow.iblog.service.UserServiceImpl;
 
-//   /user开头的默认已经登陆了
 @Slf4j
 @RestController
 //@RequestMapping("/user")
@@ -66,6 +65,7 @@ public class UserC {
     }
 
     //用户注销自己的账号
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/user")
     public ResponseEntity<ApiResponse<Boolean>> deleteUserByUid(Authentication authentication){
         Long uid = Long.valueOf(authentication.getName());// 从 token (SecurityContext) 中拿 uid
@@ -79,6 +79,7 @@ public class UserC {
     }
     //管理员注销别人的账号
     @DeleteMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Boolean>> deleteUserByAdmin(@RequestParam Long uid) {
         boolean ok = userService.deleteUserByUid(uid);
 
@@ -94,6 +95,7 @@ public class UserC {
 
      //用户修改自己的个人信息
     @PutMapping("/user")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody User u){
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         Long crtUid=Long.valueOf(authentication.getName());
