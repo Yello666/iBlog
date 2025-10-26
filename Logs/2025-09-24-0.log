@@ -1,0 +1,428 @@
+2025-09-24 10:58:34 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 49024 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 10:58:34 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 10:58:34 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 10:58:34 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 10:58:34 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-09-24 10:58:34 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 10:58:34 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 10:58:34 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 10:58:34 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 10:58:34 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 10:58:34 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 609 ms
+2025-09-24 10:58:34 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 10:58:35 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 10:58:35 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 10:58:35 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 10:58:35 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.696 seconds (process running for 1.972)
+2025-09-24 10:58:35 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 10:58:36 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 10:58:36 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 10:58:36 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 10:58:36 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-09-24 10:58:36 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5a91c11c
+2025-09-24 10:58:36 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 10:59:14 [http-nio-8080-exec-2] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-09-24 10:59:14 [http-nio-8080-exec-2] WARN  yellow.iblog.service.ArticleServiceImpl-缓存未命中或第一次查询
+2025-09-24 10:59:14 [http-nio-8080-exec-2] INFO  yellow.iblog.service.ArticleServiceImpl-缓存成功
+2025-09-24 10:59:14 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 10:59:22 [http-nio-8080-exec-3] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 10:59:22 [http-nio-8080-exec-3] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:0,redisArticle缓存里面的点赞数:17,redis取消点赞缓存里面的点赞数:0
+2025-09-24 10:59:22 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 10:59:51 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-存入了:1
+2025-09-24 10:59:51 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938点赞了
+2025-09-24 10:59:53 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-存入了:2
+2025-09-24 10:59:53 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938点赞了
+2025-09-24 10:59:54 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-存入了:3
+2025-09-24 10:59:54 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938点赞了
+2025-09-24 11:00:03 [http-nio-8080-exec-7] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 11:00:03 [http-nio-8080-exec-7] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:3,redisArticle缓存里面的点赞数:20,redis取消点赞缓存里面的点赞数:0
+2025-09-24 11:00:03 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:00:12 [http-nio-8080-exec-8] INFO  yellow.iblog.service.LikeService-取消点赞存入了:1
+2025-09-24 11:00:12 [http-nio-8080-exec-8] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:1
+2025-09-24 11:00:12 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938取消点赞了
+2025-09-24 11:00:15 [http-nio-8080-exec-9] INFO  yellow.iblog.service.LikeService-取消点赞存入了:2
+2025-09-24 11:00:15 [http-nio-8080-exec-9] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:2
+2025-09-24 11:00:15 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938取消点赞了
+2025-09-24 11:00:15 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章 17 的点赞数 3 到数据库
+2025-09-24 11:00:16 [http-nio-8080-exec-10] INFO  yellow.iblog.service.LikeService-取消点赞存入了:3
+2025-09-24 11:00:16 [http-nio-8080-exec-10] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:3
+2025-09-24 11:00:16 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938取消点赞了
+2025-09-24 11:00:21 [http-nio-8080-exec-1] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 11:00:21 [http-nio-8080-exec-1] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:0,redisArticle缓存里面的点赞数:14,redis取消点赞缓存里面的点赞数:0
+2025-09-24 11:00:21 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:04:02 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 11:04:04 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 11:04:04 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 11:04:04 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-09-24 11:44:41 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 49759 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 11:44:41 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 11:44:41 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 11:44:41 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 11:44:41 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-09-24 11:44:41 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 11:44:41 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 11:44:41 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 11:44:41 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 11:44:41 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 11:44:41 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 594 ms
+2025-09-24 11:44:41 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 11:44:42 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 11:44:42 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 11:44:42 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 11:44:42 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.521 seconds (process running for 1.778)
+2025-09-24 11:44:42 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 11:44:43 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 11:44:43 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 11:44:43 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 11:44:43 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-09-24 11:44:43 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@601c2871
+2025-09-24 11:44:43 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 11:44:45 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 11:44:47 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 11:44:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 11:44:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-09-24 11:45:22 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 49778 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 11:45:22 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 11:45:23 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 11:45:23 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 11:45:23 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2025-09-24 11:45:23 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 11:45:23 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 11:45:23 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 11:45:23 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 11:45:23 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 11:45:23 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 674 ms
+2025-09-24 11:45:23 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 11:45:24 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 11:45:24 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 11:45:24 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 11:45:24 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.613 seconds (process running for 1.819)
+2025-09-24 11:45:24 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 11:45:24 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 11:45:24 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 11:45:24 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 11:45:24 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-09-24 11:45:24 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1ff00e31
+2025-09-24 11:45:24 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 11:45:41 [http-nio-8080-exec-2] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-09-24 11:45:41 [http-nio-8080-exec-2] WARN  yellow.iblog.service.ArticleServiceImpl-缓存未命中或第一次查询
+2025-09-24 11:45:41 [http-nio-8080-exec-2] INFO  yellow.iblog.service.ArticleServiceImpl-缓存成功
+2025-09-24 11:45:41 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:45:50 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-存入了:1
+2025-09-24 11:45:50 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938点赞了
+2025-09-24 11:45:51 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-存入了:2
+2025-09-24 11:45:51 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938点赞了
+2025-09-24 11:45:58 [http-nio-8080-exec-5] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 11:45:58 [http-nio-8080-exec-5] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:2,redisArticle缓存里面的点赞数:22,redis取消点赞缓存里面的点赞数:0
+2025-09-24 11:45:58 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:46:05 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-取消点赞存入了:1
+2025-09-24 11:46:05 [http-nio-8080-exec-6] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:1
+2025-09-24 11:46:05 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938取消点赞了
+2025-09-24 11:46:10 [http-nio-8080-exec-7] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 11:46:10 [http-nio-8080-exec-7] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:2,redisArticle缓存里面的点赞数:21,redis取消点赞缓存里面的点赞数:0
+2025-09-24 11:46:10 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:46:14 [scheduling-1] ERROR yellow.iblog.service.LikeSyncService-同步点赞数据到mysql失败，key:article:unlikes:17
+org.mybatis.spring.MyBatisSystemException: null
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:97)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:439)
+	at jdk.proxy2/jdk.proxy2.$Proxy102.update(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.update(SqlSessionTemplate.java:288)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:64)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy107.decrLikeCount(Unknown Source)
+	at yellow.iblog.service.LikeSyncService.syncArticleUnLikesToDB(LikeSyncService.java:81)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.apache.ibatis.binding.BindingException: Parameter 'dalta' not found. Available parameters are [delta, aid, param1, param2]
+	at org.apache.ibatis.binding.MapperMethod$ParamMap.get(MapperMethod.java:210)
+	at org.apache.ibatis.reflection.wrapper.MapWrapper.get(MapWrapper.java:45)
+	at org.apache.ibatis.reflection.MetaObject.getValue(MetaObject.java:116)
+	at com.baomidou.mybatisplus.core.MybatisParameterHandler.setParameters(MybatisParameterHandler.java:288)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.parameterize(PreparedStatementHandler.java:97)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.parameterize(RoutingStatementHandler.java:65)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
+	at jdk.proxy2/jdk.proxy2.$Proxy158.parameterize(Unknown Source)
+	at org.apache.ibatis.executor.SimpleExecutor.prepareStatement(SimpleExecutor.java:91)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:49)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.plugin.Invocation.proceed(Invocation.java:49)
+	at com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor.intercept(MybatisPlusInterceptor.java:106)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:59)
+	at jdk.proxy2/jdk.proxy2.$Proxy157.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425)
+	... 21 common frames omitted
+2025-09-24 11:46:14 [scheduling-1] ERROR o.s.s.support.TaskUtils$LoggingErrorHandler-Unexpected error occurred in scheduled task
+java.lang.RuntimeException: org.mybatis.spring.MyBatisSystemException
+	at yellow.iblog.service.LikeSyncService.syncArticleUnLikesToDB(LikeSyncService.java:89)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.mybatis.spring.MyBatisSystemException: null
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:97)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:439)
+	at jdk.proxy2/jdk.proxy2.$Proxy102.update(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.update(SqlSessionTemplate.java:288)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:64)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy107.decrLikeCount(Unknown Source)
+	at yellow.iblog.service.LikeSyncService.syncArticleUnLikesToDB(LikeSyncService.java:81)
+	... 14 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Parameter 'dalta' not found. Available parameters are [delta, aid, param1, param2]
+	at org.apache.ibatis.binding.MapperMethod$ParamMap.get(MapperMethod.java:210)
+	at org.apache.ibatis.reflection.wrapper.MapWrapper.get(MapWrapper.java:45)
+	at org.apache.ibatis.reflection.MetaObject.getValue(MetaObject.java:116)
+	at com.baomidou.mybatisplus.core.MybatisParameterHandler.setParameters(MybatisParameterHandler.java:288)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.parameterize(PreparedStatementHandler.java:97)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.parameterize(RoutingStatementHandler.java:65)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
+	at jdk.proxy2/jdk.proxy2.$Proxy158.parameterize(Unknown Source)
+	at org.apache.ibatis.executor.SimpleExecutor.prepareStatement(SimpleExecutor.java:91)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:49)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.plugin.Invocation.proceed(Invocation.java:49)
+	at com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor.intercept(MybatisPlusInterceptor.java:106)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:59)
+	at jdk.proxy2/jdk.proxy2.$Proxy157.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425)
+	... 21 common frames omitted
+2025-09-24 11:46:14 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章 17 的点赞数 2 到数据库，并清理缓存 article::17
+2025-09-24 11:46:20 [http-nio-8080-exec-8] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-09-24 11:46:20 [http-nio-8080-exec-8] WARN  yellow.iblog.service.ArticleServiceImpl-缓存未命中或第一次查询
+2025-09-24 11:46:20 [http-nio-8080-exec-8] INFO  yellow.iblog.service.ArticleServiceImpl-缓存成功
+2025-09-24 11:46:20 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:51:22 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 11:51:24 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 11:51:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 11:51:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-09-24 11:51:56 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 49862 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 11:51:56 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 11:51:56 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 11:51:56 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 11:51:56 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-09-24 11:51:56 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 11:51:56 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 11:51:56 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 11:51:56 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 11:51:56 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 11:51:56 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 569 ms
+2025-09-24 11:51:56 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 11:51:57 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 11:51:57 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 11:51:57 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 11:51:57 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.553 seconds (process running for 1.753)
+2025-09-24 11:51:57 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 11:51:58 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 11:51:58 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 11:51:58 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 11:51:58 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-09-24 11:51:58 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@42a351f3
+2025-09-24 11:51:58 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 11:52:06 [http-nio-8080-exec-2] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-09-24 11:52:06 [http-nio-8080-exec-2] WARN  yellow.iblog.service.ArticleServiceImpl-缓存未命中或第一次查询
+2025-09-24 11:52:06 [http-nio-8080-exec-2] INFO  yellow.iblog.service.ArticleServiceImpl-缓存成功
+2025-09-24 11:52:06 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:52:12 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-存入了:1
+2025-09-24 11:52:12 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938点赞了
+2025-09-24 11:52:13 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-存入了:2
+2025-09-24 11:52:13 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938点赞了
+2025-09-24 11:52:15 [http-nio-8080-exec-5] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 11:52:15 [http-nio-8080-exec-5] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:2,redisArticle缓存里面的点赞数:24,redis取消点赞缓存里面的点赞数:0
+2025-09-24 11:52:15 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:52:19 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-取消点赞存入了:1
+2025-09-24 11:52:19 [http-nio-8080-exec-6] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:1
+2025-09-24 11:52:19 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938取消点赞了
+2025-09-24 11:52:20 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-取消点赞存入了:2
+2025-09-24 11:52:20 [http-nio-8080-exec-7] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:2
+2025-09-24 11:52:20 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938取消点赞了
+2025-09-24 11:52:22 [http-nio-8080-exec-8] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 11:52:22 [http-nio-8080-exec-8] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:2,redisArticle缓存里面的点赞数:22,redis取消点赞缓存里面的点赞数:0
+2025-09-24 11:52:22 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:52:47 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章 17 的取消点赞数 2 到数据库
+2025-09-24 11:52:47 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章 17 的点赞数 2 到数据库，并清理缓存 article::17
+2025-09-24 11:53:12 [http-nio-8080-exec-9] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-09-24 11:53:12 [http-nio-8080-exec-9] WARN  yellow.iblog.service.ArticleServiceImpl-缓存未命中或第一次查询
+2025-09-24 11:53:12 [http-nio-8080-exec-9] INFO  yellow.iblog.service.ArticleServiceImpl-缓存成功
+2025-09-24 11:53:12 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 11:53:28 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 11:53:30 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 11:53:30 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 11:53:30 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-09-24 19:21:05 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 53138 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 19:21:05 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 19:21:05 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 19:21:05 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 19:21:05 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-09-24 19:21:05 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 19:21:05 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 19:21:05 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 19:21:05 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 19:21:05 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 19:21:05 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 582 ms
+2025-09-24 19:21:06 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 19:21:06 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 19:21:06 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 19:21:06 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 19:21:06 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.529 seconds (process running for 1.812)
+2025-09-24 19:21:06 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 19:21:07 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 19:21:07 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 19:21:07 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 19:21:07 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-09-24 19:21:07 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6383cb58
+2025-09-24 19:21:07 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 19:22:01 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.UserC-用户1103登陆成功
+2025-09-24 19:22:35 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938收藏了
+2025-09-24 19:22:46 [scheduling-1] INFO  yellow.iblog.service.FavorSyncService-同步评论 17 的收藏数 1 到数据库
+2025-09-24 19:25:06 [http-nio-8080-exec-10] INFO  yellow.iblog.service.FavorService-取消收藏存入了:1
+2025-09-24 19:25:06 [http-nio-8080-exec-10] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:1
+2025-09-24 19:25:06 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938收藏了
+2025-09-24 19:25:20 [http-nio-8080-exec-1] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 19:25:20 [http-nio-8080-exec-1] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:0,redisArticle缓存里面的点赞数:22,redis取消点赞缓存里面的点赞数:0
+2025-09-24 19:25:20 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 19:25:37 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938收藏了
+2025-09-24 19:25:48 [http-nio-8080-exec-3] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 19:25:48 [http-nio-8080-exec-3] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:0,redisArticle缓存里面的点赞数:22,redis取消点赞缓存里面的点赞数:0
+2025-09-24 19:25:48 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 19:26:06 [scheduling-1] INFO  yellow.iblog.service.FavorSyncService-同步评论 17 的收藏数 1 到数据库
+2025-09-24 19:26:51 [http-nio-8080-exec-6] INFO  yellow.iblog.service.FavorService-取消收藏存入了:2
+2025-09-24 19:26:51 [http-nio-8080-exec-6] INFO  yellow.iblog.service.ArticleServiceImpl-设置的取消点赞数为:2
+2025-09-24 19:26:51 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-文章17被1968964617531047938收藏了
+2025-09-24 19:26:57 [http-nio-8080-exec-7] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-09-24 19:26:57 [http-nio-8080-exec-7] INFO  yellow.iblog.service.ArticleServiceImpl-目前redis点赞缓存里面的点赞数:0,redisArticle缓存里面的点赞数:22,redis取消点赞缓存里面的点赞数:0
+2025-09-24 19:26:57 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-09-24 19:30:16 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论 78 的点赞数 1 到数据库,并清理缓存comment::78
+2025-09-24 19:31:56 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论 77 的点赞数 1 到数据库,并清理缓存comment::77
+2025-09-24 19:43:41 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 19:43:42 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m34s756ms).
+2025-09-24 19:43:43 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 19:43:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 19:43:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-09-24 21:26:01 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 54275 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 21:26:01 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 21:26:01 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 21:26:01 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 21:26:01 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-09-24 21:26:01 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 21:26:01 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 21:26:01 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 21:26:01 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 21:26:01 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 21:26:01 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 605 ms
+2025-09-24 21:26:01 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 21:26:02 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 21:26:02 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 21:26:02 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 21:26:02 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.571 seconds (process running for 1.938)
+2025-09-24 21:26:02 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 21:26:02 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 21:26:02 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 21:26:02 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 21:26:02 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-09-24 21:26:03 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@53a73f92
+2025-09-24 21:26:03 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 21:26:52 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论 77 的点赞数 1 到数据库,并清理缓存comment::77
+2025-09-24 21:27:35 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 21:27:37 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 21:27:37 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 21:27:37 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-09-24 21:31:56 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 54510 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 21:31:56 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 21:31:57 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 21:31:57 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 21:31:57 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-09-24 21:31:57 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 21:31:57 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 21:31:57 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 21:31:57 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 21:31:57 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 21:31:57 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 618 ms
+2025-09-24 21:31:57 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 21:31:57 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 21:31:58 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 21:31:58 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 21:31:58 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.564 seconds (process running for 1.92)
+2025-09-24 21:31:58 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 21:31:58 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 21:31:58 [RMI TCP Connection(3)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 21:31:58 [RMI TCP Connection(3)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 21:31:58 [RMI TCP Connection(3)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-09-24 21:31:58 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2e4acbd
+2025-09-24 21:31:58 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 21:32:15 [http-nio-8080-exec-3] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-09-24 21:32:15 [http-nio-8080-exec-3] INFO  yellow.iblog.service.CommentServiceImpl-缓存评论成功
+2025-09-24 21:32:48 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论 77 的点赞数 1 到数据库,并清理缓存comment::77
+2025-09-24 21:34:52 [http-nio-8080-exec-7] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-09-24 21:34:52 [http-nio-8080-exec-7] INFO  yellow.iblog.service.CommentServiceImpl-缓存评论成功
+2025-09-24 21:35:18 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论 77 的取消点赞数 1 到数据库
+2025-09-24 21:57:50 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 21:57:52 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 21:57:52 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 21:57:52 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-09-24 21:57:58 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 54773 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-09-24 21:57:58 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-09-24 21:57:58 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-09-24 21:57:58 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-09-24 21:57:58 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-09-24 21:57:58 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-09-24 21:57:58 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-09-24 21:57:58 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-09-24 21:57:58 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-24 21:57:59 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-09-24 21:57:59 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 547 ms
+2025-09-24 21:57:59 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-24 21:57:59 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-09-24 21:57:59 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-09-24 21:57:59 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-09-24 21:57:59 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.434 seconds (process running for 1.703)
+2025-09-24 21:57:59 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-09-24 21:58:00 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-09-24 21:58:00 [RMI TCP Connection(3)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24 21:58:00 [RMI TCP Connection(3)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-09-24 21:58:00 [RMI TCP Connection(3)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-09-24 21:58:00 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2339b4f9
+2025-09-24 21:58:00 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-09-24 21:58:25 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-24 21:58:27 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-09-24 21:58:27 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-09-24 21:58:27 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.

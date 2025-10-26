@@ -1,0 +1,125 @@
+2025-10-23 00:09:28 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:09:28 [http-nio-8080-exec-9] WARN  yellow.iblog.service.UserServiceImpl-用户1968964617531048000不存在
+2025-10-23 00:11:18 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:12:39 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:12:40 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:13:22 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-23 00:13:24 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-10-23 00:13:24 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-10-23 00:13:24 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-10-23 00:14:03 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 91263 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-10-23 00:14:03 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-10-23 00:14:03 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-23 00:14:03 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-10-23 00:14:03 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-10-23 00:14:03 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-10-23 00:14:04 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:14:04 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-10-23 00:14:04 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-10-23 00:14:04 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-10-23 00:14:04 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 602 ms
+2025-10-23 00:14:04 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-10-23 00:14:04 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-10-23 00:14:04 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:14:04 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-10-23 00:14:04 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.555 seconds (process running for 1.794)
+2025-10-23 00:14:04 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-10-23 00:14:05 [RMI TCP Connection(4)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-23 00:14:05 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-10-23 00:14:05 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-10-23 00:14:05 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-10-23 00:14:05 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1ad3f6ae
+2025-10-23 00:14:05 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-10-23 00:14:18 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章:Article(aid=17, uid=1968964617531047938, title=hello world, content=你好你好你好nihao, likesCount=22, favorCount=2, commentsCount=0, createdAt=2025-09-23T15:18:01, updatedAt=2025-09-24T18:15:05)
+2025-10-23 00:16:49 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-23 00:16:51 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-10-23 00:16:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-10-23 00:16:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-10-23 00:28:33 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 91458 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-10-23 00:28:33 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-10-23 00:28:34 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-23 00:28:34 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-10-23 00:28:34 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-10-23 00:28:34 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-10-23 00:28:34 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:28:34 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-10-23 00:28:34 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-10-23 00:28:34 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-10-23 00:28:34 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 587 ms
+2025-10-23 00:28:34 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-10-23 00:28:34 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-10-23 00:28:35 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:28:35 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-10-23 00:28:35 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.472 seconds (process running for 1.68)
+2025-10-23 00:28:35 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-10-23 00:28:35 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-10-23 00:28:35 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-23 00:28:35 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-10-23 00:28:35 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-10-23 00:28:35 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e765d54
+2025-10-23 00:28:35 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-10-23 00:29:41 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:31:39 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:32:16 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-23 00:32:18 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-10-23 00:32:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-10-23 00:32:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-10-23 00:35:07 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 91636 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-10-23 00:35:07 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-10-23 00:35:07 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-23 00:35:07 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-10-23 00:35:07 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-10-23 00:35:08 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-10-23 00:35:08 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:35:08 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-10-23 00:35:08 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-10-23 00:35:08 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-10-23 00:35:08 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 586 ms
+2025-10-23 00:35:08 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-10-23 00:35:08 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-10-23 00:35:08 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:35:08 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-10-23 00:35:08 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.498 seconds (process running for 1.687)
+2025-10-23 00:35:08 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-10-23 00:35:09 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-10-23 00:35:09 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-23 00:35:09 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-10-23 00:35:09 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-10-23 00:35:09 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1249311
+2025-10-23 00:35:09 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-10-23 00:35:17 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:39:24 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-23 00:39:26 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-10-23 00:39:26 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-10-23 00:39:26 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-10-23 00:39:51 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 91707 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-10-23 00:39:51 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-10-23 00:39:51 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-10-23 00:39:51 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-10-23 00:39:51 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-10-23 00:39:51 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-10-23 00:39:51 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:39:51 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-10-23 00:39:51 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-10-23 00:39:51 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-10-23 00:39:51 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 562 ms
+2025-10-23 00:39:51 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-10-23 00:39:52 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-10-23 00:39:52 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-10-23 00:39:52 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-10-23 00:39:52 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.462 seconds (process running for 1.655)
+2025-10-23 00:39:52 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-10-23 00:39:53 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-10-23 00:39:53 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-23 00:39:53 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-10-23 00:39:53 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-10-23 00:39:53 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@60c85430
+2025-10-23 00:39:53 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-10-23 00:39:59 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:40:00 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:41:14 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:41:17 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-返回了3篇热门文章
+2025-10-23 00:42:23 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-23 00:42:25 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-10-23 00:42:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-10-23 00:42:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
