@@ -1,3 +1,4 @@
+-- 不使用了
 CREATE TABLE au_relations
 (
     aurid      BIGINT AUTO_INCREMENT NOT NULL,

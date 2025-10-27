@@ -5,7 +5,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Step 3: 复制本地 Jar 包到镜像中
-COPY target/iBlog-0.0.1-SNAPSHOT.jar app.jar
+COPY iBlog-0.0.1-SNAPSHOT.jar app.jar
 
 # Step 4: 暴露应用端口（Spring Boot 默认8080）
 EXPOSE 8080
