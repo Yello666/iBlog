@@ -97,7 +97,7 @@ public class LikeSyncService {
         }
     }
 
-    @Scheduled(fixedRate = 3600000) //ms
+    @Scheduled(fixedRate = 10000) //ms
     public void syncArticleUnLikesToDB() {
         // 获取所有key
         Set<String> strAids = redisTemplate.opsForSet().members("article:like:ids");
@@ -133,8 +133,8 @@ public class LikeSyncService {
     }
 
     //同步文章的redis点赞数到mysql，并删除article的缓存
-    // 每隔一个小时执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 3600000) //ms
+    // 每隔10s执行一次，可以根据需求调整
+    @Scheduled(fixedRate = 10000) //ms
     public void syncArticleLikesToDB() {
         // 获取所有被点赞过的文章 ID
         Set<String> articleIds = redisTemplate.opsForSet().members("article:like:ids");

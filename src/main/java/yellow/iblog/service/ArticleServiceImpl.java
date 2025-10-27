@@ -185,7 +185,7 @@ public class ArticleServiceImpl implements ArticleService{
                 .last("LIMIT "+num);
         //LIMIT是mysql语句的写法,控制返回的数量
         //SELECT * FROM article ORDER BY LikesCount DESC LIMIT 5;
-        return articleMapper.selectList(wrapper);
-        //test
+
+         return articleMapper.selectList(wrapper);
     }
 }

@@ -6,6 +6,7 @@ CREATE TABLE comment
     uid        BIGINT       NOT NULL,
     parent_id  BIGINT       NULL,
     created_at datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    likes_count int NULL DEFAULT 0,
     INDEX idx_aid (aid), -- 索引就是让aid排到第一列，然后后面的再填相关信息，其实就是主键的查询功能，之前是cid排到第一列
     INDEX idx_parent_id (parent_id),
     INDEX idx_aid_created_at (aid, created_at), -- 实现文章评论按时间排序的索引

@@ -2,10 +2,9 @@ create table tag_article_relations
 (
     ta_relation_id bigint auto_increment
         primary key,
-    tid            bigint not null,
-    aid            bigint not null,
-    constraint uq_tid_aid
-        unique (tid, aid)
+    tag_name varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+    aid            bigint not null
+
 );
 
 create index idx_aid

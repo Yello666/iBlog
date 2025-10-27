@@ -17,7 +17,7 @@ public class FavorSyncService {
 
     private final StringRedisTemplate redisTemplate;
     private final ArticleMapper articleMapper;
-    @Scheduled(fixedRate = 50000)
+    @Scheduled(fixedRate = 10000)
     public void syncUnFavorToDB() {
         // 获取所有key
         Set<String> keys = redisTemplate.keys("article:favor:*");
@@ -46,8 +46,8 @@ public class FavorSyncService {
             }
         }
     }
-    // 每隔50秒执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 50000)
+    // 每隔10秒执行一次，可以根据需求调整
+    @Scheduled(fixedRate = 10000)
     public void syncFavorToDB() {
         // 获取所有key
         Set<String> keys = redisTemplate.keys("article:favor:*");
