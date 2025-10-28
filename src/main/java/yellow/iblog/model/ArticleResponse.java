@@ -27,6 +27,11 @@ public class ArticleResponse {
 
     private LocalDateTime updatedAt;
 
+    private boolean isLiked;
+
+    private boolean isFavored;
+
+
     public ArticleResponse(Article a){
         this.aid=a.getAid();
         this.uid=String.valueOf(a.getUid());
@@ -37,7 +42,9 @@ public class ArticleResponse {
         this.favorCount=a.getFavorCount();
         this.createdAt=a.getCreatedAt();
         this.updatedAt=a.getUpdatedAt();
+
     }
+
 
 
 }

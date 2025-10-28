@@ -97,10 +97,12 @@ public class LikeSyncService {
         }
     }
 
+
+    //文章取消点赞同步
     @Scheduled(fixedRate = 10000) //ms
     public void syncArticleUnLikesToDB() {
         // 获取所有key
-        Set<String> strAids = redisTemplate.opsForSet().members("article:like:ids");
+        Set<String> strAids = redisTemplate.opsForSet().members("article:unlike:aids");
         if (strAids == null || strAids.isEmpty()) {
             return;
         }
@@ -127,7 +129,7 @@ public class LikeSyncService {
                 //slf4j中，如果最后一个对象是异常，不用使用占位符
                 log.error("同步文章取消点赞数据到mysql失败，key:{}",strAid, e);
             } finally{
-                redisTemplate.opsForSet().remove("article:like:ids",strAid);
+                redisTemplate.opsForSet().remove("article:unlike:aids",strAid);
             }
         }
     }
@@ -137,7 +139,7 @@ public class LikeSyncService {
     @Scheduled(fixedRate = 10000) //ms
     public void syncArticleLikesToDB() {
         // 获取所有被点赞过的文章 ID
-        Set<String> articleIds = redisTemplate.opsForSet().members("article:like:ids");
+        Set<String> articleIds = redisTemplate.opsForSet().members("article:like:aids");
         if (articleIds == null || articleIds.isEmpty()) {
             return;
         }
@@ -168,7 +170,7 @@ public class LikeSyncService {
                 log.error("同步文章点赞数据到 mysql 失败，文章ID: {}", aidStr, e);
             } finally {
                 // 无论成功失败，都先移除集合里的 ID，避免下次重复处理
-                redisTemplate.opsForSet().remove("article:like:ids", aidStr);
+                redisTemplate.opsForSet().remove("article:like:aids", aidStr);
             }
         }
     }

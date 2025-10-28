@@ -15,6 +15,9 @@ import yellow.iblog.model.Article;
 
 import yellow.iblog.model.ArticleResponse;
 import yellow.iblog.service.ArticleServiceImpl;
+import yellow.iblog.service.FavorService;
+import yellow.iblog.service.LikeService;
+import yellow.iblog.service.LikeSyncService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,9 @@ import java.util.List;
 //@RequestMapping("/article")
 public class ArticleC {
     private final ArticleServiceImpl articleService;
+    private final LikeSyncService likeSyncService;
+    private final LikeService likeService;
+    private final FavorService favorService;
 
 //    //取消收藏
 //    @PostMapping("/article/undoFavor")
@@ -124,15 +130,32 @@ public class ArticleC {
 
     //用户查看某一篇文章
     //获取单条数据不需要分页，获取多条数据需要分页
+    //需要联系uid来看它有没有点赞
     @GetMapping("/article/{aid}")
-    public ResponseEntity<ApiResponse<Article>> getArticleByAid(@PathVariable Long aid) {
+    public ResponseEntity<ApiResponse<ArticleResponse>> getArticleByAid(
+            @PathVariable Long aid,
+            @RequestParam Long uid) {
         Article a=articleService.getArticleByAid(aid);
+        ArticleResponse response;
         if(a!=null){
             log.info("用户{}的文章{}被查看了",a.getUid(),a.getAid());
-
-            return ResponseEntity.ok(ApiResponse.success(a));
+            response=new ArticleResponse(a);
+            if(uid!=null){
+                //去查redis有没有点赞
+                response.setLiked(likeService.getArticleIsLiked(aid,uid));
+                response.setFavored(favorService.getArticleIsFavored(aid,uid));
+                log.info("isliked:{},isFavored:{}",response.isLiked(),response.isFavored());
+            }
+            else{
+                response.setLiked(false);
+                response.setFavored(false);
+            }
+            return ResponseEntity.ok(ApiResponse.success(response));
+        } else{
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
         }
-        return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
+
+
 
     }
 

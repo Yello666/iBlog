@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService{
         }
 //        a.setLikesCount(a.getLikesCount()+1); 没有必要做这个操作，因为数据都是从数据库拿出来，
 //        临时点赞存放到redis那，获取点赞数是先从数据库查询，再与redis相加，没必要在这里加点赞数
-        int deltaLikes=Math.toIntExact(likeService.likeArticle(aid));
+        int deltaLikes=Math.toIntExact(likeService.likeArticle(aid,uid));
         if(deltaLikes<=0){
             log.error("用户{}点赞文章{}失败",uid,aid);
             throw new RuntimeException("点赞失败");
@@ -56,7 +56,7 @@ public class ArticleServiceImpl implements ArticleService{
             throw new RuntimeException("尝试取消点赞不存在的文章");
         }
 
-        int redisUnLikes=Math.toIntExact(likeService.unlikeArticle(aid));
+        int redisUnLikes=Math.toIntExact(likeService.unlikeArticle(aid,uid));
         log.info("设置的取消点赞数为:{}",redisUnLikes);
         return redisUnLikes;
     }
@@ -69,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService{
             log.error("用户{}取消收藏文章{}失败:文章不存在",uid,aid);
             throw new RuntimeException("尝试取消收藏不存在的文章");
         }
-        int redisUnLikes=Math.toIntExact(favorService.unFavorArticle(aid));
+        int redisUnLikes=Math.toIntExact(favorService.unFavorArticle(aid,uid));
         log.info("设置的取消点赞数为:{}",redisUnLikes);
         return redisUnLikes;
     }
@@ -82,7 +82,7 @@ public class ArticleServiceImpl implements ArticleService{
             log.error("用户{}收藏文章{}失败:文章不存在",uid,aid);
             throw new RuntimeException("尝试收藏不存在的文章");
         }
-        int deltaFavors=Math.toIntExact(favorService.favorArticle(aid));
+        int deltaFavors=Math.toIntExact(favorService.favorArticle(aid,uid));
         if(deltaFavors<=0){
             log.error("用户{}收藏文章{}失败",uid,aid);
             throw new RuntimeException("收藏失败");
