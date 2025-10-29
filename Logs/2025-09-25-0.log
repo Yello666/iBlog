@@ -9,7 +9,7 @@
 2025-09-25 19:52:43 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 19:52:43 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 19:52:43 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 692 ms
-2025-09-25 19:52:43 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 19:52:43 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 19:52:43 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 19:52:44 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 19:52:44 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -37,7 +37,7 @@
 2025-09-25 19:57:11 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 19:57:11 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 19:57:11 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 590 ms
-2025-09-25 19:57:11 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 19:57:11 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 19:57:11 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 19:57:11 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 19:57:11 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -72,7 +72,7 @@
 2025-09-25 19:59:04 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 19:59:04 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 19:59:04 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 570 ms
-2025-09-25 19:59:04 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 19:59:04 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 19:59:04 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 19:59:04 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 19:59:04 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -99,7 +99,7 @@
 2025-09-25 19:59:24 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 19:59:24 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 19:59:24 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 523 ms
-2025-09-25 19:59:24 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 19:59:24 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 19:59:25 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 19:59:25 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 19:59:25 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -127,7 +127,7 @@
 2025-09-25 20:48:48 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 20:48:48 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 20:48:48 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 571 ms
-2025-09-25 20:48:48 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 20:48:48 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 20:48:48 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 20:48:49 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 20:48:49 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -154,7 +154,7 @@
 2025-09-25 20:52:56 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 20:52:56 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 20:52:56 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 572 ms
-2025-09-25 20:52:56 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 20:52:56 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 20:52:56 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext-Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'filterChain' defined in class path resource [yellow/iblog/config/SecurityAndJwtConfig.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'filterChain' threw exception with message: Error creating bean with name 'mvcHandlerMappingIntrospector' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Ambiguous mapping. Cannot map 'tagC' method 
 yellow.iblog.Controller.TagC#CreateTag(String)
 to {POST [/tags]}: There is already 'tagC' bean method
@@ -275,7 +275,7 @@ yellow.iblog.Controller.TagC#AddTagsToArticle(TagRequest) mapped.
 2025-09-25 20:55:19 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 20:55:19 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 20:55:19 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 572 ms
-2025-09-25 20:55:19 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 20:55:19 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 20:55:20 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 20:55:20 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 20:55:20 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -317,7 +317,7 @@ yellow.iblog.Controller.TagC#AddTagsToArticle(TagRequest) mapped.
 2025-09-25 21:00:46 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 21:00:46 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 21:00:46 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 569 ms
-2025-09-25 21:00:46 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 21:00:46 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 21:00:46 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 21:00:46 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 21:00:46 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -349,7 +349,7 @@ yellow.iblog.Controller.TagC#AddTagsToArticle(TagRequest) mapped.
 2025-09-25 21:02:36 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 21:02:36 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 21:02:36 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 553 ms
-2025-09-25 21:02:36 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 21:02:36 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 21:02:36 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 21:02:36 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 21:02:36 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
@@ -376,7 +376,7 @@ yellow.iblog.Controller.TagC#AddTagsToArticle(TagRequest) mapped.
 2025-09-25 21:03:11 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
 2025-09-25 21:03:11 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
 2025-09-25 21:03:11 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 531 ms
-2025-09-25 21:03:11 [main] INFO  yellow.iblog.config.Page-分页插件已加载
+2025-09-25 21:03:11 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
 2025-09-25 21:03:12 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
 2025-09-25 21:03:12 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
 2025-09-25 21:03:12 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'

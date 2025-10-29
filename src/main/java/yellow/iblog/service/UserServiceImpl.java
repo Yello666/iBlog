@@ -5,15 +5,12 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import yellow.iblog.Common.ApiResponse;
-import yellow.iblog.model.UpdatePswRequest;
+import yellow.iblog.model.*;
 import yellow.iblog.Common.Utils;
 import yellow.iblog.exception.PasswordIncorrectException;
 import yellow.iblog.exception.UserNotFoundException;
 import yellow.iblog.mapper.UserMapper;
 import yellow.iblog.jwt.JwtUtils;
-import yellow.iblog.model.LoginInfo;
-import yellow.iblog.model.LoginResponse;
-import yellow.iblog.model.User;
 
 import java.time.LocalDateTime;
 
@@ -45,10 +42,14 @@ public class UserServiceImpl implements UserService {
         }
         //生成token
         String token= JwtUtils.generateToken(u.getUid(),u.getUserName(),u.getRole());
+        //设置用户信息，uid为字符串
         LoginResponse response=new LoginResponse();
-        response.setUser(u);
+        UserResponse userResponse=new UserResponse(u);
+        log.info("UserResponse:{}",userResponse);
+        response.setUser(userResponse);
         //token
         response.setToken(token);
+        log.info("response:{}",response);
         return ApiResponse.success(response);
 
 

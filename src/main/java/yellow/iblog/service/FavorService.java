@@ -37,12 +37,13 @@ public class FavorService {
         try {
             // 存储增量（每次+1）,返回的是当前的个数
             Long newCount = redisTemplate.opsForValue().increment(key, 1);
-            redisTemplate.expire(key, 2, TimeUnit.MINUTES); // 设置过期时间
+            redisTemplate.expire(key, 1, TimeUnit.HOURS); // 设置过期时间
 
             //记录收藏过这篇文章的user//TODO 持久化存储
             String setKey="article:"+aid+"favor:uids:";
-            redisTemplate.opsForSet().add(key,String.valueOf(uid));
-            redisTemplate.expire(setKey, 2, TimeUnit.MINUTES); // 设置过期时间
+            redisTemplate.opsForSet().add(setKey,String.valueOf(uid));
+            redisTemplate.expire(setKey, 1, TimeUnit.HOURS); // 设置过期时间
+            log.info("用户{}收藏了文章{}",uid,aid);
 
             return newCount;
         } catch (Exception e) {

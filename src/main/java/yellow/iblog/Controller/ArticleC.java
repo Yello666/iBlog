@@ -135,6 +135,7 @@ public class ArticleC {
     public ResponseEntity<ApiResponse<ArticleResponse>> getArticleByAid(
             @PathVariable Long aid,
             @RequestParam Long uid) {
+        log.info("调用了查看文章controller");
         Article a=articleService.getArticleByAid(aid);
         ArticleResponse response;
         if(a!=null){
@@ -147,6 +148,7 @@ public class ArticleC {
                 log.info("isliked:{},isFavored:{}",response.isLiked(),response.isFavored());
             }
             else{
+                log.info("未登陆用户查看文章");
                 response.setLiked(false);
                 response.setFavored(false);
             }

@@ -33,7 +33,7 @@ public class UserC {
         User savedUser=userService.createUser(u);
         if(savedUser!=null){
             log.info("{}用户{}成功注册",savedUser.getRole(),savedUser.getUid());
-            UserResponse r=new UserResponse().FromUser(u);
+            UserResponse r=new UserResponse(u);
             return ResponseEntity.ok(ApiResponse.success(r));
         } else{
             return ResponseEntity.badRequest().body(ApiResponse.fail("error"));
@@ -46,7 +46,6 @@ public class UserC {
         if(result.IsSuccess()){
             log.info("用户{}登陆成功",loginInfo.getUserName());
             return ResponseEntity.ok(result);
-
         } else{
             log.warn("用户{}登陆失败",loginInfo.getUserName());
             return ResponseEntity.badRequest().body(result);
@@ -57,7 +56,7 @@ public class UserC {
     public ResponseEntity<ApiResponse<UserResponse>> getUserByUid(@PathVariable Long uid){
         User savedUser=userService.getUserByUid(uid);
         if(savedUser!=null){
-            UserResponse r=new UserResponse().FromUser(savedUser);
+            UserResponse r=new UserResponse(savedUser);
             return ResponseEntity.ok(ApiResponse.success(r));
         } else{
             return ResponseEntity.badRequest().body(ApiResponse.fail("用户未注册"));
@@ -105,7 +104,7 @@ public class UserC {
         }
         User savedUser=userService.updateUser(u);
         if(savedUser!=null){
-            UserResponse r=new UserResponse().FromUser(u);
+            UserResponse r=new UserResponse(u);
             return ResponseEntity.ok(ApiResponse.success(r));
         } else{
             return ResponseEntity.badRequest().body(ApiResponse.fail("error"));

@@ -15,14 +15,14 @@ import java.util.List;
 public interface ArticleMapper extends BaseMapper<Article> {
     default int addComments(Long aid){
         UpdateWrapper<Article> wrapper=new UpdateWrapper<>();
-        wrapper.setSql("comment_count=comment_count+1")
+        wrapper.setSql("comments_count=comments_count+1")
                 .eq("aid",aid);
         return this.update(null,wrapper);//第一个传null，可以动态更新
 
     }
     default int deleteComments(Long aid){
         UpdateWrapper<Article> wrapper=new UpdateWrapper<>();
-        wrapper.setSql("comment_count=comment_count-1")
+        wrapper.setSql("comments_count=comments_count-1")
                 .eq("aid",aid);
         return this.update(null,wrapper);//第一个传null，可以动态更新
 
