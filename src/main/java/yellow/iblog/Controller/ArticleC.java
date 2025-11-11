@@ -164,11 +164,11 @@ public class ArticleC {
     //用户查看某个用户的所有文章列表
     //要做分页
     @GetMapping("/article/user/{uid}")
-    public ResponseEntity<ApiResponse<Page<Article>>> getArticleByUid(
+    public ResponseEntity<ApiResponse<Page<ArticleResponse>>> getArticleByUid(
             @PathVariable Long uid,
             @RequestParam(defaultValue ="1") int page,
             @RequestParam(defaultValue ="10") int size) {
-        Page<Article> articleList=articleService.getArticleByUid(uid,page,size);
+        Page<ArticleResponse> articleList=articleService.getArticleByUid(uid,page,size);
         if(articleList!=null){
             return ResponseEntity.ok(ApiResponse.success(articleList));
         }

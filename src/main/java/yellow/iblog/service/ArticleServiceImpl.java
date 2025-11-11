@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.model.Article;
+import yellow.iblog.model.ArticleResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -166,13 +167,15 @@ public class ArticleServiceImpl implements ArticleService{
 
     }
     @Override
-    public Page<Article> getArticleByUid(Long uid, int page, int size){
+    public Page<ArticleResponse> getArticleByUid(Long uid, int page, int size){
         Page<Article> articlePage=new Page<>(page,size);
         LambdaQueryWrapper<Article> wrapper=new LambdaQueryWrapper<>();
         wrapper.eq(Article::getUid,uid)
-                .select(Article::getAid,Article::getTitle,Article::getUpdatedAt)
                 .orderByDesc(Article::getUpdatedAt);
-        return articleMapper.selectPage(articlePage,wrapper);
+//                .select(Article::getAid,Article::getTitle,Article::getUpdatedAt)//值返回aid，title，更新时间，注释掉就返回所有字段
+
+        Page<Article> articleList=articleMapper.selectPage(articlePage,wrapper);
+        return (Page<ArticleResponse>) articleList.convert(ArticleResponse::new);
 
     }
     @Override

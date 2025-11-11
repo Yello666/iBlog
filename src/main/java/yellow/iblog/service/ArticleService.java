@@ -2,6 +2,7 @@ package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import yellow.iblog.model.Article;
+import yellow.iblog.model.ArticleResponse;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ public interface ArticleService {
     Boolean deleteArticleByAid(Long Aid);
     Article updateArticle(Article article);
     Article getArticleByAid(Long Aid);
-    Page<Article> getArticleByUid(Long uid, int page, int size);
+    Page<ArticleResponse> getArticleByUid(Long uid, int page, int size);
     List<Article> getArticleListOrderedByLikes(Integer num);
 }

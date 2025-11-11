@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class ArticleResponse {
+    private Integer SHOW_LENGTH=200;//返回的文章的字数
+
     private Long aid;
 
     private String uid;//uid变成字符串，防止前端溢出
@@ -32,16 +34,25 @@ public class ArticleResponse {
     private boolean isFavored;
 
 
+
     public ArticleResponse(Article a){
         this.aid=a.getAid();
         this.uid=String.valueOf(a.getUid());
         this.title=a.getTitle();
         this.commentsCount=a.getCommentsCount();
-        this.content=a.getContent();
+//        this.content=a.getContent();
         this.likesCount=a.getLikesCount();
         this.favorCount=a.getFavorCount();
         this.createdAt=a.getCreatedAt();
         this.updatedAt=a.getUpdatedAt();
+        // 截取content前200字
+        String originalContent = a.getContent();
+        if (originalContent != null) {
+            int length = Math.min(originalContent.length(), SHOW_LENGTH);
+            this.content = originalContent.substring(0, length);
+        } else {
+            this.content = null;
+        }
 
     }
 
