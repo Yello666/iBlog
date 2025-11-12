@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import yellow.iblog.Common.ApiResponse;
 
 import yellow.iblog.model.Comment;
+import yellow.iblog.model.CommentLikeResponse;
+import yellow.iblog.model.CommentResponse;
 import yellow.iblog.service.CommentServiceImpl;
 
 import java.util.List;
@@ -25,39 +27,50 @@ public class CommentC {
         this.commentService = commentService;
     }
 
-    //取消点赞
-    @PostMapping("/comments/unlike")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ApiResponse<Integer>> UnLikeCommentByCid(@RequestParam Long cid){
-        Integer deltaLikes=commentService.UnLikeComment(cid);
-        if(deltaLikes<=0){
-            log.error("取消点赞失败,cid:{}",cid);
-            return ResponseEntity.internalServerError().body(ApiResponse.fail("取消点赞失败"));
-        }
-        return ResponseEntity.ok(ApiResponse.success(deltaLikes));
-    }
+//    //取消点赞
+//    @PostMapping("/comments/unlike")
+//    @PreAuthorize("isAuthenticated()")
+//    public ResponseEntity<ApiResponse<Integer>> UnLikeCommentByCid(@RequestParam Long cid){
+//        Integer deltaLikes=commentService.UnLikeComment(cid);
+//        if(deltaLikes<=0){
+//            log.error("取消点赞失败,cid:{}",cid);
+//            return ResponseEntity.internalServerError().body(ApiResponse.fail("取消点赞失败"));
+//        }
+//        return ResponseEntity.ok(ApiResponse.success(deltaLikes));
+//    }
 
     //点赞评论
     @PostMapping("/comments/like")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ApiResponse<Integer>> LikeCommentByCid(@RequestParam Long cid){
-        Integer deltaLikes=commentService.LikeComment(cid);
-        if(deltaLikes<=0){
+    public ResponseEntity<ApiResponse<CommentLikeResponse>> LikeCommentByCid(@RequestParam Long cid){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        Long uid=Long.valueOf(authentication.getName());
+        CommentLikeResponse response =commentService.LikeComment(cid,uid);
+
+        if(response==null||response.getCrtLikes()<0){
             log.error("点赞失败,cid:{}",cid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("点赞失败"));
         }
-        return ResponseEntity.ok(ApiResponse.success(deltaLikes));
+        return ResponseEntity.ok(ApiResponse.success(response));
 
     }
     //获取单条评论
     @GetMapping("/comments")
-    public ResponseEntity<ApiResponse<Comment>> GetCommentByCid(@RequestParam Long cid){
-        Comment c=commentService.getCommentByCid(cid);
-        if(c==null){
+    public ResponseEntity<ApiResponse<CommentResponse>> GetCommentByCid(@RequestParam Long cid){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String watcherUidStr=authentication.getName();
+        Long watcherUid;
+        if(watcherUidStr!=null){
+            watcherUid=Long.parseLong(watcherUidStr);//登陆了的用户（可以查看自己有没有赞过评论）
+        } else{
+            watcherUid=-1L;//未登陆用户
+        }
+        CommentResponse response=commentService.getCommentByCid(cid,watcherUid);
+        if(response==null){
             log.error("获取评论失败,cid:{}",cid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error:获取评论失败"));
         }
-        return ResponseEntity.ok(ApiResponse.success(c));
+        return ResponseEntity.ok(ApiResponse.success(response));
 
     }
     /**
@@ -132,13 +145,13 @@ public class CommentC {
      * @param size 每页大小（默认 10）
      */
     @GetMapping("/comments/article")
-    public ResponseEntity<ApiResponse<Page<Comment>>> getCommentsByArticle(
+    public ResponseEntity<ApiResponse<Page<CommentResponse>>> getCommentsByArticle(
             @RequestParam Long aid,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
         // 1. 打印传入的查询参数（确认aid、page、size是否正确）
         log.info("查询文章评论：aid={}, 页码={}, 每页大小={}", aid, page, size);
-        Page<Comment> comments = commentService.getCommentsByAid(aid, page, size);
+        Page<CommentResponse> comments = commentService.getCommentsByAid(aid, page, size);
         if(comments!=null){
             // 3. 打印查询结果的关键信息（核心：总记录数、当前页记录数）
             log.info("查询结果：总记录数={}, 当前页记录数={}", comments.getTotal(), comments.getRecords().size());

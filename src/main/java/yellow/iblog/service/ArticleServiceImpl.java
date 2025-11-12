@@ -90,14 +90,14 @@ public class ArticleServiceImpl implements ArticleService{
         return null;
     }
 
-
-
+    //删除文章
     @Override
     @CacheEvict(value="article",key="#aid")
     public Boolean deleteArticleByAid(Long aid) {
         return articleMapper.deleteById(aid) > 0;
     }
 
+    //更新文章
     @Override
     @CachePut(value="article",key="#article.aid")
     public Article updateArticle(Article article) {

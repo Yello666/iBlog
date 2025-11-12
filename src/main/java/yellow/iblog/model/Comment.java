@@ -2,13 +2,17 @@ package yellow.iblog.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 
 @Data//包含getter和setter，但是不包括构造函数
 @TableName("comment")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
     @TableId(type= IdType.AUTO)
     private Long cid;
@@ -38,7 +42,7 @@ public class Comment {
         this.parentCid = parent_cid;
         this.likesCount=0;
     }
-    public Comment(){}
+
 }
 
 

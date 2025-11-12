@@ -7,14 +7,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.mapper.CommentMapper;
-import yellow.iblog.model.Comment;
+import yellow.iblog.mapper.UserMapper;
+import yellow.iblog.model.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,11 +30,12 @@ public class CommentServiceImpl implements CommentService{
     private final ArticleMapper articleMapper;
     private final LikeService likeService; // 注入LikeService
     private final RedisService redisService;
-    private final RedisTemplate redisTemplate;
+    private final StringRedisTemplate redisTemplate;
+    private final UserMapper userMapper;
 
     //点赞数增量从redis获取，redis的点赞数定期相加存储到mysql中
     @Override
-    public Comment getCommentByCid(Long cid) {
+    public CommentResponse getCommentByCid(Long cid,Long watcherUid) {
         //1.先读缓存
         Comment cacheC=(Comment) redisService.checkCache("comment",cid);
         if(cacheC==null){
@@ -39,61 +45,72 @@ public class CommentServiceImpl implements CommentService{
                 log.warn("尝试查询不存在的评论,cid:{}",cid);
                 return null;
             } else{
-                //3.设置当前点赞数
-                int redisCacheLikes=Math.toIntExact(likeService.getCommentLikeCount(cid));
-                int redisCacheUnlikes=Math.toIntExact(likeService.getCommentUnLikeCount(cid));
-                int dbLikes=dbComment.getLikesCount();
-                dbComment.setLikesCount(redisCacheLikes+dbLikes-redisCacheUnlikes);
-                //4.手动缓存
+                //3.设置当前点赞数和状态
+                int crtLikes=likeService.getCommentLikeCount(cid);
+                dbComment.setLikesCount(crtLikes);
+                //4.手动缓存,设置评论过期时间2H
                 if(redisService.addCache("comment",cid,dbComment,2)){
                     log.info("缓存评论成功");
                 } else{
                     log.warn("缓存评论失败");
                 }
-                return dbComment;
+                //5.查询用户名，返回增加用户名
+                Long uid= dbComment.getUid();
+                User u=userMapper.selectById(uid);
+                CommentResponse response=new CommentResponse(dbComment);
+                if(u!=null){
+                    response.setUserName(u.getUserName());
+
+                } else{
+                    response.setUserName("用户已注销");
+                }
+                if(watcherUid!=-1){
+                    response.setLiked(likeService.getCommentIsLiked(cid,watcherUid));
+                }
+                return response;
             }
         } else{
-            //5.如果存在评论缓存，需要返回点赞数为缓存comment的点赞数+redisLike-redisUnLike
-            int redisCacheLikes=Math.toIntExact(likeService.getCommentLikeCount(cid));
-            int redisCacheUnlikes=Math.toIntExact(likeService.getCommentUnLikeCount(cid));
-            cacheC.setLikesCount(redisCacheLikes+cacheC.getLikesCount()-redisCacheUnlikes);
-            log.info("目前redis评论点赞缓存里面的点赞数:{},redisComment缓存里面的点赞数:{}," +
-                    "redis取消评论点赞缓存里面的点赞数:{}",redisCacheLikes,cacheC.getLikesCount(),redisCacheUnlikes);
-            return cacheC;
+            //如果存在评论缓存
+            //5.查询用户名，返回增加用户名
+            Long uid= cacheC.getUid();
+            User u=userMapper.selectById(uid);
+            CommentResponse response=new CommentResponse(cacheC);
+            if(u!=null){
+                response.setUserName(u.getUserName());
+            } else{
+                response.setUserName("用户已注销");
+            }
+            //6.更新点赞数和点赞状态
+            int crtLikes=likeService.getCommentLikeCount(cid);
+            response.setLikesCount(crtLikes);
+            if(watcherUid!=-1){
+                response.setLiked(likeService.getCommentIsLiked(cid,watcherUid));
+            }
+            return response;
         }
 
-    }
-    @Transactional
-    @Override
-    public Integer UnLikeComment(Long cid) {
-        Comment c=commentMapper.selectById(cid);
-        if(c==null){
-            log.error("评论{}不存在",cid);
-            throw new RuntimeException("尝试取消点赞不存在的评论");
-        }
-        Long deltaLikes= likeService.unlikeComment(cid);
-        if(deltaLikes<=0) {//将点赞数存到redis中
-            log.error("存储取消点赞数到redis失败,cid:{}",cid);
-            throw new RuntimeException("点赞失败");
-        }
-        return Math.toIntExact(deltaLikes);
     }
 
     @Override
     @Transactional
-    public Integer LikeComment(Long cid) {
+    public CommentLikeResponse LikeComment(Long cid, Long uid) {
         Comment c=commentMapper.selectById(cid);//selectById(cid) 基于主键查询，在有索引的情况下是O(1)复杂度
-        //所以不需要缓存
         if(c==null){
             log.error("评论{}不存在",cid);
             throw new RuntimeException("尝试点赞不存在的评论");
         }
-        Long deltaLikes= likeService.likeComment(cid);
-        if(deltaLikes<=0) {//将点赞数存到redis中
-            log.error("存储点赞数到redis失败,cid:{}",cid);
-            throw new RuntimeException("点赞失败");
+        Boolean status = likeService.likeComment(cid,uid);
+        if(status){
+            log.info("用户{}点赞了评论{}",uid,cid);
+        } else{
+            log.info("用户{}取消了评论{}的点赞",uid,cid);
         }
-        return Math.toIntExact(deltaLikes);
+        int crtLikes=likeService.getCommentLikeCount(cid);
+        CommentLikeResponse response=new CommentLikeResponse();
+        response.setCrtLikes(crtLikes);
+        response.setStatus(status);
+        return response;
+
     }
 
     //写的时候不需要添加缓存，因为会返回data，就等于有缓存了
@@ -154,7 +171,7 @@ public class CommentServiceImpl implements CommentService{
 //    @Cacheable(value="comment",key="#aid + '_' + #page + '_' + #size",unless="#result==null")
     //分页就不要做缓存了，太麻烦了，还要改缓存呢
     @Override
-    public Page<Comment> getCommentsByAid(Long aid, int page, int size) {
+    public Page<CommentResponse> getCommentsByAid(Long aid, int page, int size) {
         // 使用分页插件
         Page<Comment> commentPage = new Page<>(page, size);//分页插件，page是第几页，size是页面有多少个对象
         LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();//这个是查询对象
@@ -164,23 +181,42 @@ public class CommentServiceImpl implements CommentService{
                 .isNull(Comment::getParentCid) // 只查没有上级评论的评论，即顶级评论
                 .orderByDesc(Comment::getCreatedAt);//查询需要按照时间排序降序排序，即越晚发布的越先显示
 
-        // 获取评论分页数据
+        // 1.获取评论分页数据
         Page<Comment> comments = commentMapper.selectPage(commentPage, wrapper);
 
-        // 更新点赞数(redisLikes+数据库-redisUnLikes）
+        // 2.更新点赞数
         for (Comment comment : comments.getRecords()) {
-            String likeKey = "comment:likes:" + comment.getCid();
-            String unlikeKey="comment:unlikes:" + comment.getCid();
-            Integer likeCount =(Integer)redisTemplate.opsForValue().get(likeKey);
-            Integer unlikeCount =(Integer) redisTemplate.opsForValue().get(unlikeKey);
-            likeCount=likeCount==null?0 :likeCount;
-            unlikeCount=unlikeCount==null? 0:unlikeCount;
-            comment.setLikesCount(comment.getLikesCount()+likeCount-unlikeCount);  // 设置评论的点赞数
+            int crtLikes=likeService.getCommentLikeCount(comment.getCid());
+            comment.setLikesCount(crtLikes);  // 设置评论的点赞数
         }
+        // 3. 批量查询用户名
+        // 3.1 提取所有评论的uid，放到list里面
+        List<Long> uidList = comments.getRecords().stream()
+                .map(Comment::getUid)
+                .distinct() // 去重，减少查询次数
+                .collect(Collectors.toList());
 
-        return comments;
+        // 3.2 使用Map将list里面的uid和userName对应起来
+        Map<Long, String> uidToNameMap = new HashMap<>();
+        if (!uidList.isEmpty()) {
+            List<User> userList = userMapper.selectBatchIds(uidList);
+            for (User user : userList) {
+                uidToNameMap.put(user.getUid(), user.getUserName());
+            }
+        }
+        // 4. 转换为CommentResponse并设置用户名，convert里面是一个匿名函数，comment是输入的参数，即for循环的comment，{}里是函数逻辑
+        //返回值赋值给commentList
+        Page<CommentResponse> commentList=(Page<CommentResponse>)comments.convert(comment -> {
+            CommentResponse response = new CommentResponse(comment);
+            // 从map中获取用户名（若用户不存在，可设为默认值）
+            response.setUserName(uidToNameMap.getOrDefault(comment.getUid(), "匿名用户"));
+            return response;
+        });
+
+        return commentList;
     }
 
+    //获取一条评论的所有第一层回复
     @Override
     @Cacheable(value="comment",key="#cid",unless="#result==null")
     public List<Comment> getAllRepliesByCid(Long cid) {

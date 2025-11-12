@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import yellow.iblog.mapper.ArticleMapper;
+import yellow.iblog.mapper.CommentLikeMapper;
 import yellow.iblog.mapper.CommentMapper;
 
 import java.util.Objects;
@@ -21,82 +22,74 @@ public class LikeSyncService {
     private final StringRedisTemplate redisTemplate;
     private final CommentMapper commentMapper;
     private final ArticleMapper articleMapper;
+    private final CommentLikeMapper commentLikeMapper;
     //同步文章点赞数和取消点赞数到数据库的时间（单位是ms）因为schedule只能使用编译时就确定好的量
 //    private static final Integer SYNC_ARTICLE_LIKE=;//1h
     //同步评论点赞和取消点赞到数据库的时间
 //    private static final Integer SYNC_COMMENTS_LIKE=5400000;//1.5h
 
-    // 同步评论点赞到数据库的时间
-    @Scheduled(fixedRate = 50000)//ms
+    // 同步评论点赞到数据库的时间(30s)
+    @Scheduled(fixedRate = 30000)//ms
     public void syncCommentsLikesToDB() {
-        // 获取所有key用来同步点赞数
-        Set<String> commentIds = redisTemplate.opsForSet().members("comment:like:ids");
-        if (commentIds == null || commentIds.isEmpty()) {
-            return;
+        Set<String> keys=redisTemplate.opsForSet().members("comment:likes:dirty");
+        if(keys==null||keys.isEmpty()){
+            return;//没有要修改的key
         }
-
-        for (String cidStr :commentIds) {
+        for (String key : keys) {
+            Long cid = 0L;
             try {
-                Long cid = Long.valueOf(cidStr);
-                String likeKey="comment:likes:"+cid;
-                // 使用原子操作获取并删除，避免并发问题
-                String deltaStr = redisTemplate.opsForValue().getAndDelete(likeKey);
-                if (deltaStr == null) continue;
-                int delta = Integer.parseInt(deltaStr);
-                if (delta <= 0) continue;
-
-                // SQL 原子更新点赞数
-                if(commentMapper.incrLikeCount(cid, delta)<=0){
-                    throw new RuntimeException("同步评论点赞数据到mysql失败");
-                }
-                //删除评论缓存
-                String commentCacheKey="comment::"+cid;
-                redisTemplate.delete(commentCacheKey);
-                log.info("同步评论 {} 的点赞数 {} 到数据库,并清理缓存{}", cid, delta,commentCacheKey);
+                cid = Long.parseLong(key);
+                String countKey = "comment:" + cid + ":likes:count";
+                String countStr = redisTemplate.opsForValue().get(countKey);
+                if (countStr == null) continue;
+                int count = Integer.parseInt(countStr);
+                commentMapper.updateLikesCount(cid, count);//同步到mysql
+                log.info("同步评论{}的点赞数:{}到mysql", cid, count);
             } catch (Exception e) {
-                log.error("同步评论点赞数据到mysql失败，评论ID:{}",cidStr,e);
+                log.error("同步评论点赞数据到 mysql 失败，文章ID: {}", cid, e);
             } finally{
-                redisTemplate.opsForSet().remove("comment:like:ids",cidStr);
-            }
-
-        }
-    }
-
-    // 同步评论取消点赞到数据库的时间
-    @Scheduled(fixedRate = 50000)
-    public void syncCommentsUnLikesToDB() {
-        // 获取所有key
-        Set<String> strCids = redisTemplate.opsForSet().members("comment:unlike:ids");
-        if (strCids == null || strCids.isEmpty()) {
-            return;
-        }
-
-        for (String strCid : strCids) {
-            try {
-                Long cid = Long.valueOf(strCid);
-                String unlikeKey="comment:unlikes:"+cid;
-                // 使用原子操作获取并删除，避免并发问题
-                String deltaStr = redisTemplate.opsForValue().getAndDelete(unlikeKey);
-
-                if (deltaStr == null) continue;
-
-                int delta = Integer.parseInt(deltaStr);
-                if (delta <= 0) continue;
-
-                // SQL 原子更新点赞数
-                if(commentMapper.decrLikeCount(cid, delta)<=0){
-                    throw new RuntimeException("同步评论取消点赞数据到mysql失败");
-                }
-
-                log.info("同步评论 {} 的取消点赞数 {} 到数据库", cid, delta);
-            } catch (Exception e) {
-                log.error("同步评论点赞数据到mysql失败，评论id:{}",strCid,e);
-
-            } finally {
-                redisTemplate.opsForSet().remove("comment:unlike:ids",strCid);
+                //处理后移出key
+                redisTemplate.opsForSet().remove("comment:likes:dirty",key);
             }
         }
+
     }
+
+//    // 同步评论取消点赞到数据库的时间
+//    @Scheduled(fixedRate = 50000)
+//    public void syncCommentsUnLikesToDB() {
+//        // 获取所有key
+//        Set<String> strCids = redisTemplate.opsForSet().members("comment:unlike:ids");
+//        if (strCids == null || strCids.isEmpty()) {
+//            return;
+//        }
+//
+//        for (String strCid : strCids) {
+//            try {
+//                Long cid = Long.valueOf(strCid);
+//                String unlikeKey="comment:unlikes:"+cid;
+//                // 使用原子操作获取并删除，避免并发问题
+//                String deltaStr = redisTemplate.opsForValue().getAndDelete(unlikeKey);
+//
+//                if (deltaStr == null) continue;
+//
+//                int delta = Integer.parseInt(deltaStr);
+//                if (delta <= 0) continue;
+//
+//                // SQL 原子更新点赞数
+//                if(commentMapper.decrLikeCount(cid, delta)<=0){
+//                    throw new RuntimeException("同步评论取消点赞数据到mysql失败");
+//                }
+//
+//                log.info("同步评论 {} 的取消点赞数 {} 到数据库", cid, delta);
+//            } catch (Exception e) {
+//                log.error("同步评论点赞数据到mysql失败，评论id:{}",strCid,e);
+//
+//            } finally {
+//                redisTemplate.opsForSet().remove("comment:unlike:ids",strCid);
+//            }
+//        }
+//    }
 
 //
 //    //文章取消点赞同步

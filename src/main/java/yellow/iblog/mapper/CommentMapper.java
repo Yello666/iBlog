@@ -9,13 +9,8 @@ import yellow.iblog.model.Comment;
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
 
-    // 点赞数增加 delta
-    @Update("UPDATE comment SET likes_count = likes_count + #{delta} WHERE cid = #{cid}")
-    int incrLikeCount(Long cid,int delta);
-    //取消点赞数增加
-    @Update("UPDATE comment SET likes_count = likes_count - #{delta} WHERE cid = #{cid}")
-    int decrLikeCount(Long cid,int delta);
-
-
+    //更新当前点赞数-用于redis同步
+    @Update("UPDATE comment SET likes_count=#{currentLikes} WHERE cid=#{cid}")
+    int updateLikesCount(Long cid,int currentLikes);
 
 }
