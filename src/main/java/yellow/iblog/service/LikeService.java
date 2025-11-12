@@ -85,7 +85,7 @@ public class LikeService {
         // 标记这篇文章的点赞数被修改过（会在下面通过mysql关系表修改）
         redisTemplate.opsForSet().add(dirtyKey, String.valueOf(aid));
         //如果集合里面找不到用户，说明用户没有点过赞
-        if(Boolean.FALSE.equals(redisTemplate.opsForSet().isMember(key, String.valueOf(uid)))){
+        if(!getArticleIsLiked(aid,uid)){
             //增加用户到集合里面
             redisTemplate.opsForSet().add(key, String.valueOf(uid));
             //点赞数+1，点赞成功
@@ -109,23 +109,23 @@ public class LikeService {
     }
     //获得文章redis点赞数--可用于查询文章点赞数，或者点赞的时候加载文章初始点赞数
     //应该返回目前点赞数
-    public Long getArticleLikeCount(Long aid) {
+    public Integer getArticleLikeCount(Long aid) {
         //先从redis查目前点赞数，如果查不到，说明数据库里存的就是目前点赞数
         String key = "article:" + aid+":likes:count";
-        Object obj = redisTemplate.opsForValue().get(key);
-        if(obj!=null){
+        String likesStr = redisTemplate.opsForValue().get(key);
+        if(likesStr!=null){
             //文章如果被访问，就刷新点赞键的存活时长为2H，可以避免冷门数据长期占用内存，但热门文章会“续命”
             redisTemplate.expire(key, Duration.ofHours(2));
-            return Long.parseLong(obj.toString());
+            return Integer.parseInt(likesStr);
         } else{
             Article a= articleMapper.selectById(aid);
             if(a==null){//防止恶意请求不存在的aid
                 redisTemplate.opsForValue().set(key,"0",5,TimeUnit.MINUTES);
-                return 0L;
+                return 0;
             }
             // 回填缓存，防止下次再查DB(或者初始化文章初始点赞数)
             redisTemplate.opsForValue().set(key, String.valueOf(a.getLikesCount()), 2, TimeUnit.HOURS);
-            return (long) a.getLikesCount();
+            return a.getLikesCount();
         }
     }
     //查看用户是否点赞过文章
@@ -135,58 +135,4 @@ public class LikeService {
         log.info("用户{}点赞{}:{}",uid,aid,isLiked);
         return isLiked;
     }
-
-
-//    public Long likeArticle(Long aid,Long uid) {
-//        String key = "article:likes:" + aid;
-//        log.info("正在点赞中");
-//        try {
-//            // 存储增量（每次+1）
-//            Long newCount = redisTemplate.opsForValue().increment(key, 1);
-//            redisTemplate.expire(key, 1, TimeUnit.HOURS); // 设置过期时间
-//            // 记录被点赞过的文章 ID，到时候可以遍历点赞的文章然后同步点赞数到mysql
-//            //在redis设置一个集合，里面存放点赞文章的id（字符串类型）
-////            redisTemplate.opsForSet().add("article:like:ids", String.valueOf(aid));
-//            redisTemplate.opsForSet().add("article:like:aids", String.valueOf(aid));
-//            //存入为文章点赞的用户uid，记录用户是否有为文章点过赞
-//            String setKey="article:"+aid+"like:uids:";
-//            redisTemplate.opsForSet().add(setKey, String.valueOf(uid));
-//            redisTemplate.expire(setKey, 1, TimeUnit.HOURS);
-//
-//            log.info("点赞存入了:{}",redisTemplate.opsForValue().get(key));
-//            return newCount;
-//        } catch (Exception e) {
-//            throw new RuntimeException("点赞失败", e);
-//        }
-//    }
-
-
-//    //取消点赞（redis自增）但后续要减去这个数
-//    public Long unlikeArticle(Long aid,Long uid) {
-//        String key = "article:unlikes:" + aid;//新建一个字段，避免操作原来的字段，可能有并发问题
-//        //放到redis集合里面统计取消点赞的aid
-//        redisTemplate.opsForSet().add("article:unlike:aids",String.valueOf(aid));
-//        //删除掉点赞集合的uid
-//        String setKey="article:"+aid+"like:uids:";
-//        redisTemplate.opsForSet().remove(setKey,String.valueOf(uid));
-//        try {
-//            // 存储增量（每次+1）
-//            Long newCount = redisTemplate.opsForValue().increment(key, 1);
-//            redisTemplate.expire(key, 3, TimeUnit.MINUTES); // 设置过期时间
-//            log.info("取消点赞存入了:{}",redisTemplate.opsForValue().get(key));
-//            return newCount;
-//        } catch (Exception e) {
-//            throw new RuntimeException("取消点赞失败", e);
-//        }
-//    }
-
-//    //获取文章取消点赞数
-//    public Long getArticleUnLikeCount(Long aid) {
-//        String key = "article:unlikes:" + aid;
-//        Object obj = redisTemplate.opsForValue().get(key);//如果这个键不存在的话，那么就返回0
-//        return obj == null ? 0L : Long.parseLong(obj.toString());
-//
-//    }
-
-
 }

@@ -27,25 +27,30 @@ public interface ArticleMapper extends BaseMapper<Article> {
         return this.update(null,wrapper);//第一个传null，可以动态更新
 
     }
-
-    // 点赞数增加 delta
-    @Update("UPDATE articles SET likes_count = likes_count + #{delta} WHERE aid = #{aid}")
-    int incrLikeCount(Long aid,int delta);
-
-    // 收藏数增加 delta
-    @Update("UPDATE articles SET favor_count = favor_count + #{delta} WHERE aid = #{aid}")
-    int incrFavorCount(Long aid,int delta);
-
-    //点赞数减少
-    @Update("UPDATE articles SET likes_count=likes_count-#{delta} WHERE aid=#{aid}")
-    int decrLikeCount(Long aid, int delta);
-    //收藏数减少
-    @Update("UPDATE articles SET favor_count = favor_count - #{delta} WHERE aid=#{aid}")
-    int decrFavorCount(Long aid, int delta);
-
     //更新当前点赞数-用于redis同步
     @Update("UPDATE articles SET likes_count=#{currentLikes} WHERE aid=#{aid}")
     int updateLikesCount(Long aid,int currentLikes);
+    //更新当前收藏数-用于redis同步
+    @Update("UPDATE articles SET favor_count=#{currentFavors} WHERE aid=#{aid}")
+    int updateFavorsCount(Long aid,int currentFavors);
+
+//    // 点赞数增加 delta
+//    @Update("UPDATE articles SET likes_count = likes_count + #{delta} WHERE aid = #{aid}")
+//    int incrLikeCount(Long aid,int delta);
+//
+//    // 收藏数增加 delta
+//    @Update("UPDATE articles SET favor_count = favor_count + #{delta} WHERE aid = #{aid}")
+//    int incrFavorCount(Long aid,int delta);
+//
+//    //点赞数减少
+//    @Update("UPDATE articles SET likes_count=likes_count-#{delta} WHERE aid=#{aid}")
+//    int decrLikeCount(Long aid, int delta);
+//    //收藏数减少
+//    @Update("UPDATE articles SET favor_count = favor_count - #{delta} WHERE aid=#{aid}")
+//    int decrFavorCount(Long aid, int delta);
+
+
+
 
 
 

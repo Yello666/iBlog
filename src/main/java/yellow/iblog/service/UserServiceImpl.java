@@ -1,4 +1,5 @@
 package yellow.iblog.service;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -17,15 +18,18 @@ import java.time.LocalDateTime;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
 //    @Autowired 依赖注入，会去找有没有userMapper这个类型的bean类，找到了就new一个对象给到userMapper
 //    好处就是不用自己new，不用改，坏处是不透明，不知道用了哪一个bean
 //    所以又改成了构造函数注入,通过传递的参数就知道是userMapper类，而不是userMapperV2类
     private final UserMapper userMapper;
-    public UserServiceImpl(UserMapper userMapper) {
-        this.userMapper=userMapper;
-    }
+    private final JwtUtils jwtUtils;
+
+//    public UserServiceImpl(UserMapper userMapper) {
+//        this.userMapper=userMapper;
+//    }
 
     //用户登陆
     @Override
@@ -41,7 +45,7 @@ public class UserServiceImpl implements UserService {
             throw new PasswordIncorrectException("用户密码不正确");
         }
         //生成token
-        String token= JwtUtils.generateToken(u.getUid(),u.getUserName(),u.getRole());
+        String token= jwtUtils.generateToken(u.getUid(),u.getUserName(),u.getRole());
         //设置用户信息，uid为字符串
         LoginResponse response=new LoginResponse();
         UserResponse userResponse=new UserResponse(u);

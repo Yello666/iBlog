@@ -4,6 +4,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+###application.properties###
+src/main/resources
+
+### jwt ###
+
+
+
 ### STS ###
 .apt_generated
 .classpath

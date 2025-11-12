@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.model.Article;
+import yellow.iblog.model.ArticleFavorResponse;
 import yellow.iblog.model.ArticleLikeResponse;
 import yellow.iblog.model.ArticleResponse;
 
@@ -50,55 +51,34 @@ public class ArticleServiceImpl implements ArticleService{
         } else{
             log.info("用户{}取消了文章{}的点赞",uid,aid);
         }
-        long crtLikes=Math.toIntExact(likeService.getArticleLikeCount(aid));
+        int crtLikes=likeService.getArticleLikeCount(aid);
         ArticleLikeResponse response=new ArticleLikeResponse();
         response.setCrtLikes(crtLikes);
         response.setStatus(status);
         return response;
 
     }
-//    //取消点赞//要改redis里面的缓存，设置成-1也可以，到时候返回article缓存的时候要设置点赞数为redisLike+缓存Article
-//    @Override
-//    @Transactional
-//    public Integer undoArticleLike(Long aid, Long uid){
-//        Article a=articleMapper.selectById(aid);
-//        if(a==null){
-//            log.error("用户{}取消点赞文章{}失败:文章不存在",uid,aid);
-//            throw new RuntimeException("尝试取消点赞不存在的文章");
-//        }
-//
-//        int redisUnLikes=Math.toIntExact(likeService.unlikeArticle(aid,uid));
-//        log.info("设置的取消点赞数为:{}",redisUnLikes);
-//        return redisUnLikes;
-//    }
-    //取消收藏
-//    @Override
-//    @Transactional
-//    public Integer undoArticleFavor(Long aid, Long uid){
-//        Article a=articleMapper.selectById(aid);
-//        if(a==null){
-//            log.error("用户{}取消收藏文章{}失败:文章不存在",uid,aid);
-//            throw new RuntimeException("尝试取消收藏不存在的文章");
-//        }
-//        int redisUnLikes=Math.toIntExact(favorService.unFavorArticle(aid,uid));
-//        log.info("设置的取消点赞数为:{}",redisUnLikes);
-//        return redisUnLikes;
-//    }
+
 //收藏文章
     @Override
     @Transactional
-    public Integer favorArticleByAid(Long aid,Long uid){
+    public ArticleFavorResponse favorArticleByAid(Long aid, Long uid){
         Article a=articleMapper.selectById(aid);
         if(a==null){
             log.error("用户{}收藏文章{}失败:文章不存在",uid,aid);
             throw new RuntimeException("尝试收藏不存在的文章");
         }
-        int deltaFavors=Math.toIntExact(favorService.favorArticle(aid,uid));
-        if(deltaFavors<=0){
-            log.error("用户{}收藏文章{}失败",uid,aid);
-            throw new RuntimeException("收藏失败");
+        ArticleFavorResponse response=new ArticleFavorResponse();
+        Boolean status=favorService.favorArticle(aid,uid);
+        if(status){
+            log.info("用户{}收藏了文章{}",uid,aid);
+        } else{
+            log.info("用户{}取消收藏了文章{}",uid,aid);
         }
-        return Math.toIntExact(deltaFavors);
+        response.setStatus(status);
+        Integer crtFavors=favorService.getArticleFavorCount(aid);
+        response.setCrtFavors(crtFavors);
+        return response;
     }
 
     @Override
@@ -149,10 +129,10 @@ public class ArticleServiceImpl implements ArticleService{
             }
             else{
                 //3.将点赞数设置为当前点赞数
-                Long crtLikes= likeService.getArticleLikeCount(aid);
-                dbArticle.setLikesCount(Math.toIntExact(crtLikes));
+                int crtLikes= likeService.getArticleLikeCount(aid);
+                dbArticle.setLikesCount(crtLikes);
                 //将收藏数设置为当前收藏数
-                int crtFavors=Math.toIntExact(favorService.getArticleFavorCount(aid));
+                int crtFavors=favorService.getArticleFavorCount(aid);
                 dbArticle.setFavorCount(crtFavors);
                 //4.手动缓存，设置过期时间：2小时
                 if(redisService.addCache("article",aid,dbArticle,2)){
@@ -164,7 +144,7 @@ public class ArticleServiceImpl implements ArticleService{
             }
         } else{
             //5.有缓存,更新点赞数,更新收藏数
-            Long crtLikes= likeService.getArticleLikeCount(aid);
+            int crtLikes= likeService.getArticleLikeCount(aid);
             cacheA.setLikesCount(Math.toIntExact(crtLikes));
             int crtFavors=Math.toIntExact(favorService.getArticleFavorCount(aid));
             cacheA.setFavorCount(crtFavors);
