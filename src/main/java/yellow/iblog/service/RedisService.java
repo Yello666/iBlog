@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -28,14 +30,14 @@ public class RedisService {
         log.warn("缓存未命中");
         return null;
     }
-    public Boolean addCache(String type,Long id,Object value){
+    public Boolean addCache(String type,Long id,Object value,Integer Hours){
         if(value==null){
             log.error("缓存的value为null");
             return false;
         } else{
             try {
                 String key = type + "::" + id;
-                redisTemplate.opsForValue().set(key, value);
+                redisTemplate.opsForValue().set(key, value, Hours,TimeUnit.HOURS);
                 return true;
             } catch (Exception e){
                 log.error("缓存失败",e);
@@ -45,5 +47,9 @@ public class RedisService {
 
 
     }
+    public String getKey(String type,Long id){
+        return type + "::" + id;
+    }
+
 
 }

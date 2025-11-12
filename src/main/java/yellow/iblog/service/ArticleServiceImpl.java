@@ -6,14 +6,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.model.Article;
+import yellow.iblog.model.ArticleLikeResponse;
 import yellow.iblog.model.ArticleResponse;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -25,55 +31,59 @@ public class ArticleServiceImpl implements ArticleService{
     private final RedisService redisService;
 
     private final static  Integer DEFAULT_ARTICLES_NUM=5;
+    private final StringRedisTemplate redisTemplate;
 
 
     //    点赞文章
-    //返回的是增长的点赞数
+    //返回的是当前点赞数
     @Override
     @Transactional
-    public Integer likeArticleByAid(Long aid,Long uid){
+    public ArticleLikeResponse likeArticle(Long aid, Long uid){
         Article a=articleMapper.selectById(aid);
         if(a==null){
             log.error("用户{}点赞文章{}失败:文章不存在",uid,aid);
             throw new RuntimeException("尝试点赞不存在的文章");
         }
-//        a.setLikesCount(a.getLikesCount()+1); 没有必要做这个操作，因为数据都是从数据库拿出来，
-//        临时点赞存放到redis那，获取点赞数是先从数据库查询，再与redis相加，没必要在这里加点赞数
-        int deltaLikes=Math.toIntExact(likeService.likeArticle(aid,uid));
-        if(deltaLikes<=0){
-            log.error("用户{}点赞文章{}失败",uid,aid);
-            throw new RuntimeException("点赞失败");
+        Boolean status=likeService.likeArticleV2(aid,uid);
+        if(status){
+            log.info("用户{}点赞了文章{}",uid,aid);
+        } else{
+            log.info("用户{}取消了文章{}的点赞",uid,aid);
         }
-        return Math.toIntExact(deltaLikes);
+        long crtLikes=Math.toIntExact(likeService.getArticleLikeCount(aid));
+        ArticleLikeResponse response=new ArticleLikeResponse();
+        response.setCrtLikes(crtLikes);
+        response.setStatus(status);
+        return response;
 
     }
-    //取消点赞//要改redis里面的缓存，设置成-1也可以，到时候返回article缓存的时候要设置点赞数为redisLike+缓存Article
-    @Override
-    @Transactional
-    public Integer undoArticleLike(Long aid, Long uid){
-        Article a=articleMapper.selectById(aid);
-        if(a==null){
-            log.error("用户{}取消点赞文章{}失败:文章不存在",uid,aid);
-            throw new RuntimeException("尝试取消点赞不存在的文章");
-        }
-
-        int redisUnLikes=Math.toIntExact(likeService.unlikeArticle(aid,uid));
-        log.info("设置的取消点赞数为:{}",redisUnLikes);
-        return redisUnLikes;
-    }
+//    //取消点赞//要改redis里面的缓存，设置成-1也可以，到时候返回article缓存的时候要设置点赞数为redisLike+缓存Article
+//    @Override
+//    @Transactional
+//    public Integer undoArticleLike(Long aid, Long uid){
+//        Article a=articleMapper.selectById(aid);
+//        if(a==null){
+//            log.error("用户{}取消点赞文章{}失败:文章不存在",uid,aid);
+//            throw new RuntimeException("尝试取消点赞不存在的文章");
+//        }
+//
+//        int redisUnLikes=Math.toIntExact(likeService.unlikeArticle(aid,uid));
+//        log.info("设置的取消点赞数为:{}",redisUnLikes);
+//        return redisUnLikes;
+//    }
     //取消收藏
-    @Override
-    @Transactional
-    public Integer undoArticleFavor(Long aid, Long uid){
-        Article a=articleMapper.selectById(aid);
-        if(a==null){
-            log.error("用户{}取消收藏文章{}失败:文章不存在",uid,aid);
-            throw new RuntimeException("尝试取消收藏不存在的文章");
-        }
-        int redisUnLikes=Math.toIntExact(favorService.unFavorArticle(aid,uid));
-        log.info("设置的取消点赞数为:{}",redisUnLikes);
-        return redisUnLikes;
-    }
+//    @Override
+//    @Transactional
+//    public Integer undoArticleFavor(Long aid, Long uid){
+//        Article a=articleMapper.selectById(aid);
+//        if(a==null){
+//            log.error("用户{}取消收藏文章{}失败:文章不存在",uid,aid);
+//            throw new RuntimeException("尝试取消收藏不存在的文章");
+//        }
+//        int redisUnLikes=Math.toIntExact(favorService.unFavorArticle(aid,uid));
+//        log.info("设置的取消点赞数为:{}",redisUnLikes);
+//        return redisUnLikes;
+//    }
 //收藏文章
     @Override
     @Transactional
@@ -93,6 +103,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Article createArticle(Article article) {
+        article.setCreatedAt(LocalDateTime.now());
         if(articleMapper.insert(article)>0){
             return article;
         }
@@ -130,7 +141,6 @@ public class ArticleServiceImpl implements ArticleService{
         //1.先读缓存
         Article cacheA=(Article) redisService.checkCache("article",aid);
         if(cacheA==null){
-            log.warn("缓存未命中或第一次查询");
             //2.缓存未命中，从DB读数据
             Article dbArticle=articleMapper.selectById(aid);
             if (dbArticle == null){
@@ -139,29 +149,27 @@ public class ArticleServiceImpl implements ArticleService{
             }
             else{
                 //3.将点赞数设置为当前点赞数
-                int redisLikes=Math.toIntExact(likeService.getArticleLikeCount(aid));
-                int dbLikes=dbArticle.getLikesCount();
-                int redisUnLikes=Math.toIntExact(likeService.getArticleUnLikeCount(aid));
-                dbArticle.setLikesCount(redisLikes+dbLikes-redisUnLikes);
+                Long crtLikes= likeService.getArticleLikeCount(aid);
+                dbArticle.setLikesCount(Math.toIntExact(crtLikes));
                 //将收藏数设置为当前收藏数
-                int redisFavors=Math.toIntExact(favorService.getArticleFavorCount(aid));
-                int dbFavors=dbArticle.getFavorCount();
-                int redisUnFavors=Math.toIntExact(favorService.getArticleUnFavorCount(aid));
-                dbArticle.setFavorCount(redisFavors+dbFavors-redisUnFavors);
-                //4.手动缓存
-                if(redisService.addCache("article",aid,dbArticle)){
-                    log.info("缓存成功");
+                int crtFavors=Math.toIntExact(favorService.getArticleFavorCount(aid));
+                dbArticle.setFavorCount(crtFavors);
+                //4.手动缓存，设置过期时间：2小时
+                if(redisService.addCache("article",aid,dbArticle,2)){
+                    log.info("缓存文章成功");
                 } else{
-                    log.warn("缓存失败");
+                    log.warn("缓存文章失败");
                 }
                 return dbArticle;
             }
         } else{
-            //5.有缓存，需要返回的点赞数和收藏数是缓存的值+redisLike-redisUnlike
-            cacheA.setLikesCount(Math.toIntExact(likeService.getArticleLikeCount(aid))+cacheA.getLikesCount()-Math.toIntExact(likeService.getArticleUnLikeCount(aid)));
-            cacheA.setFavorCount(Math.toIntExact(favorService.getArticleFavorCount(aid))+cacheA.getFavorCount());
-            log.info("目前redis点赞缓存里面的点赞数:{},redisArticle缓存里面的点赞数:{}," +
-                    "redis取消点赞缓存里面的点赞数:{}",likeService.getArticleLikeCount(aid),cacheA.getLikesCount(),Math.toIntExact(likeService.getArticleUnLikeCount(aid)));
+            //5.有缓存,更新点赞数,更新收藏数
+            Long crtLikes= likeService.getArticleLikeCount(aid);
+            cacheA.setLikesCount(Math.toIntExact(crtLikes));
+            int crtFavors=Math.toIntExact(favorService.getArticleFavorCount(aid));
+            cacheA.setFavorCount(crtFavors);
+            //更新文章的TTL为2小时
+            redisTemplate.expire(redisService.getKey("article",aid), 2, TimeUnit.HOURS);
             return cacheA;
         }
 

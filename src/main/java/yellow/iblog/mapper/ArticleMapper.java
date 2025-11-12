@@ -43,6 +43,10 @@ public interface ArticleMapper extends BaseMapper<Article> {
     @Update("UPDATE articles SET favor_count = favor_count - #{delta} WHERE aid=#{aid}")
     int decrFavorCount(Long aid, int delta);
 
+    //更新当前点赞数-用于redis同步
+    @Update("UPDATE articles SET likes_count=#{currentLikes} WHERE aid=#{aid}")
+    int updateLikesCount(Long aid,int currentLikes);
+
 
 
 }

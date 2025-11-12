@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService{
                 int dbLikes=dbComment.getLikesCount();
                 dbComment.setLikesCount(redisCacheLikes+dbLikes-redisCacheUnlikes);
                 //4.手动缓存
-                if(redisService.addCache("comment",cid,dbComment)){
+                if(redisService.addCache("comment",cid,dbComment,2)){
                     log.info("缓存评论成功");
                 } else{
                     log.warn("缓存评论失败");

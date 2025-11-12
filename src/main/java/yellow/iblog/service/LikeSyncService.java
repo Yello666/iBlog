@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.mapper.CommentMapper;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -135,8 +136,35 @@ public class LikeSyncService {
     }
 
     //同步文章的redis点赞数到mysql，并删除article的缓存
-    // 每隔10s执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 10000) //ms
+    // 每隔30s执行一次，可以根据需求调整
+    @Scheduled(fixedRate = 30000) //ms
+    public void syncArticleLikesToDBV2() {
+        //Redis keys 命令在大数据量下非常慢（是阻塞的 O(N) 操作）
+        //Set<String> keys = redisTemplate.keys("article:*:likes:count");
+        //使用集合记录修改过的key，并遍历
+        Set<String> keys=redisTemplate.opsForSet().members("article:likes:dirty");
+        if(keys==null||keys.isEmpty()){
+            return;//没有要修改的key
+        }
+        for (String key : keys) {
+            Long aid = 0L;
+            try {
+                aid = Long.parseLong(key);
+                String countKey = "article:" + aid + ":likes:count";
+                String countStr = redisTemplate.opsForValue().get(countKey);
+                if (countStr == null) continue;
+                int count = Integer.parseInt(countStr);
+                articleMapper.updateLikesCount(aid, count);//同步到mysql
+                log.info("同步文章{}的点赞数:{}到mysql", aid, count);
+            } catch (Exception e) {
+                log.error("同步文章点赞数据到 mysql 失败，文章ID: {}", aid, e);
+            } finally{
+                //处理后移出key
+                redisTemplate.opsForSet().remove("article:likes:dirty",key);
+            }
+        }
+    }
+
     public void syncArticleLikesToDB() {
         // 获取所有被点赞过的文章 ID
         Set<String> articleIds = redisTemplate.opsForSet().members("article:like:aids");

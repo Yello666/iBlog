@@ -2,14 +2,15 @@ package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import yellow.iblog.model.Article;
+import yellow.iblog.model.ArticleLikeResponse;
 import yellow.iblog.model.ArticleResponse;
 
 import java.util.List;
 
 public interface ArticleService {
-    Integer undoArticleFavor(Long aid,Long uid);
-    Integer undoArticleLike(Long aid,Long uid);
-    Integer likeArticleByAid(Long aid,Long uid);
+    //Integer undoArticleFavor(Long aid,Long uid);
+    //Integer undoArticleLike(Long aid,Long uid);
+    ArticleLikeResponse likeArticle(Long aid, Long uid);
     Integer favorArticleByAid(Long aid,Long uid);
     Article createArticle(Article article);
     Boolean deleteArticleByAid(Long Aid);
