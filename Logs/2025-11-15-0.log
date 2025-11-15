@@ -1,0 +1,845 @@
+2025-11-15 14:21:51 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 1995 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 14:21:51 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 14:21:52 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 14:21:52 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 14:21:52 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-11-15 14:21:52 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 14:21:52 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:21:52 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 14:21:52 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 14:21:52 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 14:21:52 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 572 ms
+2025-11-15 14:21:52 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 14:21:52 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 14:21:53 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:21:53 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 14:21:53 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.513 seconds (process running for 1.758)
+2025-11-15 14:21:53 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 14:21:53 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 14:21:53 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 14:21:53 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 14:21:53 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-11-15 14:21:53 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@43369f42
+2025-11-15 14:21:53 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 14:22:05 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:22:05 [http-nio-8080-exec-3] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:22:16 [http-nio-8080-exec-4] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-11-15 14:22:16 [http-nio-8080-exec-4] INFO  yellow.iblog.service.ArticleServiceImpl-缓存文章成功
+2025-11-15 14:22:16 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:22:16 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479039000点赞文章18:false
+2025-11-15 14:22:16 [http-nio-8080-exec-4] INFO  yellow.iblog.service.FavorService-用户1982766301479039000,文章18,收藏false
+2025-11-15 14:22:16 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-isliked:false,isFavored:false
+2025-11-15 14:22:16 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:22:16 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:22:16 [http-nio-8080-exec-5] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:22:19 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:22:19 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:22:19 [http-nio-8080-exec-6] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978点赞了文章18
+2025-11-15 14:22:23 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章18的点赞数:1到mysql
+2025-11-15 14:27:59 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 14:28:01 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 14:28:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 14:28:01 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 14:33:20 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2106 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 14:33:20 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 14:33:21 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 14:33:21 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 14:33:21 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-11-15 14:33:21 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 14:33:21 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:33:21 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 14:33:21 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 14:33:21 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 14:33:21 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 554 ms
+2025-11-15 14:33:21 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 14:33:22 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 14:33:22 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:33:22 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 14:33:22 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.468 seconds (process running for 1.671)
+2025-11-15 14:33:22 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 14:33:22 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 14:33:22 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 14:33:22 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 14:33:22 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-11-15 14:33:22 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@622ab44b
+2025-11-15 14:33:22 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 14:33:30 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:33:30 [http-nio-8080-exec-3] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:33:35 [http-nio-8080-exec-4] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:33:35 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:33:35 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479039000点赞文章18:false
+2025-11-15 14:33:35 [http-nio-8080-exec-4] INFO  yellow.iblog.service.FavorService-用户1982766301479039000,文章18,收藏false
+2025-11-15 14:33:35 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-isliked:false,isFavored:false
+2025-11-15 14:33:35 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:33:35 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:33:35 [http-nio-8080-exec-5] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:34:27 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:34:27 [http-nio-8080-exec-8] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:36:58 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 14:37:00 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 14:37:00 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 14:37:00 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 14:37:04 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2160 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 14:37:04 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 14:37:04 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 14:37:04 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 14:37:04 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-11-15 14:37:04 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 14:37:04 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:37:04 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 14:37:04 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 14:37:04 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 14:37:04 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 540 ms
+2025-11-15 14:37:04 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 14:37:05 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 14:37:05 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:37:05 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 14:37:05 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.462 seconds (process running for 1.653)
+2025-11-15 14:37:05 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 14:37:05 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 14:37:05 [RMI TCP Connection(4)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 14:37:05 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 14:37:05 [RMI TCP Connection(4)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-11-15 14:37:05 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1a12862a
+2025-11-15 14:37:05 [RMI TCP Connection(1)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 14:37:13 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479039000
+2025-11-15 14:37:13 [http-nio-8080-exec-1] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:37:13 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:37:13 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479039000点赞文章18:false
+2025-11-15 14:37:13 [http-nio-8080-exec-1] INFO  yellow.iblog.service.FavorService-用户1982766301479039000,文章18,收藏false
+2025-11-15 14:37:13 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-isliked:false,isFavored:false
+2025-11-15 14:37:13 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:37:13 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:37:13 [http-nio-8080-exec-2] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:37:40 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 14:37:42 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 14:37:42 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 14:37:42 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 14:40:03 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2238 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 14:40:03 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 14:40:04 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 14:40:04 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 14:40:04 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-11-15 14:40:04 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 14:40:04 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:40:04 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 14:40:04 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 14:40:04 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 14:40:04 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 590 ms
+2025-11-15 14:40:04 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 14:40:04 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 14:40:05 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:40:05 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 14:40:05 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.559 seconds (process running for 1.812)
+2025-11-15 14:40:05 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 14:40:05 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 14:40:05 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 14:40:05 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 14:40:05 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-11-15 14:40:05 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@21a5267
+2025-11-15 14:40:05 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 14:40:09 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:40:09 [http-nio-8080-exec-3] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:40:11 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:40:11 [http-nio-8080-exec-4] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:40:11 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:40:11 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:40:11 [http-nio-8080-exec-4] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:40:11 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:false
+2025-11-15 14:40:11 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:40:11 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:40:11 [http-nio-8080-exec-5] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:40:14 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:40:14 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:40:14 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:40:14 [http-nio-8080-exec-6] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消了文章18的点赞
+2025-11-15 14:40:14 [http-nio-8080-exec-6] ERROR yellow.iblog.Controller.ArticleC-1982766301479038978点赞文章失败,aid:18
+2025-11-15 14:40:18 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:40:18 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:40:18 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:40:18 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978给文章点赞成功
+2025-11-15 14:40:18 [http-nio-8080-exec-7] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978点赞了文章18
+2025-11-15 14:40:35 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章18的点赞数:1到mysql
+2025-11-15 14:40:48 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:40:48 [http-nio-8080-exec-8] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:40:48 [http-nio-8080-exec-8] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:40:48 [http-nio-8080-exec-8] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消了文章18的点赞
+2025-11-15 14:40:48 [http-nio-8080-exec-8] ERROR yellow.iblog.Controller.ArticleC-1982766301479038978点赞文章失败,aid:18
+2025-11-15 14:41:05 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章18的点赞数:0到mysql
+2025-11-15 14:43:24 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:43:24 [http-nio-8080-exec-9] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:43:24 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:43:24 [http-nio-8080-exec-9] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:43:24 [http-nio-8080-exec-9] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:43:24 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-isliked:false,isFavored:false
+2025-11-15 14:43:24 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:43:24 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:43:24 [http-nio-8080-exec-10] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:43:32 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:43:32 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:43:32 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:43:32 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978给文章点赞成功
+2025-11-15 14:43:32 [http-nio-8080-exec-1] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978点赞了文章18
+2025-11-15 14:43:35 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章18的点赞数:1到mysql
+2025-11-15 14:43:37 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:43:37 [http-nio-8080-exec-2] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:43:37 [http-nio-8080-exec-2] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:43:37 [http-nio-8080-exec-2] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消了文章18的点赞
+2025-11-15 14:43:37 [http-nio-8080-exec-2] ERROR yellow.iblog.Controller.ArticleC-1982766301479038978点赞文章失败,aid:18
+2025-11-15 14:44:05 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章18的点赞数:0到mysql
+2025-11-15 14:44:42 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 14:44:44 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 14:44:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 14:44:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 14:44:46 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2301 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 14:44:46 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 14:44:46 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 14:44:46 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 14:44:46 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2025-11-15 14:44:46 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 14:44:46 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:44:46 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 14:44:46 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 14:44:46 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 14:44:46 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 542 ms
+2025-11-15 14:44:46 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 14:44:47 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 14:44:47 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:44:47 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 14:44:47 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.425 seconds (process running for 1.609)
+2025-11-15 14:44:47 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 14:44:47 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 14:44:47 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 14:44:47 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 14:44:47 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-11-15 14:44:47 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@39baffda
+2025-11-15 14:44:47 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 14:44:58 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:44:58 [http-nio-8080-exec-1] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:44:58 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:44:58 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:44:58 [http-nio-8080-exec-1] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:44:58 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-isliked:false,isFavored:false
+2025-11-15 14:44:58 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:44:58 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:44:58 [http-nio-8080-exec-2] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:45:03 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:45:03 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:45:03 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:45:03 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1982766301479038978给文章点赞成功
+2025-11-15 14:45:03 [http-nio-8080-exec-3] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978点赞了文章18
+2025-11-15 14:45:07 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:45:07 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:45:07 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:45:07 [http-nio-8080-exec-4] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消了文章18的点赞
+2025-11-15 14:45:11 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:45:11 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:45:11 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:45:11 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1982766301479038978给文章点赞成功
+2025-11-15 14:45:11 [http-nio-8080-exec-5] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978点赞了文章18
+2025-11-15 14:45:13 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:45:13 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:45:13 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:45:13 [http-nio-8080-exec-6] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消了文章18的点赞
+2025-11-15 14:45:14 [http-nio-8080-exec-7] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:45:14 [http-nio-8080-exec-7] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978收藏了文章18
+2025-11-15 14:45:14 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-文章18被1982766301479038978收藏了
+2025-11-15 14:45:16 [http-nio-8080-exec-8] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 14:45:16 [http-nio-8080-exec-8] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消收藏了文章18
+2025-11-15 14:45:16 [http-nio-8080-exec-8] ERROR yellow.iblog.Controller.ArticleC-1982766301479038978收藏文章失败,aid:18
+2025-11-15 14:45:17 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章18的点赞数:0到mysql
+2025-11-15 14:45:17 [scheduling-1] INFO  yellow.iblog.service.FavorSyncService-同步文章 18 的收藏数 0 到数据库
+2025-11-15 14:45:26 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 14:45:28 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 14:45:28 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 14:45:28 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 14:45:30 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2331 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 14:45:30 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 14:45:30 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 14:45:30 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 14:45:31 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-11-15 14:45:31 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 14:45:31 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:45:31 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 14:45:31 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 14:45:31 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 14:45:31 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 554 ms
+2025-11-15 14:45:31 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 14:45:31 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 14:45:31 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:45:31 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 14:45:31 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.441 seconds (process running for 1.629)
+2025-11-15 14:45:31 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 14:45:32 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 14:45:32 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 14:45:32 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 14:45:32 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-11-15 14:45:32 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2870f78a
+2025-11-15 14:45:32 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 14:45:37 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:45:37 [http-nio-8080-exec-1] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:45:37 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:45:37 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:45:37 [http-nio-8080-exec-1] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:45:37 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-isliked:false,isFavored:false
+2025-11-15 14:45:37 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:45:37 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:45:37 [http-nio-8080-exec-2] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:45:39 [http-nio-8080-exec-3] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:45:39 [http-nio-8080-exec-3] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978收藏了文章18
+2025-11-15 14:45:39 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-文章18被1982766301479038978收藏了
+2025-11-15 14:45:41 [http-nio-8080-exec-4] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 14:45:41 [http-nio-8080-exec-4] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消收藏了文章18
+2025-11-15 14:45:41 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-文章18被1982766301479038978收藏了
+2025-11-15 14:45:44 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:45:44 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:45:44 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:45:44 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1982766301479038978给文章点赞成功
+2025-11-15 14:45:44 [http-nio-8080-exec-5] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978点赞了文章18
+2025-11-15 14:45:45 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:45:45 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:45:45 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:45:45 [http-nio-8080-exec-6] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978取消了文章18的点赞
+2025-11-15 14:45:47 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-controllerLike：用户1982766301479038978点赞文章18
+2025-11-15 14:45:47 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-进入likeArticleV2
+2025-11-15 14:45:47 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:false
+2025-11-15 14:45:47 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978给文章点赞成功
+2025-11-15 14:45:47 [http-nio-8080-exec-7] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978点赞了文章18
+2025-11-15 14:45:49 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:45:49 [http-nio-8080-exec-10] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:45:51 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:45:51 [http-nio-8080-exec-1] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:45:51 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:45:51 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:45:51 [http-nio-8080-exec-1] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:45:51 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:false
+2025-11-15 14:45:51 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:45:51 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:45:51 [http-nio-8080-exec-2] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:45:55 [http-nio-8080-exec-3] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏false
+2025-11-15 14:45:55 [http-nio-8080-exec-3] INFO  yellow.iblog.service.ArticleServiceImpl-用户1982766301479038978收藏了文章18
+2025-11-15 14:45:55 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-文章18被1982766301479038978收藏了
+2025-11-15 14:45:57 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:45:57 [http-nio-8080-exec-6] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:45:59 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:45:59 [http-nio-8080-exec-7] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:45:59 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:45:59 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:45:59 [http-nio-8080-exec-7] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 14:45:59 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 14:45:59 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:45:59 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:45:59 [http-nio-8080-exec-8] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:46:01 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步文章18的点赞数:1到mysql
+2025-11-15 14:46:02 [scheduling-1] INFO  yellow.iblog.service.FavorSyncService-同步文章 18 的收藏数 1 到数据库
+2025-11-15 14:46:10 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:46:10 [http-nio-8080-exec-1] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:46:34 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:46:34 [http-nio-8080-exec-2] WARN  yellow.iblog.service.RedisService-缓存未命中
+2025-11-15 14:46:34 [http-nio-8080-exec-2] INFO  yellow.iblog.service.ArticleServiceImpl-缓存文章成功
+2025-11-15 14:46:34 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章17被查看了
+2025-11-15 14:46:34 [http-nio-8080-exec-2] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章17:false
+2025-11-15 14:46:34 [http-nio-8080-exec-2] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章17,收藏false
+2025-11-15 14:46:34 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-isliked:false,isFavored:false
+2025-11-15 14:46:34 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=17, 页码=1, 每页大小=10
+2025-11-15 14:46:34 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:46:34 [http-nio-8080-exec-3] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:46:38 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-用户1982766301479038978评论了文章17
+2025-11-15 14:46:38 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=17, 页码=1, 每页大小=10
+2025-11-15 14:46:38 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 14:46:38 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：195
+2025-11-15 14:46:41 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论195:false
+2025-11-15 14:46:41 [http-nio-8080-exec-6] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论195
+2025-11-15 14:46:44 [http-nio-8080-exec-7] ERROR yellow.iblog.exception.GlobalExceptionHandler-资源路径不存在No static resource comments/unlike.
+2025-11-15 14:47:01 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论195的点赞数:1到mysql
+2025-11-15 14:49:11 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=17, 页码=1, 每页大小=10
+2025-11-15 14:49:11 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 14:49:11 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：195
+2025-11-15 14:51:58 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=17, 页码=1, 每页大小=10
+2025-11-15 14:51:58 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 14:51:58 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：195
+2025-11-15 14:52:07 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=17, 页码=1, 每页大小=10
+2025-11-15 14:52:07 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 14:52:07 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：195
+2025-11-15 14:52:48 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 14:52:50 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 14:52:50 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 14:52:50 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 14:52:52 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2436 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 14:52:52 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 14:52:52 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 14:52:52 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 14:52:52 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-11-15 14:52:53 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 14:52:53 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:52:53 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 14:52:53 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 14:52:53 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 14:52:53 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 561 ms
+2025-11-15 14:52:53 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 14:52:53 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 14:52:53 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 14:52:53 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 14:52:53 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.475 seconds (process running for 1.669)
+2025-11-15 14:52:53 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 14:52:54 [RMI TCP Connection(3)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 14:52:54 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 14:52:54 [RMI TCP Connection(3)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 14:52:54 [RMI TCP Connection(3)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-11-15 14:52:54 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@75446736
+2025-11-15 14:52:54 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 14:53:04 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论195:true
+2025-11-15 14:53:04 [http-nio-8080-exec-1] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978取消了评论195的点赞
+2025-11-15 14:53:15 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:53:15 [http-nio-8080-exec-4] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:53:18 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:53:18 [http-nio-8080-exec-5] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:53:18 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:53:18 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:53:18 [http-nio-8080-exec-5] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 14:53:18 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 14:53:18 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:53:18 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=0, 当前页记录数=0
+2025-11-15 14:53:18 [http-nio-8080-exec-6] WARN  yellow.iblog.Controller.CommentC-未查询到符合条件的评论
+2025-11-15 14:53:23 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.CommentC-用户1982766301479038978评论了文章18
+2025-11-15 14:53:23 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:53:23 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 14:53:23 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 14:53:23 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论195的点赞数:0到mysql
+2025-11-15 14:53:25 [http-nio-8080-exec-9] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:false
+2025-11-15 14:53:25 [http-nio-8080-exec-9] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论196
+2025-11-15 14:53:29 [http-nio-8080-exec-10] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 14:53:29 [http-nio-8080-exec-10] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978取消了评论196的点赞
+2025-11-15 14:53:30 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:false
+2025-11-15 14:53:30 [http-nio-8080-exec-1] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论196
+2025-11-15 14:53:32 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:53:32 [http-nio-8080-exec-4] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:53:33 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:53:33 [http-nio-8080-exec-5] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:53:33 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:53:33 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:53:33 [http-nio-8080-exec-5] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 14:53:33 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 14:53:33 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:53:33 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 14:53:33 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 14:53:53 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论196的点赞数:1到mysql
+2025-11-15 14:54:03 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 14:54:03 [http-nio-8080-exec-7] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978取消了评论196的点赞
+2025-11-15 14:54:05 [http-nio-8080-exec-8] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:false
+2025-11-15 14:54:05 [http-nio-8080-exec-8] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论196
+2025-11-15 14:54:06 [http-nio-8080-exec-9] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 14:54:06 [http-nio-8080-exec-9] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978取消了评论196的点赞
+2025-11-15 14:54:23 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论196的点赞数:0到mysql
+2025-11-15 14:54:44 [http-nio-8080-exec-10] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:false
+2025-11-15 14:54:44 [http-nio-8080-exec-10] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论196
+2025-11-15 14:54:53 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论196的点赞数:1到mysql
+2025-11-15 14:54:59 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 14:54:59 [http-nio-8080-exec-3] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 14:55:01 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 14:55:01 [http-nio-8080-exec-4] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 14:55:01 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 14:55:01 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 14:55:01 [http-nio-8080-exec-4] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 14:55:01 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 14:55:01 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 14:55:01 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 14:55:01 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:00:23 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 15:00:23 [http-nio-8080-exec-8] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 15:00:25 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 15:00:25 [http-nio-8080-exec-9] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 15:00:25 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 15:00:25 [http-nio-8080-exec-9] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 15:00:25 [http-nio-8080-exec-9] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 15:00:25 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 15:00:25 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 15:00:25 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:00:25 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:00:33 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:00:33 [http-nio-8080-exec-1] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978取消了评论196的点赞
+2025-11-15 15:00:34 [http-nio-8080-exec-2] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:false
+2025-11-15 15:00:34 [http-nio-8080-exec-2] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论196
+2025-11-15 15:00:36 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:00:36 [http-nio-8080-exec-3] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978取消了评论196的点赞
+2025-11-15 15:00:36 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:false
+2025-11-15 15:00:36 [http-nio-8080-exec-4] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论196
+2025-11-15 15:00:39 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 15:00:39 [http-nio-8080-exec-7] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 15:00:41 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 15:00:41 [http-nio-8080-exec-8] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 15:00:41 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 15:00:41 [http-nio-8080-exec-8] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 15:00:41 [http-nio-8080-exec-8] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 15:00:41 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 15:00:41 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 15:00:41 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:00:41 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:00:53 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论196的点赞数:1到mysql
+2025-11-15 15:03:53 [http-nio-8080-exec-2] INFO  yellow.iblog.service.UserServiceImpl-UserResponse:yellow.iblog.model.UserResponse@12c18ab4
+2025-11-15 15:03:53 [http-nio-8080-exec-2] INFO  yellow.iblog.service.UserServiceImpl-response:LoginResponse(user=yellow.iblog.model.UserResponse@12c18ab4, token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOTgwOTI5MjY5OTQxMDA2MzM4Iiwicm9sZSI6IlJPTEVfVVNFUiIsInVzZXJuYW1lIjoiaGVsbG8iLCJpYXQiOjE3NjMxOTAyMzMsImV4cCI6MTc2MzI3NjYzM30.c-sNlqz3I6i0A1EERl2kZ2mHzD_m-K1WdDpkhqLGkT4)
+2025-11-15 15:03:53 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.UserC-用户hello登陆成功
+2025-11-15 15:04:41 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:false
+2025-11-15 15:04:41 [http-nio-8080-exec-3] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338点赞了评论77
+2025-11-15 15:04:53 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论77的点赞数:4到mysql
+2025-11-15 15:04:59 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=16, 页码=1, 每页大小=10
+2025-11-15 15:04:59 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:04:59 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：77
+2025-11-15 15:06:03 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 15:06:05 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 15:06:05 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 15:06:05 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 15:16:57 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2672 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 15:16:57 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 15:16:57 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 15:16:57 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 15:16:57 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-11-15 15:16:58 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 15:16:58 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:16:58 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 15:16:58 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 15:16:58 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 15:16:58 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 577 ms
+2025-11-15 15:16:58 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 15:16:58 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 15:16:58 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:16:58 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 15:16:58 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.518 seconds (process running for 1.721)
+2025-11-15 15:16:58 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 15:16:59 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 15:16:59 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 15:16:59 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 15:16:59 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-11-15 15:16:59 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@740bb0c
+2025-11-15 15:16:59 [RMI TCP Connection(3)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 15:17:05 [http-nio-8080-exec-2] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:true
+2025-11-15 15:17:05 [http-nio-8080-exec-2] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338取消了评论77的点赞
+2025-11-15 15:17:06 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:false
+2025-11-15 15:17:06 [http-nio-8080-exec-3] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338点赞了评论77
+2025-11-15 15:17:10 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=16, 页码=1, 每页大小=10
+2025-11-15 15:17:10 [http-nio-8080-exec-4] ERROR yellow.iblog.exception.GlobalExceptionHandler-出错了
+java.lang.NumberFormatException: For input string: "anonymousUser"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Long.parseLong(Long.java:709)
+	at java.base/java.lang.Long.valueOf(Long.java:1157)
+	at yellow.iblog.Controller.CommentC.getCommentsByArticle(CommentC.java:160)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:724)
+	at yellow.iblog.Controller.CommentC$$SpringCGLIB$$0.getCommentsByArticle(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at yellow.iblog.jwt.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-11-15 15:17:28 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论77的点赞数:4到mysql
+2025-11-15 15:20:07 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 15:20:09 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 15:20:09 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 15:20:09 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 15:20:12 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2706 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 15:20:12 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 15:20:13 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 15:20:13 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 15:20:13 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-11-15 15:20:13 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 15:20:13 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:20:13 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 15:20:13 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 15:20:13 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 15:20:13 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 554 ms
+2025-11-15 15:20:13 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 15:20:13 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 15:20:14 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:20:14 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 15:20:14 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.445 seconds (process running for 1.644)
+2025-11-15 15:20:14 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 15:20:14 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 15:20:14 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 15:20:14 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 15:20:14 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-11-15 15:20:14 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c886fb1
+2025-11-15 15:20:14 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 15:20:22 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:true
+2025-11-15 15:20:22 [http-nio-8080-exec-1] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338取消了评论77的点赞
+2025-11-15 15:20:23 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:false
+2025-11-15 15:20:23 [http-nio-8080-exec-3] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338点赞了评论77
+2025-11-15 15:20:25 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=16, 页码=1, 每页大小=10
+2025-11-15 15:20:25 [http-nio-8080-exec-4] INFO  yellow.iblog.service.CommentServiceImpl-用户点赞过评论吗？:false
+2025-11-15 15:20:25 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:20:25 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：77
+2025-11-15 15:20:44 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论77的点赞数:4到mysql
+2025-11-15 15:23:56 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 15:23:58 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 15:23:58 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 15:23:58 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 15:24:06 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2733 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 15:24:06 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 15:24:07 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 15:24:07 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 15:24:07 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-11-15 15:24:07 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 15:24:07 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:24:07 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 15:24:07 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 15:24:07 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 15:24:07 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 527 ms
+2025-11-15 15:24:07 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 15:24:07 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 15:24:08 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:24:08 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 15:24:08 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.41 seconds (process running for 1.595)
+2025-11-15 15:24:08 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 15:24:08 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 15:24:08 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 15:24:08 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 15:24:08 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 0 ms
+2025-11-15 15:24:08 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@71166696
+2025-11-15 15:24:08 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 15:24:13 [http-nio-8080-exec-2] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:true
+2025-11-15 15:24:13 [http-nio-8080-exec-2] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338取消了评论77的点赞
+2025-11-15 15:24:15 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:false
+2025-11-15 15:24:15 [http-nio-8080-exec-3] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338点赞了评论77
+2025-11-15 15:24:20 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=16, 页码=1, 每页大小=10
+2025-11-15 15:24:20 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-用户未登陆，查看评论
+2025-11-15 15:24:20 [http-nio-8080-exec-4] INFO  yellow.iblog.service.CommentServiceImpl-用户-1点赞过评论吗？:false
+2025-11-15 15:24:20 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:24:20 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：77
+2025-11-15 15:24:38 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论77的点赞数:4到mysql
+2025-11-15 15:24:46 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=16, 页码=1, 每页大小=10
+2025-11-15 15:24:46 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-用户1980929269941006338查看评论
+2025-11-15 15:24:46 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1980929269941006338点赞评论77:true
+2025-11-15 15:24:46 [http-nio-8080-exec-5] INFO  yellow.iblog.service.CommentServiceImpl-用户1980929269941006338点赞过评论吗？:true
+2025-11-15 15:24:46 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:24:46 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：77
+2025-11-15 15:25:11 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 15:25:13 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 15:25:13 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 15:25:13 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
+2025-11-15 15:25:21 [main] INFO  yellow.iblog.IBlogApplication-Starting IBlogApplication using Java 21.0.7 with PID 2755 (/Users/emily/JavaProjects/iBlog/target/classes started by emily in /Users/emily/JavaProjects/iBlog)
+2025-11-15 15:25:21 [main] INFO  yellow.iblog.IBlogApplication-No active profile set, falling back to 1 default profile: "default"
+2025-11-15 15:25:22 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-15 15:25:22 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-15 15:25:22 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate-Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2025-11-15 15:25:22 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat initialized with port 8080 (http)
+2025-11-15 15:25:22 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Initializing ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:25:22 [main] INFO  org.apache.catalina.core.StandardService-Starting service [Tomcat]
+2025-11-15 15:25:22 [main] INFO  org.apache.catalina.core.StandardEngine-Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-11-15 15:25:22 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring embedded WebApplicationContext
+2025-11-15 15:25:22 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext-Root WebApplicationContext: initialization completed in 547 ms
+2025-11-15 15:25:22 [main] INFO  yellow.iblog.config.PageConfig-分页插件已加载
+2025-11-15 15:25:22 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-11-15 15:25:23 [main] INFO  org.apache.coyote.http11.Http11NioProtocol-Starting ProtocolHandler ["http-nio-8080"]
+2025-11-15 15:25:23 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer-Tomcat started on port 8080 (http) with context path '/'
+2025-11-15 15:25:23 [main] INFO  yellow.iblog.IBlogApplication-Started IBlogApplication in 1.462 seconds (process running for 1.649)
+2025-11-15 15:25:23 [main] INFO  yellow.iblog.IBlogApplication-系统已经启动，访问地址http://127.0.0.1:8080
+2025-11-15 15:25:23 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Starting...
+2025-11-15 15:25:23 [RMI TCP Connection(1)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]-Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-15 15:25:23 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Initializing Servlet 'dispatcherServlet'
+2025-11-15 15:25:23 [RMI TCP Connection(1)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet-Completed initialization in 1 ms
+2025-11-15 15:25:23 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.pool.HikariPool-HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2dc7059a
+2025-11-15 15:25:23 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Start completed.
+2025-11-15 15:25:34 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 15:25:34 [http-nio-8080-exec-3] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 15:25:36 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 15:25:36 [http-nio-8080-exec-4] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 15:25:36 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 15:25:36 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 15:25:36 [http-nio-8080-exec-4] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 15:25:36 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 15:25:36 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 15:25:36 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-用户1982766301479038978查看评论
+2025-11-15 15:25:36 [http-nio-8080-exec-5] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:25:36 [http-nio-8080-exec-5] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞过评论吗？:true
+2025-11-15 15:25:36 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:25:36 [http-nio-8080-exec-5] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:25:40 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:25:40 [http-nio-8080-exec-6] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978取消了评论196的点赞
+2025-11-15 15:25:42 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:false
+2025-11-15 15:25:42 [http-nio-8080-exec-7] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞了评论196
+2025-11-15 15:25:44 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 15:25:44 [http-nio-8080-exec-10] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 15:25:45 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 15:25:45 [http-nio-8080-exec-1] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 15:25:45 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 15:25:45 [http-nio-8080-exec-1] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 15:25:45 [http-nio-8080-exec-1] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 15:25:45 [http-nio-8080-exec-1] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 15:25:45 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 15:25:45 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-用户1982766301479038978查看评论
+2025-11-15 15:25:45 [http-nio-8080-exec-2] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:25:45 [http-nio-8080-exec-2] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞过评论吗？:true
+2025-11-15 15:25:45 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:25:45 [http-nio-8080-exec-2] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:25:48 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 15:25:48 [http-nio-8080-exec-5] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 15:25:50 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 15:25:50 [http-nio-8080-exec-6] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 15:25:50 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 15:25:50 [http-nio-8080-exec-6] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 15:25:50 [http-nio-8080-exec-6] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 15:25:50 [http-nio-8080-exec-6] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 15:25:50 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 15:25:50 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.CommentC-用户1982766301479038978查看评论
+2025-11-15 15:25:50 [http-nio-8080-exec-7] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:25:50 [http-nio-8080-exec-7] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞过评论吗？:true
+2025-11-15 15:25:50 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:25:50 [http-nio-8080-exec-7] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:25:53 [scheduling-1] INFO  yellow.iblog.service.LikeSyncService-同步评论196的点赞数:1到mysql
+2025-11-15 15:29:52 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 15:29:52 [http-nio-8080-exec-8] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 15:29:52 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 15:29:52 [http-nio-8080-exec-8] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 15:29:52 [http-nio-8080-exec-8] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 15:29:52 [http-nio-8080-exec-8] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 15:29:52 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 15:29:52 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-用户1982766301479038978查看评论
+2025-11-15 15:29:52 [http-nio-8080-exec-9] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:29:52 [http-nio-8080-exec-9] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞过评论吗？:true
+2025-11-15 15:29:52 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:29:52 [http-nio-8080-exec-9] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:31:10 [http-nio-8080-exec-10] INFO  yellow.iblog.Controller.ArticleC-返回了5篇热门文章
+2025-11-15 15:31:10 [http-nio-8080-exec-2] WARN  yellow.iblog.service.UserServiceImpl-用户1967172287496998913不存在
+2025-11-15 15:31:11 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-传过来的uid1982766301479038978
+2025-11-15 15:31:11 [http-nio-8080-exec-3] INFO  yellow.iblog.service.RedisService-缓存命中
+2025-11-15 15:31:11 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-用户1968964617531047938的文章18被查看了
+2025-11-15 15:31:11 [http-nio-8080-exec-3] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞文章18:true
+2025-11-15 15:31:11 [http-nio-8080-exec-3] INFO  yellow.iblog.service.FavorService-用户1982766301479038978,文章18,收藏true
+2025-11-15 15:31:11 [http-nio-8080-exec-3] INFO  yellow.iblog.Controller.ArticleC-isliked:true,isFavored:true
+2025-11-15 15:31:11 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询文章评论：aid=18, 页码=1, 每页大小=10
+2025-11-15 15:31:11 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-用户1982766301479038978查看评论
+2025-11-15 15:31:11 [http-nio-8080-exec-4] INFO  yellow.iblog.service.LikeService-用户1982766301479038978点赞评论196:true
+2025-11-15 15:31:11 [http-nio-8080-exec-4] INFO  yellow.iblog.service.CommentServiceImpl-用户1982766301479038978点赞过评论吗？:true
+2025-11-15 15:31:11 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-查询结果：总记录数=1, 当前页记录数=1
+2025-11-15 15:31:11 [http-nio-8080-exec-4] INFO  yellow.iblog.Controller.CommentC-第一条评论ID：196
+2025-11-15 15:35:27 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-15 15:35:29 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown-Graceful shutdown complete
+2025-11-15 15:35:29 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown initiated...
+2025-11-15 15:35:29 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource-HikariPool-1 - Shutdown completed.
