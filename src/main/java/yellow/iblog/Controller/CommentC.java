@@ -151,7 +151,22 @@ public class CommentC {
             @RequestParam(defaultValue = "10") int size) {
         // 1. 打印传入的查询参数（确认aid、page、size是否正确）
         log.info("查询文章评论：aid={}, 页码={}, 每页大小={}", aid, page, size);
-        Page<CommentResponse> comments = commentService.getCommentsByAid(aid, page, size);
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String uidStr=authentication.getName();
+        long watcherUid;
+        if (uidStr == null || "anonymousUser".equals(uidStr) || !uidStr.matches("\\d+")) {
+            watcherUid = -1L; // 用-1表示匿名用户或无效ID
+            log.info("用户未登陆，查看评论");
+        } else {
+            try {
+                watcherUid = Long.parseLong(uidStr);
+                log.info("用户{}查看评论",watcherUid);
+            } catch (NumberFormatException e) {
+                // 兜底处理，防止意外的数字格式错误
+                watcherUid = -1L;
+            }
+        }
+        Page<CommentResponse> comments = commentService.getCommentsByAid(aid, watcherUid,page, size);
         if(comments!=null){
             // 3. 打印查询结果的关键信息（核心：总记录数、当前页记录数）
             log.info("查询结果：总记录数={}, 当前页记录数={}", comments.getTotal(), comments.getRecords().size());

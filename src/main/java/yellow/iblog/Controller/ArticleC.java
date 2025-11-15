@@ -34,42 +34,6 @@ public class ArticleC {
     private final LikeService likeService;
     private final FavorService favorService;
 
-//    //取消收藏
-//    @PostMapping("/article/undoFavor")
-//    @PreAuthorize("isAuthenticated()")
-//    public ResponseEntity<ApiResponse<Integer>> undoArticleFavor(
-//            @RequestParam Long aid,
-//            @RequestParam Long uid){
-////        Integer deltaLikes=articleService.likeArticleByAid(aid);
-//        Integer deltaFavors=articleService.undoArticleFavor(aid,uid);
-//        if(deltaFavors<=0){
-//            log.error("{}取消收藏文章失败,aid:{}",uid,aid);
-//            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：取消收藏文章失败"));
-//        }
-//        log.info("文章{}被{}取消收藏了",aid,uid);
-//        return ResponseEntity.ok(ApiResponse.success(deltaFavors));
-//
-//    }
-
-//    //取消点赞,需要改变缓存
-//    @PostMapping("/article/undoLike")
-//    @PreAuthorize("isAuthenticated()")
-//    public ResponseEntity<ApiResponse<Integer>> undoArticleLike(
-//            @RequestParam Long aid,
-//            @RequestParam Long uid){
-////        Integer deltaLikes=articleService.likeArticleByAid(aid);
-//        Integer res;
-//        res = articleService.undoArticleLike(aid,uid);
-//        if(res<=0){
-//            log.error("{}取消点赞文章失败,aid:{}",uid,aid);
-//            return ResponseEntity.internalServerError().body(ApiResponse.fail("error：取消点赞文章失败"));
-//        }
-//        log.info("文章{}被{}取消点赞了",aid,uid);
-//        return ResponseEntity.ok(ApiResponse.success(res));
-//
-//    }
-
-
     //点赞文章
     @PostMapping("/article/like")
     @PreAuthorize("isAuthenticated()")
@@ -78,8 +42,9 @@ public class ArticleC {
         //uid从身份获取，不建议从前端传，防止伪造请求
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
         Long uid=Long.valueOf(authentication.getName());
+        log.info("controllerLike：用户{}点赞文章{}",uid,aid);
         ArticleLikeResponse response=articleService.likeArticle(aid,uid);
-        if(response.getCrtLikes()<=0){
+        if(response.getCrtLikes()<0){
             log.error("{}点赞文章失败,aid:{}",uid,aid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error：点赞文章失败"));
         }
@@ -94,7 +59,7 @@ public class ArticleC {
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
         Long uid=Long.valueOf(authentication.getName());
         ArticleFavorResponse response=articleService.favorArticleByAid(aid,uid);
-        if(response.getCrtFavors()<=0){
+        if(response.getCrtFavors()<0){
             log.error("{}收藏文章失败,aid:{}",uid,aid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error：收藏文章失败"));
         }
@@ -140,11 +105,15 @@ public class ArticleC {
             @PathVariable Long aid,
             @RequestParam Long uid) {
         //log.info("调用了查看文章controller");
+        log.info("传过来的uid{}",uid);
         Article a=articleService.getArticleByAid(aid);
         ArticleResponse response;
         if(a!=null){//数据库中存储了文章
             log.info("用户{}的文章{}被查看了",a.getUid(),a.getAid());
+            //防止文章的内容被截断
+            String content=a.getContent();
             response=new ArticleResponse(a);
+            response.setContent(content);
             if(uid!=null){
                 //去查redis有没有点赞
                 response.setLiked(likeService.getArticleIsLiked(aid,uid));

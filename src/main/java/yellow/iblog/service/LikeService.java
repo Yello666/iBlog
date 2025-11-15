@@ -123,6 +123,7 @@ public class LikeService {
 
     //点赞文章---点赞文章和取消点赞都是一个请求，只需要检查用户有没有点赞过，以此为标准进行点赞的增减
     public Boolean likeArticleV2(Long aid,Long uid){
+        log.info("进入likeArticleV2");
         //记录该文章点赞用户集合的key--判断uid用户是否点过赞
         String key="article:"+aid+":likes:users";
         //记录该文章点赞数的key--点赞数的增减
@@ -136,7 +137,9 @@ public class LikeService {
         //如果集合里面找不到用户，说明用户没有点过赞
         if(!getArticleIsLiked(aid,uid)){
             //增加用户到集合里面
+
             redisTemplate.opsForSet().add(key, String.valueOf(uid));
+           log.info("用户{}给文章点赞成功",uid);
             //点赞数+1，点赞成功
             redisTemplate.opsForValue().increment(countKey);
             //关系表插入记录

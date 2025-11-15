@@ -17,8 +17,8 @@ public interface CommentService {
     Comment replyCommentByCid(Long cid,Comment c);
     //查看某一条评论
     CommentResponse getCommentByCid(Long cid,Long watcherUid);
-    //获得某个文章的所有评论（按时间排序）
-    Page<CommentResponse> getCommentsByAid(Long aid, int page, int size);//分页功能
+    //获得某个文章的所有评论（按时间排序）,要传uid，因为要看查看者是否给评论点过赞
+    Page<CommentResponse> getCommentsByAid(Long aid, Long uid,int page, int size);//分页功能
     //获得某个评论的所有回复（暂时是获得一层回复，不能获取所有的回复。）
     List<Comment> getAllRepliesByCid(Long cid);
 

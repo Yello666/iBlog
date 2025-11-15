@@ -171,7 +171,7 @@ public class CommentServiceImpl implements CommentService{
 //    @Cacheable(value="comment",key="#aid + '_' + #page + '_' + #size",unless="#result==null")
     //分页就不要做缓存了，太麻烦了，还要改缓存呢
     @Override
-    public Page<CommentResponse> getCommentsByAid(Long aid, int page, int size) {
+    public Page<CommentResponse> getCommentsByAid(Long aid, Long watcherUid,int page, int size) {
         // 使用分页插件
         Page<Comment> commentPage = new Page<>(page, size);//分页插件，page是第几页，size是页面有多少个对象
         LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();//这个是查询对象
@@ -210,6 +210,13 @@ public class CommentServiceImpl implements CommentService{
             CommentResponse response = new CommentResponse(comment);
             // 从map中获取用户名（若用户不存在，可设为默认值）
             response.setUserName(uidToNameMap.getOrDefault(comment.getUid(), "匿名用户"));
+            //看当前用户是否点赞过该评论
+            Boolean isLiked = false;
+            if(watcherUid!=-1L){
+                isLiked=likeService.getCommentIsLiked(response.getCid(),watcherUid);
+            }
+            log.info("用户{}点赞过评论吗？:{}",watcherUid,isLiked);
+            response.setLiked(isLiked);
             return response;
         });
 
