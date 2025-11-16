@@ -5,7 +5,7 @@
 项目已部署在阿里云 ECS 的 Docker 环境中，并可通过公网访问：
 
 * **公网访问地址**：[https://www.yellow-iblog.cn](https://www.yellow-iblog.cn)
-* **项目仓库地址（前端）**：https://github.com/Yello666/iBlog_Front
+* **前端Vue项目仓库地址**：https://github.com/Yello666/iBlog_Front
 
 > 注：前端部分由于作者未系统学习前端，主要由 AI 协助生成，仅用于展示项目功能。后端为独立开发。
 
@@ -49,7 +49,7 @@
 
 点赞与收藏逻辑均使用 Redis ，并定期同步至mysql数据库。
 
-由于在同步点赞数到mysql的同时，还要保证查询文章时返回的点赞数的正确性、保证用户点赞状态的正确性，这个是本人做得最辛苦的地方。。。
+由于在同步点赞数到mysql的同时，还要保证查询文章时返回的点赞数的正确性、保证用户点赞状态的正确性，这个是本人做得最辛苦的地方。
 
 ---
 
@@ -78,17 +78,17 @@
 
 后端服务已打包成 Docker 镜像并部署至阿里云 ECS，可通过前端页面在公网正常访问。
 
-关于docker的配置，我按照了这个文章的配置方法来配置
+关于docker的配置，参考了这篇文章的配置方法
 https://zhuanlan.zhihu.com/p/1911727880951564207
 
 ---
 
 ## 📌 项目亮点
 
-* 完整的用户/文章/评论体系
-* Redis 热点缓存提升首页访问性能
+* 完整的用户/文章/评论体系，且配备了可公网访问的前端展示页面
+* Redis 热点缓存文章提升访问性能
 * Redis 点赞收藏逻辑，避免频繁写 DB
-* JWT 统一登录认证
+* JWT 统一登录认证与权限校验
 * Spring Security 全接口权限校验
 * 前后端分离，可轻松扩展
 
@@ -97,14 +97,15 @@ https://zhuanlan.zhihu.com/p/1911727880951564207
 ## 📄 项目结构（简略）
 
 ```
-├── controller       # 控制层
-├── service          # 业务层
-├── mapper           # DAO 层
+├── common           # 共用工具类
 ├── config           # Security、JWT、跨域等配置
-├── entity           # 实体类
-├── dto              # 数据传输对象
-├── util             # 工具类
-└── ...
+├── controller       # 控制层
+├── exception        # 异常类与异常捕获
+├── jwt              # jwt工具类
+├── mapper           # DAO 层
+├── model            # 实体类和请求类和响应类
+├── service          # 业务层
+└── iBLOGApplication # 启动类
 ```
 
 ---
