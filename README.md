@@ -7,7 +7,6 @@
 * **公网访问地址**：[https://www.yellow-iblog.cn](https://www.yellow-iblog.cn)
 * **前端Vue项目仓库地址**：https://github.com/Yello666/iBlog_Front
 
-> 注：前端部分由于作者未系统学习前端，主要由 AI 协助生成，仅用于展示项目功能。后端为独立开发。
 
 ---
 
