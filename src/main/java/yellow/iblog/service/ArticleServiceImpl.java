@@ -121,10 +121,12 @@ public class ArticleServiceImpl implements ArticleService{
         //1.先读缓存
         Article cacheA=(Article) redisService.checkCache("article",aid);
         if(cacheA==null){
-            //2.缓存未命中，从DB读数据
+            //2.缓存未命中，从DB读数据，并设置redis缓存空值，设置短TTL，防止缓存穿透
             Article dbArticle=articleMapper.selectById(aid);
             if (dbArticle == null){
                 log.warn("尝试查询不存在的文章,aid:{}",aid);
+                String articleKey=redisService.getKey("article",aid);
+                redisTemplate.opsForValue().set(articleKey,"文章不存在",30,TimeUnit.SECONDS);
                 return null;
             }
             else{
@@ -154,6 +156,7 @@ public class ArticleServiceImpl implements ArticleService{
         }
 
     }
+    // 获得一个用户的所有文章列表
     @Override
     public Page<ArticleResponse> getArticleByUid(Long uid, int page, int size){
         Page<Article> articlePage=new Page<>(page,size);
@@ -179,4 +182,19 @@ public class ArticleServiceImpl implements ArticleService{
 
          return articleMapper.selectList(wrapper);
     }
+
+    //获取最新发布的文章
+    @Override
+    public List<Article> getArticleListOrderedByTime(Integer num){
+        if(num==null||num<=0){
+            num=DEFAULT_ARTICLES_NUM;//默认值
+        }
+        LambdaQueryWrapper<Article> wrapper=new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(Article::getCreatedAt)
+                .last("LIMIT "+num);
+        //LIMIT是mysql语句的写法,控制返回的数量
+        //SELECT * FROM article ORDER BY LikesCount DESC LIMIT 5;
+        return articleMapper.selectList(wrapper);
+    }
+
 }

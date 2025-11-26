@@ -224,5 +224,21 @@ public class ArticleC {
         }
     }
 
+    @GetMapping("/article/new")
+    public ResponseEntity<ApiResponse<List<ArticleResponse>>> getArticleListOrderedByTime(@RequestParam Integer num){
+        List<Article> articles=articleService.getArticleListOrderedByTime(num);
+        if(articles!=null){
+            log.info("返回了{}篇最新文章",num);
+            List<ArticleResponse> articleList=new ArrayList<>();
+            for (Article article : articles) {
+                ArticleResponse r = new ArticleResponse(article);
+                articleList.add(r);
+            }
+            return ResponseEntity.ok(ApiResponse.success(articleList));//返回的uid是字符串
+        } else{
+            return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
+        }
+    }
+
 
 }

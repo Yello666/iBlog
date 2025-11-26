@@ -19,4 +19,5 @@ public interface ArticleService {
     Article getArticleByAid(Long Aid);
     Page<ArticleResponse> getArticleByUid(Long uid, int page, int size);
     List<Article> getArticleListOrderedByLikes(Integer num);
+    List<Article >getArticleListOrderedByTime(Integer num);
 }

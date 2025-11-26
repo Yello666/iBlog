@@ -76,7 +76,6 @@ public class UserServiceImpl implements UserService {
     //表明方法返回值是可缓存的。执行前会检查缓存Key是否存在，存在则直接返回，不执行方法。
     //value是设置缓存的名称，就是一个文件夹，key是下面的文件名
     //缓存Key将是 "user::1001" 这样的形式，真正的Key=缓存名::设置的Key
-    //后面表示如果没有缓存，去查找数据库返回的User为null，那么就不缓存，可以解决缓存穿透问题
     public User getUserByUid(Long uid){
         //此时的u包含密码，创建时间，更改时间，这三个不需要的值，所以要设置为null吗？--在controller层会解决
         //service层负责查询就好了，controller可以把这个赋值给UserResponse
