@@ -49,8 +49,8 @@ public class FavorSyncService {
 //        }
 //    }
 
-    // 每隔30秒执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 30000)
+    // 每隔3min秒执行一次，可以根据需求调整
+    @Scheduled(fixedRate = 180000)
     public void syncFavorToDB() {
         // 获取所有需要同步的aid
         Set<String> keys = redisTemplate.opsForSet().members("article:favor:dirty");

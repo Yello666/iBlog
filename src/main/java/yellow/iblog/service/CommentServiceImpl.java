@@ -50,7 +50,7 @@ public class CommentServiceImpl implements CommentService{
                 dbComment.setLikesCount(crtLikes);
                 //4.手动缓存,设置评论过期时间2H
                 if(redisService.addCache("comment",cid,dbComment,2)){
-                    log.info("缓存评论成功");
+//                    log.info("缓存评论成功");
                 } else{
                     log.warn("缓存评论失败");
                 }
@@ -215,7 +215,7 @@ public class CommentServiceImpl implements CommentService{
             if(watcherUid!=-1L){
                 isLiked=likeService.getCommentIsLiked(response.getCid(),watcherUid);
             }
-            log.info("用户{}点赞过评论吗？:{}",watcherUid,isLiked);
+//            log.info("用户{}点赞过评论吗？:{}",watcherUid,isLiked);
             response.setLiked(isLiked);
             return response;
         });

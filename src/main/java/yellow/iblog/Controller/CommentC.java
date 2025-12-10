@@ -150,7 +150,7 @@ public class CommentC {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
         // 1. 打印传入的查询参数（确认aid、page、size是否正确）
-        log.info("查询文章评论：aid={}, 页码={}, 每页大小={}", aid, page, size);
+//        log.info("查询文章评论：aid={}, 页码={}, 每页大小={}", aid, page, size);
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String uidStr=authentication.getName();
         long watcherUid;
@@ -171,11 +171,9 @@ public class CommentC {
             // 3. 打印查询结果的关键信息（核心：总记录数、当前页记录数）
             log.info("查询结果：总记录数={}, 当前页记录数={}", comments.getTotal(), comments.getRecords().size());
 
-            // 4. 若有记录，可打印第一条记录的ID（确认是否查询到具体数据）
-            if (!comments.getRecords().isEmpty()) {
-                log.info("第一条评论ID：{}", comments.getRecords().getFirst().getCid());
-            } else {
-                log.warn("未查询到符合条件的评论"); // 无记录时警告
+            // 4. 无记录时警告
+            if (comments.getRecords().isEmpty()) {
+                log.warn("未查询到符合条件的评论"); //
             }
             return ResponseEntity.ok(ApiResponse.success(comments));
         }

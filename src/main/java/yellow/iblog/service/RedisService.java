@@ -20,14 +20,14 @@ public class RedisService {
             String key = type + "::" + id;
             Object object=redisTemplate.opsForValue().get(key);
             if(object!=null){
-                log.info("缓存命中");
+//                log.info("缓存命中");
                 return object;
             }
         } catch (Exception e){
             log.error("查找缓存失败",e);
             return null;
         }
-        log.warn("缓存未命中");
+//        log.warn("缓存未命中");
         return null;
     }
     public Boolean addCache(String type,Long id,Object value,Integer Hours){

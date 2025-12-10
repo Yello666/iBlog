@@ -80,7 +80,7 @@ public class FavorService {
     public Boolean getArticleIsFavored(Long aid,Long uid){
         String setKey="article:"+aid+":favor:users";
         Boolean isFavored=redisTemplate.opsForSet().isMember(setKey,String.valueOf(uid));
-        log.info("用户{},文章{},收藏{}",uid,aid,isFavored);
+//        log.info("用户{},文章{},收藏{}",uid,aid,isFavored);
         return isFavored;
     }
 

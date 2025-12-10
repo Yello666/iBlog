@@ -6,10 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import yellow.iblog.mapper.ArticleLikeMapper;
 import yellow.iblog.mapper.ArticleMapper;
 import yellow.iblog.mapper.CommentLikeMapper;
 import yellow.iblog.mapper.CommentMapper;
+import yellow.iblog.model.ArticleLike;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,14 +25,14 @@ public class LikeSyncService {
     private final StringRedisTemplate redisTemplate;
     private final CommentMapper commentMapper;
     private final ArticleMapper articleMapper;
-    private final CommentLikeMapper commentLikeMapper;
+    private final ArticleLikeMapper articleLikeMapper;
     //同步文章点赞数和取消点赞数到数据库的时间（单位是ms）因为schedule只能使用编译时就确定好的量
 //    private static final Integer SYNC_ARTICLE_LIKE=;//1h
     //同步评论点赞和取消点赞到数据库的时间
 //    private static final Integer SYNC_COMMENTS_LIKE=5400000;//1.5h
 
-    // 同步评论点赞到数据库的时间(30s)
-    @Scheduled(fixedRate = 30000)//ms
+    // 同步评论点赞到数据库的时间(3min)
+    @Scheduled(fixedRate = 180000)//ms
     public void syncCommentsLikesToDB() {
         Set<String> keys=redisTemplate.opsForSet().members("comment:likes:dirty");
         if(keys==null||keys.isEmpty()){
@@ -129,8 +132,8 @@ public class LikeSyncService {
 //    }
 
     //同步文章的redis点赞数到mysql，并删除article的缓存
-    // 每隔30s执行一次，可以根据需求调整
-    @Scheduled(fixedRate = 30000) //ms
+    // 每隔3min执行一次，可以根据需求调整
+    @Scheduled(fixedRate = 180000) //ms
     public void syncArticleLikesToDBV2() {
         //Redis keys 命令在大数据量下非常慢（是阻塞的 O(N) 操作）
         //Set<String> keys = redisTemplate.keys("article:*:likes:count");
@@ -139,23 +142,39 @@ public class LikeSyncService {
         if(keys==null||keys.isEmpty()){
             return;//没有要修改的key
         }
-        for (String key : keys) {
+        for (String aidstr : keys) {
             Long aid = 0L;
             try {
-                aid = Long.parseLong(key);
+                aid = Long.parseLong(aidstr);
                 String countKey = "article:" + aid + ":likes:count";
                 String countStr = redisTemplate.opsForValue().get(countKey);
                 if (countStr == null) continue;
                 int count = Integer.parseInt(countStr);
-                articleMapper.updateLikesCount(aid, count);//同步到mysql
+                articleMapper.updateLikesCount(aid, count);//同步点赞数到mysql
                 log.info("同步文章{}的点赞数:{}到mysql", aid, count);
             } catch (Exception e) {
                 log.error("同步文章点赞数据到 mysql 失败，文章ID: {}", aid, e);
             } finally{
                 //处理后移出key
-                redisTemplate.opsForSet().remove("article:likes:dirty",key);
+                redisTemplate.opsForSet().remove("article:likes:dirty",aidstr);
             }
+//            //同步点赞关系表到mysql，不可以放在定时任务这里做，因为会重复插入大量的sql，并且也没有批量插入。会非常非常满
+//            String userSetKey="article:"+aid+":likes:users";//获取每一篇文章的点过赞的用户，添加到mysql
+//            Set<String> uids=redisTemplate.opsForSet().members(userSetKey);
+//            if (uids != null && !uids.isEmpty()) {
+//                for(String uidStr:uids){
+//                    Long uid=Long.parseLong(uidStr);
+//                    ArticleLike articleLike=new ArticleLike();
+//                    articleLike.setCreatedAt(LocalDateTime.now());
+//                    articleLike.setUid(uid);
+//                    articleLike.setAid(aid);
+//                    articleLikeMapper.insert(articleLike);
+//                }
+//
+//            }
+
         }
+
     }
 
 //    public void syncArticleLikesToDB() {

@@ -117,13 +117,13 @@ public class LikeService {
     public Boolean getCommentIsLiked(Long cid,Long uid){
         String setKey="comment:"+cid+":likes:users";
         Boolean isLiked= redisTemplate.opsForSet().isMember(setKey,String.valueOf(uid));
-        log.info("用户{}点赞评论{}:{}",uid,cid,isLiked);
+//        log.info("用户{}点赞评论{}:{}",uid,cid,isLiked);
         return isLiked;
     }
 
     //点赞文章---点赞文章和取消点赞都是一个请求，只需要检查用户有没有点赞过，以此为标准进行点赞的增减
     public Boolean likeArticleV2(Long aid,Long uid){
-        log.info("进入likeArticleV2");
+//        log.info("进入likeArticleV2");
         //记录该文章点赞用户集合的key--判断uid用户是否点过赞
         String key="article:"+aid+":likes:users";
         //记录该文章点赞数的key--点赞数的增减
@@ -137,25 +137,24 @@ public class LikeService {
         //如果集合里面找不到用户，说明用户没有点过赞
         if(!getArticleIsLiked(aid,uid)){
             //增加用户到集合里面
-
             redisTemplate.opsForSet().add(key, String.valueOf(uid));
            log.info("用户{}给文章点赞成功",uid);
             //点赞数+1，点赞成功
             redisTemplate.opsForValue().increment(countKey);
-            //关系表插入记录
-            // TODO为了高性能，可以放入消息队列异步执行
-            ArticleLike articleLike=new ArticleLike();
-            articleLike.setCreatedAt(LocalDateTime.now());
-            articleLike.setUid(uid);
-            articleLike.setAid(aid);
-            articleLikeMapper.insert(articleLike);
+            //关系表插入记录，小项目可以不使用，如果扩展到查看用户点赞历史，这样需要复杂查询的功能，则需要mysql存储
+//            // TODO为了高性能，应该放在放在消息队列里面执行
+//            ArticleLike articleLike=new ArticleLike();
+//            articleLike.setCreatedAt(LocalDateTime.now());
+//            articleLike.setUid(uid);
+//            articleLike.setAid(aid);
+//            articleLikeMapper.insert(articleLike);
             return true;//返回true，代表现在已经点了赞
         } else{
             //如果找到了，就是已经点过赞,从文章点赞集合移除用户，文章点赞数-1
             redisTemplate.opsForSet().remove(key, String.valueOf(uid));
             redisTemplate.opsForValue().decrement(countKey);
-            //关系表删除记录
-            articleLikeMapper.deleteLikesByAidUid(aid,uid);
+//            //关系表删除记录
+//            articleLikeMapper.deleteLikesByAidUid(aid,uid);
             return false;//返回false，代表现在没有点赞。
         }
     }
@@ -184,7 +183,7 @@ public class LikeService {
     public Boolean getArticleIsLiked(Long aid,Long uid){
         String setKey="article:"+aid+":likes:users";
         Boolean isLiked= redisTemplate.opsForSet().isMember(setKey,String.valueOf(uid));
-        log.info("用户{}点赞文章{}:{}",uid,aid,isLiked);
+//        log.info("用户{}点赞文章{}:{}",uid,aid,isLiked);
         return isLiked;
     }
 }

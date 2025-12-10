@@ -42,7 +42,7 @@ public class ArticleC {
         //uid从身份获取，不建议从前端传，防止伪造请求
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
         Long uid=Long.valueOf(authentication.getName());
-        log.info("controllerLike：用户{}点赞文章{}",uid,aid);
+//        log.info("controllerLike：用户{}点赞文章{}",uid,aid);
         ArticleLikeResponse response=articleService.likeArticle(aid,uid);
         if(response.getCrtLikes()<0){
             log.error("{}点赞文章失败,aid:{}",uid,aid);
@@ -63,7 +63,7 @@ public class ArticleC {
             log.error("{}收藏文章失败,aid:{}",uid,aid);
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error：收藏文章失败"));
         }
-        log.info("文章{}被{}收藏了",aid,uid);
+//        log.info("文章{}被{}收藏了",aid,uid);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
     //用户取消收藏文章
@@ -87,7 +87,7 @@ public class ArticleC {
     public ResponseEntity<ApiResponse<Article>> addArticle(@RequestBody Article article) {
         Article a=articleService.createArticle(article);
         if(a!=null){
-            log.info("用户{}发布了一篇文章",a.getUid());
+//            log.info("用户{}发布了一篇文章",a.getUid());
             return ResponseEntity.ok(ApiResponse.success(a));
         }
         //出错了一般不会返回这个，而是会被全局异常捕获器捕。
@@ -105,7 +105,7 @@ public class ArticleC {
             @PathVariable Long aid,
             @RequestParam Long uid) {
         //log.info("调用了查看文章controller");
-        log.info("传过来的uid{}",uid);
+//        log.info("传过来的uid{}",uid);
         Article a=articleService.getArticleByAid(aid);
         ArticleResponse response;
         if(a!=null){//数据库中存储了文章
@@ -118,10 +118,10 @@ public class ArticleC {
                 //去查redis有没有点赞
                 response.setLiked(likeService.getArticleIsLiked(aid,uid));
                 response.setFavored(favorService.getArticleIsFavored(aid,uid));
-                log.info("isliked:{},isFavored:{}",response.isLiked(),response.isFavored());
+//                log.info("isliked:{},isFavored:{}",response.isLiked(),response.isFavored());
             }
             else{
-                log.info("未登陆用户查看文章");
+//                log.info("未登陆用户查看文章");
                 response.setLiked(false);
                 response.setFavored(false);
             }
@@ -223,7 +223,7 @@ public class ArticleC {
             return ResponseEntity.internalServerError().body(ApiResponse.fail("error"));
         }
     }
-
+    //获取n篇文章最新的文章：用于前端展示
     @GetMapping("/article/new")
     public ResponseEntity<ApiResponse<List<ArticleResponse>>> getArticleListOrderedByTime(@RequestParam Integer num){
         List<Article> articles=articleService.getArticleListOrderedByTime(num);

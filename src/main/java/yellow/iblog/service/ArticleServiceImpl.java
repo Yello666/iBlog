@@ -2,12 +2,14 @@ package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
@@ -90,25 +92,40 @@ public class ArticleServiceImpl implements ArticleService{
         return null;
     }
 
-    //删除文章
+    //删除文章，需要删除缓存
     @Override
     @CacheEvict(value="article",key="#aid")
     public Boolean deleteArticleByAid(Long aid) {
         return articleMapper.deleteById(aid) > 0;
     }
 
-    //更新文章
+    //更新文章，需要删除缓存
     @Override
-    @CachePut(value="article",key="#article.aid")
+//    @CachePut(value="article",key="#article.aid")
     public Article updateArticle(Article article) {
         //必须要先将之前的拿出来，再存。
         //因为mybatis-plus是动态修改，传过来的article只包含标题，内容，作者id，其它内容都是空的
         //直接存进去会将创建时间和其它所有东西都置为默认值，创建时间会丢失掉
         Article savedA=articleMapper.selectById(article.getAid());
+        //删除缓存--延迟双删，可以解决高并发下的缓存不一致的问题，虽然这里应该不会发生
+        String articleKey=redisService.getKey("article", savedA.getAid());
+        redisTemplate.delete(articleKey);
+        //更新数据库
         savedA.setUpdatedAt(LocalDateTime.now());
         savedA.setTitle(article.getTitle());//只能修改标题和内容
         savedA.setContent(article.getContent());
         if(articleMapper.updateById(savedA)>0){
+            // 延迟双删：500毫秒后再次删除缓存
+//            taskScheduler.schedule(() -> {
+//                try {
+//                    String delayArticleKey = redisService.getKey("article", savedA.getAid());
+//                    redisTemplate.delete(delayArticleKey);
+//                } catch (Exception e) {
+//                    // 记录日志，避免任务执行失败影响主流程
+//                    log.error("延迟删除缓存失败，articleId: {}", savedA.getAid(), e);
+//                }
+//            }, Duration.ofMillis(500));
+
             return savedA;
         }
         return null;
@@ -138,7 +155,7 @@ public class ArticleServiceImpl implements ArticleService{
                 dbArticle.setFavorCount(crtFavors);
                 //4.手动缓存，设置过期时间：2小时
                 if(redisService.addCache("article",aid,dbArticle,2)){
-                    log.info("缓存文章成功");
+//                    log.info("缓存文章成功");
                 } else{
                     log.warn("缓存文章失败");
                 }

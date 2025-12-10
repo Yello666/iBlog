@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
         //设置用户信息，uid为字符串
         LoginResponse response=new LoginResponse();
         UserResponse userResponse=new UserResponse(u);
-        log.info("UserResponse:{}",userResponse);
+//        log.info("UserResponse:{}",userResponse);
         response.setUser(userResponse);
         //token
         response.setToken(token);
-        log.info("response:{}",response);
+//        log.info("response:{}",response);
         return ApiResponse.success(response);
 
 
