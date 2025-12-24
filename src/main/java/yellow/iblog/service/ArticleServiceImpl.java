@@ -2,14 +2,11 @@ package yellow.iblog.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yellow.iblog.mapper.ArticleMapper;
@@ -18,11 +15,12 @@ import yellow.iblog.model.ArticleFavorResponse;
 import yellow.iblog.model.ArticleLikeResponse;
 import yellow.iblog.model.ArticleResponse;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalUnit;
-import java.util.List;
+
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -159,6 +157,9 @@ public class ArticleServiceImpl implements ArticleService{
                 } else{
                     log.warn("缓存文章失败");
                 }
+                //文章浏览给热度+0.1
+                String rankKey="article:likes:rank";
+                redisTemplate.opsForZSet().incrementScore(rankKey,aid.toString(),0.1);
                 return dbArticle;
             }
         } else{
@@ -169,6 +170,9 @@ public class ArticleServiceImpl implements ArticleService{
             cacheA.setFavorCount(crtFavors);
             //更新文章的TTL为2小时
             redisTemplate.expire(redisService.getKey("article",aid), 2, TimeUnit.HOURS);
+            //文章浏览给热度+0.1
+            String rankKey="article:likes:rank";
+            redisTemplate.opsForZSet().incrementScore(rankKey,aid.toString(),0.1);
             return cacheA;
         }
 
@@ -191,13 +195,49 @@ public class ArticleServiceImpl implements ArticleService{
         if(num==null||num<=0){
             num=DEFAULT_ARTICLES_NUM;//默认值
         }
-        LambdaQueryWrapper<Article> wrapper=new LambdaQueryWrapper<>();
-        wrapper.orderByDesc(Article::getLikesCount)
-                .last("LIMIT "+num);
+        String rankKey="article:likes:rank";
+//        LambdaQueryWrapper<Article> wrapper=new LambdaQueryWrapper<>();
+//        wrapper.orderByDesc(Article::getLikesCount)
+//                .last("LIMIT "+num);
         //LIMIT是mysql语句的写法,控制返回的数量
         //SELECT * FROM article ORDER BY LikesCount DESC LIMIT 5;
+        //1.从zset中取出热门文章id
+        // 1. 从ZSet获取热度最高的N篇文章ID
+        Set<ZSetOperations.TypedTuple<String>> topArticles =
+                redisTemplate.opsForZSet()
+                        .reverseRangeWithScores(rankKey, 0, num - 1);
+        //reverseRange：按Score从大到小排序，取下标 [0, num-1] 的 member
+        if (topArticles == null || topArticles.isEmpty()) {
+            return Collections.emptyList();
+        }
+        // 2. 提取文章ID列表
+        List<Long> articleIds = topArticles.stream()
+                .map(tuple -> Long.parseLong(tuple.getValue()))
+                .collect(Collectors.toList());
 
-         return articleMapper.selectList(wrapper);
+        // 3. 批量查询数据库获取文章基本信息
+        List<Article> articles = articleMapper.selectBatchIds(articleIds);
+
+        // 4. 转换为Map便于后续匹配
+        Map<Long, Article> articleMap = articles.stream()
+                .collect(Collectors.toMap(Article::getAid, Function.identity()));
+
+        // 5. 批量获取实时点赞数
+        List<Article> result = new ArrayList<>();
+        for (ZSetOperations.TypedTuple<String> tuple : topArticles) {
+            Long aid = Long.parseLong(tuple.getValue());
+            Article article = articleMap.get(aid);
+
+            if (article != null) {
+                // 获取Redis中的实时点赞数
+                Integer currentLikes =likeService.getArticleLikeCount(aid);
+                article.setLikesCount(currentLikes);
+                Integer currentFavors=favorService.getArticleFavorCount(aid);
+                article.setFavorCount(currentFavors);
+                result.add(article);
+            }
+        }
+        return result;
     }
 
     //获取最新发布的文章

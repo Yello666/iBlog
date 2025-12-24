@@ -126,6 +126,9 @@ public class CommentServiceImpl implements CommentService{
             throw new RuntimeException("数据库操作，添加评论数失败");
 
         }
+        //评论给热度+0.2
+        String rankKey="article:likes:rank";
+        redisTemplate.opsForZSet().incrementScore(rankKey,c.getAid().toString(),0.2);
         return c;
     }
 
@@ -143,6 +146,9 @@ public class CommentServiceImpl implements CommentService{
         if(articleMapper.deleteComments(c.getAid())<=0){
             throw new RuntimeException("数据库操作:减少评论数失败");
         }
+        //删除评论给热度-0.2
+        String rankKey="article:likes:rank";
+        redisTemplate.opsForZSet().incrementScore(rankKey,c.getAid().toString(),-0.2);
         return true;
     }
 

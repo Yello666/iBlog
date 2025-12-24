@@ -122,6 +122,8 @@ public class LikeService {
     }
 
     //点赞文章---点赞文章和取消点赞都是一个请求，只需要检查用户有没有点赞过，以此为标准进行点赞的增减
+    //新增功能：使用zset进行点赞数排序
+    //文章热度=点赞*0.7+评论*0.2+浏览*0.1
     public Boolean likeArticleV2(Long aid,Long uid){
 //        log.info("进入likeArticleV2");
         //记录该文章点赞用户集合的key--判断uid用户是否点过赞
@@ -130,6 +132,8 @@ public class LikeService {
         String countKey="article:"+aid+":likes:count";
         //记录修改过的key---用于同步的时候遍历，同步后会删除掉这些key
         String dirtyKey="article:likes:dirty";
+        //新增：zset文章点赞数排行可以---给文章点赞数做一个实时的排行更新
+        String rankKey="article:likes:rank";
         //预加载点赞数（如果不这么做，count 会是deltaLikes，会导致后续同步的点赞数不一致，点赞逻辑变得麻烦，获取点赞逻辑也变得麻烦）
         getArticleLikeCount(aid);
         // 标记这篇文章的点赞数被修改过（会在下面通过mysql关系表修改）
@@ -141,20 +145,24 @@ public class LikeService {
            log.info("用户{}给文章点赞成功",uid);
             //点赞数+1，点赞成功
             redisTemplate.opsForValue().increment(countKey);
+            //点赞排行榜+0.7
+            redisTemplate.opsForZSet().incrementScore(rankKey,aid.toString(),0.7);
             //关系表插入记录，小项目可以不使用，如果扩展到查看用户点赞历史，这样需要复杂查询的功能，则需要mysql存储
-//            // TODO为了高性能，应该放在放在消息队列里面执行
-//            ArticleLike articleLike=new ArticleLike();
-//            articleLike.setCreatedAt(LocalDateTime.now());
-//            articleLike.setUid(uid);
-//            articleLike.setAid(aid);
-//            articleLikeMapper.insert(articleLike);
+           // TODO为了高性能，可以消息队列里面执行
+            ArticleLike articleLike=new ArticleLike();
+            articleLike.setCreatedAt(LocalDateTime.now());
+            articleLike.setUid(uid);
+            articleLike.setAid(aid);
+            articleLikeMapper.insert(articleLike);
             return true;//返回true，代表现在已经点了赞
         } else{
             //如果找到了，就是已经点过赞,从文章点赞集合移除用户，文章点赞数-1
             redisTemplate.opsForSet().remove(key, String.valueOf(uid));
             redisTemplate.opsForValue().decrement(countKey);
-//            //关系表删除记录
-//            articleLikeMapper.deleteLikesByAidUid(aid,uid);
+            //点赞排行榜-0.7
+            redisTemplate.opsForZSet().incrementScore(rankKey,aid.toString(),-0.7);
+           //关系表删除记录
+            articleLikeMapper.deleteLikesByAidUid(aid,uid);
             return false;//返回false，代表现在没有点赞。
         }
     }

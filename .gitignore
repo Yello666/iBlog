@@ -7,8 +7,8 @@ target/
 ###application.properties###
 src/main/resources/application.properties
 
-### jwt ###
-
+### Logs ###
+Logs
 
 
 ### STS ###
