@@ -33,6 +33,7 @@ jobs:
           # source: "build/libs/*.jar" # Gradle 输出路径
           target: "/home/${{ secrets.VM_USER }}/iblog/"
           strip_components: 1  # 移除 'target' 目录层级
+          overwrite: true
 
       - name: Deploy on VM via SSH
         uses: appleboy/ssh-action@v1.0.3
