@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Build with Maven
@@ -32,6 +32,7 @@ jobs:
           source: "target/*.jar"       # Maven 输出路径
           # source: "build/libs/*.jar" # Gradle 输出路径
           target: "/home/${{ secrets.VM_USER }}/iblog/"
+          strip_components: 1  # 移除 'target' 目录层级
 
       - name: Deploy on VM via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -44,14 +45,24 @@ jobs:
             # 停止并清理旧容器和镜像
             docker stop iblog || true
             docker rm iblog || true
-            docker rmi iblog || true
+            docker rmi iblog:latest || true
             # 构建新镜像
-            docker build -t iblog .
+            docker build -t iblog:latest .
             # 运行新容器
             docker run -d \
               -p 8080:8080 \
               -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
               -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
-              -e REDIS_PASSWORD='${{ secrets.REDIS_PASSWORD }}'\
+              -e REDIS_PASSWORD='${{ secrets.REDIS_PASSWORD }}' \
               --name iblog \
               iblog:latest
+            
+            # 健康检查
+            sleep 10
+            if ! docker ps | grep -q iblog; then
+              echo "❌ Deployment failed"
+              docker logs iblog
+              exit 1
+            fi
+
+            echo "✅ Deployment successful"
