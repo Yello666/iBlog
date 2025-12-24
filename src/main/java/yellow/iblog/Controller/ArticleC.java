@@ -103,7 +103,7 @@ public class ArticleC {
     @GetMapping("/article/{aid}")
     public ResponseEntity<ApiResponse<ArticleResponse>> getArticleByAid(
             @PathVariable Long aid,
-            @RequestParam Long uid) {
+            @RequestParam(required = false) Long uid) {
         //log.info("调用了查看文章controller");
 //        log.info("传过来的uid{}",uid);
         Article a=articleService.getArticleByAid(aid);
