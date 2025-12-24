@@ -55,6 +55,7 @@ jobs:
               -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
               -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
               -e REDIS_PASSWORD='${{ secrets.REDIS_PASSWORD }}' \
+              -e JWT_SECRET='${{ secrets.JWT_SECRET }}' \
               --name iblog \
               iblog:latest
             
