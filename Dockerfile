@@ -6,7 +6,7 @@ COPY iBlog-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java","-Duser.timezone=Asia/Shanghai","-jar","app.jar"]
 
 ## Step 1: 选择基础镜像
 #FROM eclipse-temurin:21-jdk
