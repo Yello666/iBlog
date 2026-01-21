@@ -52,6 +52,7 @@ public class SecurityAndJwtConfig {
         // 允许的源（前端地址）
         configuration.setAllowedOrigins(Arrays.asList(
             "https://www.yellow-iblog.cn",  // 生产环境前端域名
+             "https://yellow-iblog.cn",
             "http://localhost:5173",        // 本地开发环境（Vite）
             "http://127.0.0.1:5173"
         ));
