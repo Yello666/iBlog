@@ -148,7 +148,7 @@ public class LikeService {
             //点赞排行榜+0.7
             redisTemplate.opsForZSet().incrementScore(rankKey,aid.toString(),0.7);
             //关系表插入记录，小项目可以不使用，如果扩展到查看用户点赞历史，这样需要复杂查询的功能，则需要mysql存储
-           // TODO为了高性能，可以消息队列里面执行
+           // 为了高性能，可以消息队列里面执行
             ArticleLike articleLike=new ArticleLike();
             articleLike.setCreatedAt(LocalDateTime.now());
             articleLike.setUid(uid);

@@ -13,6 +13,10 @@
 
     <!--系统文件输出 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只打印ERROR级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
     <!--   日志文件输出的文件名，%i表示当日志文件按大小拆分时的索引号，即表示文件滚动时的序号-->
 <!--            参数在properties那里配置-->
@@ -31,7 +35,7 @@
     </appender>
 
 <!--日志输出级别-->
-    <root level="info">
+    <root level="error">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
