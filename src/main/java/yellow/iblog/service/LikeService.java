@@ -16,7 +16,6 @@ import yellow.iblog.model.CommentLike;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -69,15 +68,12 @@ public class LikeService {
         getCommentLikeCount(cid);
         // 标记这篇评论的点赞数被修改过（会在下面通过mysql关系表修改）
         redisTemplate.opsForSet().add(dirtyKey, String.valueOf(cid));
-        //如果集合里面找不到用户，说明用户没有点过赞
-        if(!getCommentIsLiked(cid,uid)){
-            //增加用户到集合里面
-            redisTemplate.opsForSet().add(key, String.valueOf(uid));
-            //点赞数+1，点赞成功
+        // 用 SADD 返回值做原子判断：返回 1 表示本次新加入（点赞），返回 0 表示已在集合中（取消点赞），避免并发竞态
+        Long added = redisTemplate.opsForSet().add(key, String.valueOf(uid));
+        if (added != null && added == 1) {
+            // 第一次点赞
             redisTemplate.opsForValue().increment(countKey);
-            //关系表插入记录
-            // TODO为了高性能，可以放入消息队列异步执行
-            CommentLike commentLike=new CommentLike();
+            CommentLike commentLike = new CommentLike();
             commentLike.setCreatedAt(LocalDateTime.now());
             commentLike.setUid(uid);
             commentLike.setCid(cid);
@@ -87,9 +83,8 @@ public class LikeService {
             //如果找到了，就是已经点过赞,从评论点赞集合移除用户，评论点赞数-1
             redisTemplate.opsForSet().remove(key, String.valueOf(uid));
             redisTemplate.opsForValue().decrement(countKey);
-            //关系表删除记录
-            commentLikeMapper.deleteLikesByCidUid(cid,uid);
-            return false;//返回false，代表现在没有点赞。
+            commentLikeMapper.deleteLikesByCidUid(cid, uid);
+            return false;
         }
     }
     //获得评论redis点赞数
@@ -138,32 +133,28 @@ public class LikeService {
         getArticleLikeCount(aid);
         // 标记这篇文章的点赞数被修改过（会在下面通过mysql关系表修改）
         redisTemplate.opsForSet().add(dirtyKey, String.valueOf(aid));
-        //如果集合里面找不到用户，说明用户没有点过赞
-        if(!getArticleIsLiked(aid,uid)){
-            //增加用户到集合里面
-            redisTemplate.opsForSet().add(key, String.valueOf(uid));
-           log.info("用户{}给文章点赞成功",uid);
-            //点赞数+1，点赞成功
+        // 用 SADD 返回值做原子判断：返回 1 表示本次新加入（点赞），返回 0 表示已在集合中（取消点赞），避免并发竞态
+        Long added = redisTemplate.opsForSet().add(key, String.valueOf(uid));
+        if (added != null && added == 1) {
+            // 第一次点赞
+            log.info("用户{}给文章点赞成功", uid);
             redisTemplate.opsForValue().increment(countKey);
             //点赞排行榜+0.7
-            redisTemplate.opsForZSet().incrementScore(rankKey,aid.toString(),0.7);
-            //关系表插入记录，小项目可以不使用，如果扩展到查看用户点赞历史，这样需要复杂查询的功能，则需要mysql存储
-           // 为了高性能，可以消息队列里面执行
-            ArticleLike articleLike=new ArticleLike();
+            redisTemplate.opsForZSet().incrementScore(rankKey, aid.toString(), 0.7);
+            ArticleLike articleLike = new ArticleLike();
             articleLike.setCreatedAt(LocalDateTime.now());
             articleLike.setUid(uid);
             articleLike.setAid(aid);
-            articleLikeMapper.insert(articleLike);
-            return true;//返回true，代表现在已经点了赞
-        } else{
-            //如果找到了，就是已经点过赞,从文章点赞集合移除用户，文章点赞数-1
+            articleLikeMapper.insertIgnore(articleLike);
+            return true;
+        } else {
+            // 已在集合中，走取消点赞
             redisTemplate.opsForSet().remove(key, String.valueOf(uid));
             redisTemplate.opsForValue().decrement(countKey);
             //点赞排行榜-0.7
-            redisTemplate.opsForZSet().incrementScore(rankKey,aid.toString(),-0.7);
-           //关系表删除记录
-            articleLikeMapper.deleteLikesByAidUid(aid,uid);
-            return false;//返回false，代表现在没有点赞。
+            redisTemplate.opsForZSet().incrementScore(rankKey, aid.toString(), -0.7);
+            articleLikeMapper.deleteLikesByAidUid(aid, uid);
+            return false;
         }
     }
     //获得文章redis点赞数--可用于查询文章点赞数，或者点赞的时候加载文章初始点赞数
