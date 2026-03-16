@@ -6,7 +6,7 @@
 
 * **公网访问地址**：[https://www.yellow-iblog.cn](https://www.yellow-iblog.cn)
 
-  注：因为域名到期，已经不能访问。可以在根目录下的iblog.png查看原页面效果
+  注：因为SSL证书到期，已经不能访问。可以在根目录下的iblog.png查看原页面效果
 
   
 * **前端Vue项目仓库地址**：https://github.com/Yello666/iBlog_Front
@@ -112,6 +112,62 @@
 ├── service          # 业务层
 └── iBLOGApplication # 启动类
 ```
+## 压测结果
+
+环境：2核8GB的云主机上使用jmeter对点赞接口进行压测，并发线程数50，持续5分钟。
+
+场景：200个测试用户，随机选择50个用户随机对3、5、7、8、13号文章点赞。
+
+结果：
+summary +    213 in 00:00:16 =   13.2/s Avg:  1666 Min:   371 Max:  3371 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary +   1184 in 00:00:30 =   39.4/s Avg:  1250 Min:   189 Max:  4186 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =   1397 in 00:00:46 =   30.3/s Avg:  1314 Min:   189 Max:  4186 Err:     0 (0.00%)
+
+summary +   1527 in 00:00:30 =   50.9/s Avg:   979 Min:   101 Max:  2407 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =   2924 in 00:01:16 =   38.4/s Avg:  1139 Min:   101 Max:  4186 Err:     0 (0.00%)
+
+summary +   1495 in 00:00:30 =   49.8/s Avg:   990 Min:   167 Max:  2665 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =   4419 in 00:01:46 =   41.6/s Avg:  1089 Min:   101 Max:  4186 Err:     0 (0.00%)
+
+summary +   1781 in 00:00:30 =   59.3/s Avg:   834 Min:   135 Max:  2250 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =   6200 in 00:02:16 =   45.5/s Avg:  1015 Min:   101 Max:  4186 Err:     0 (0.00%)
+
+summary +   1763 in 00:00:30 =   58.8/s Avg:   841 Min:   108 Max:  2650 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =   7963 in 00:02:46 =   47.9/s Avg:   977 Min:   101 Max:  4186 Err:     0 (0.00%)
+
+summary +   1997 in 00:00:30 =   66.6/s Avg:   745 Min:    89 Max:  1925 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =   9960 in 00:03:16 =   50.8/s Avg:   930 Min:    89 Max:  4186 Err:     0 (0.00%)
+
+summary +   2089 in 00:00:30 =   69.6/s Avg:   708 Min:    92 Max:  2099 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =  12049 in 00:03:46 =   53.3/s Avg:   892 Min:    89 Max:  4186 Err:     0 (0.00%)
+
+summary +   2271 in 00:00:30 =   75.7/s Avg:   656 Min:    94 Max:  1666 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =  14320 in 00:04:16 =   55.9/s Avg:   854 Min:    89 Max:  4186 Err:     0 (0.00%)
+
+summary +   2379 in 00:00:30 =   79.3/s Avg:   625 Min:    81 Max:  2253 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
+
+summary =  16699 in 00:04:46 =   58.4/s Avg:   822 Min:    81 Max:  4186 Err:     0 (0.00%)
+
+summary +   1167 in 00:00:14 =   81.0/s Avg:   614 Min:    63 Max:  1656 Err:     0 (0.00%) Active: 0 Started: 50 Finished: 50
+
+summary =  17866 in 00:05:01 =   59.4/s Avg:   808 Min:    63 Max:  4186 Err:     0 (0.00%)
+
+Tidying up ...    @ 2026 Mar 16 23:18:14 CST (1773674294413)
+... end of run
+
+### 压测亮点总结
+1.零错误率：全程处理 17,866 次请求，错误率为 0%，系统稳定性极高。
+
+2.性能稳步提升：TPS（吞吐量）从初期的 13.2/s 逐步攀升至峰值 81.0/s，平均 TPS 保持在 59.4/s。
 
 ---
 
